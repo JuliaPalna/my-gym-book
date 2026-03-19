@@ -5,6 +5,7 @@ import {
     ErrorPage,
     MainPage,
     RegistrationPage,
+    UsersPage,
     WorkoutPage,
 } from '../../../pages';
 
@@ -17,6 +18,8 @@ export const RoutesContainer = (): JSX.Element => {
             <Route path="/register" element={<RegistrationPage />} />
 
             <Route path="/workouts/:id" element={<WorkoutPage />} />
+
+            <Route path="/admin/users" element={<UsersPage />} />
 
             <Route path="*" element={<ErrorPage />} />
         </Routes>
