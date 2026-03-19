@@ -1,9 +1,10 @@
 import { type JSX } from 'react';
+import { RegistrationForm } from '../../features';
 
 export const RegistrationPage = (): JSX.Element => {
     return (
         <>
-            <p>RegistrationPage</p>
+            <RegistrationForm />
         </>
     );
 };
