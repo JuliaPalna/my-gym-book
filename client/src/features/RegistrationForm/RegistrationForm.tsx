@@ -1,7 +1,8 @@
+import type { JSX } from 'react';
 import { Button, ErrorMessage, FieldWrapper, Input } from '../../shared';
 import { useRegistrationForm } from './useRegistrationForm';
 
-export const RegistrationForm = () => {
+export const RegistrationForm = (): JSX.Element => {
     const {
         formState,
         register,

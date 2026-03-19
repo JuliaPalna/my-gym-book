@@ -1,8 +1,9 @@
+import type { JSX } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, ErrorMessage, FieldWrapper, Input } from '../../shared';
 import { useAuthorizationForm } from './useAuthorizationForm';
 
-export const AuthorizationForm = () => {
+export const AuthorizationForm = (): JSX.Element => {
     const {
         formState,
         register,
