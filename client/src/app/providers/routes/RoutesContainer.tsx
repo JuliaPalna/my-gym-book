@@ -8,6 +8,7 @@ import {
     UsersPage,
     WorkoutPage,
 } from '../../../pages';
+import { WorkoutsPage } from '../../../pages/WorkoutsPage';
 
 export const RoutesContainer = (): JSX.Element => {
     return (
@@ -18,6 +19,7 @@ export const RoutesContainer = (): JSX.Element => {
             <Route path="/register" element={<RegistrationPage />} />
 
             <Route path="/workouts/:id" element={<WorkoutPage />} />
+            <Route path="/workouts" element={<WorkoutsPage />} />
 
             <Route path="/admin/users" element={<UsersPage />} />
 
