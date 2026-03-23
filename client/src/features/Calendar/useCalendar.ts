@@ -1,43 +1,54 @@
-import { useState } from 'react';
-import { createCalendar, getCurrentDate } from './utils';
+import { useCallback, useMemo } from 'react';
+import {
+    formatDateForDisplay,
+    formatMonth,
+    getCountCellsForCalendar,
+    getCurrentMonthYear,
+} from './utils';
+import type { CalendarProps } from './type';
 
-export const useCalendar = () => {
-    const { month, year } = getCurrentDate();
+export const useCalendar = ({ period, onChange }: CalendarProps) => {
+    const monthYear =
+        period && period.length >= 7 ? period : getCurrentMonthYear();
 
-    const [currentDate, setCurrentDate] = useState({ month, year });
+    const [year, month] = monthYear.split('-').map((item) => Number(item));
 
-    const dataCalendar = createCalendar({
-        month: currentDate.month,
-        year: currentDate.year,
-    });
+    const isValid = !isNaN(year) && !isNaN(month) && month >= 1 && month <= 12;
 
-    const onGoBack = (): void => {
-        if (currentDate.month === 0) {
-            const newDataMonth: number = 11;
-            const newDataYear: number = currentDate.year - 1;
-            setCurrentDate({ year: newDataYear, month: newDataMonth });
+    const displayDate = useMemo(() => {
+        return isValid ? formatDateForDisplay(monthYear) : 'Ошибка даты';
+    }, [monthYear, isValid]);
+
+    const calendarCells = useMemo(() => {
+        if (!isValid) return [];
+        return getCountCellsForCalendar({ year, month });
+    }, [year, month, isValid]);
+
+    const onGoBack = useCallback((): void => {
+        if (!isValid) return;
+
+        if (month === 1) {
+            onChange(`${year - 1}-12`);
             return;
         }
 
-        const newDataMonth: number = currentDate.month - 1;
-        setCurrentDate({ ...currentDate, month: newDataMonth });
-    };
+        onChange(`${year}-${formatMonth(month - 1)}`);
+    }, [year, month, onChange, isValid]);
 
-    const onGoForward = (): void => {
-        if (currentDate.month === 11) {
-            const newDataMonth: number = 0;
-            const newDataYear: number = currentDate.year + 1;
-            setCurrentDate({ year: newDataYear, month: newDataMonth });
+    const onGoForward = useCallback((): void => {
+        if (!isValid) return;
+
+        if (month === 12) {
+            onChange(`${year + 1}-01`);
             return;
         }
 
-        const newDataMonth: number = currentDate.month + 1;
-        setCurrentDate({ ...currentDate, month: newDataMonth });
-    };
+        onChange(`${year}-${formatMonth(month + 1)}`);
+    }, [year, month, onChange, isValid]);
 
     return {
-        currentDate,
-        dataCalendar,
+        displayDate,
+        calendarCells,
         onGoBack,
         onGoForward,
     };

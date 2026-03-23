@@ -1,24 +1,21 @@
 import { type JSX } from 'react';
 import { Button } from '../../shared';
 import { useCalendar } from './useCalendar';
-import { NAME_MONTH, NAME_DAYS_WEEK } from './constants';
+import { NAME_DAYS_WEEK } from './constants';
+import type { CalendarProps } from './type';
 import './styles/index.css';
 
-export const Calendar = (): JSX.Element => {
-    const {
-        currentDate: { month, year },
-        dataCalendar: { calendarDays },
-        onGoBack,
-        onGoForward,
-    } = useCalendar();
+export const Calendar = ({ period, onChange }: CalendarProps): JSX.Element => {
+    const { displayDate, calendarCells, onGoBack, onGoForward } = useCalendar({
+        period,
+        onChange,
+    });
 
     return (
         <>
             <div>
                 <Button onClick={onGoBack}>Назад</Button>
-                <span>
-                    {NAME_MONTH[month]} {year}
-                </span>
+                <span>{displayDate}</span>
                 <Button onClick={onGoForward}>Вперед</Button>
             </div>
 
@@ -33,7 +30,7 @@ export const Calendar = (): JSX.Element => {
             </ul>
 
             <ul className="list calendar-body">
-                {calendarDays.map((day, index) => {
+                {calendarCells.map((day, index) => {
                     return (
                         <li className="list__item" key={`day-${index}`}>
                             {day}
