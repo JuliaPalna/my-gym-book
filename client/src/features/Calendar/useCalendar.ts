@@ -1,13 +1,15 @@
 import { useCallback, useMemo } from 'react';
 import { formatDateForDisplay, getCellsListForCalendar } from './utils';
-import type { CalendarProps } from './type';
+import type { calendarCellsProps, CalendarProps } from './type';
+import { activityData } from '../../app/data';
 
 export const useCalendar = ({ period, onChange }: CalendarProps) => {
+    const activityDays = activityData;
     const { year, month } = period;
 
     const isValid = !isNaN(year) && !isNaN(month) && month >= 1 && month <= 12;
 
-    const displayDate = useMemo(() => {
+    const displayMonthYear = useMemo(() => {
         return isValid ? formatDateForDisplay(period) : 'Ошибка даты';
     }, [period, isValid]);
 
@@ -16,8 +18,31 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
             return [];
         }
 
-        return getCellsListForCalendar({ year, month });
-    }, [year, month, isValid]);
+        const initialCellsListCalendar = getCellsListForCalendar({
+            year,
+            month,
+        });
+
+        const cellsListCalendarWithActiveDay: calendarCellsProps =
+            initialCellsListCalendar.map((cell) => {
+                if (!cell || cell.day === null) {
+                    return '';
+                }
+
+                const isActive = activityDays.find((item) => {
+                    const date = new Date(item.date).getDate();
+
+                    return date === cell.day;
+                });
+
+                return {
+                    ...cell,
+                    hasWorkout: !!isActive,
+                };
+            });
+
+        return cellsListCalendarWithActiveDay;
+    }, [year, month, isValid, activityDays]);
 
     const onGoBack = useCallback((): void => {
         if (!isValid) {
@@ -47,7 +72,7 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
     }, [year, month, onChange, isValid, period]);
 
     return {
-        displayDate,
+        displayMonthYear,
         calendarCells,
         onGoBack,
         onGoForward,

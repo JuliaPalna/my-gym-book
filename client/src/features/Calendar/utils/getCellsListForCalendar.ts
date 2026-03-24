@@ -3,11 +3,15 @@ interface GetCalendarCellsProps {
     year: number;
 }
 
+interface CalendarCell {
+    day: number;
+}
+
 export function getCellsListForCalendar({
     month,
     year,
-}: GetCalendarCellsProps): (number | '' | undefined)[] {
-    const cellsList: (number | '' | undefined)[] = [];
+}: GetCalendarCellsProps): (CalendarCell | undefined | '')[] {
+    const cellsList: (CalendarCell | undefined | '')[] = [];
 
     if (!month || !year || isNaN(month) || isNaN(year)) {
         return cellsList;
@@ -28,7 +32,7 @@ export function getCellsListForCalendar({
     }
 
     for (let i = 1; i <= countDaysInMonth; i++) {
-        cellsList.push(i);
+        cellsList.push({ day: i });
     }
 
     for (let i = 1; i <= countEmptyCellsAfter; i++) {

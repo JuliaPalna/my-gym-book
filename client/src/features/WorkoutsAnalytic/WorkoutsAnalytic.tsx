@@ -6,7 +6,7 @@ import {
     workoutDurationBarChart,
     monthStats,
     workoutTypesDurationPieChart,
-} from './data';
+} from '../../app/data';
 
 export const WorkoutsAnalytic = () => {
     return (

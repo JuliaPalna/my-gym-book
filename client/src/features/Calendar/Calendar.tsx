@@ -6,16 +6,17 @@ import type { CalendarProps } from './type';
 import './styles/index.css';
 
 export const Calendar = ({ period, onChange }: CalendarProps): JSX.Element => {
-    const { displayDate, calendarCells, onGoBack, onGoForward } = useCalendar({
-        period,
-        onChange,
-    });
+    const { displayMonthYear, calendarCells, onGoBack, onGoForward } =
+        useCalendar({
+            period,
+            onChange,
+        });
 
     return (
         <>
             <div>
                 <Button onClick={onGoBack}>Назад</Button>
-                <span>{displayDate}</span>
+                <span>{displayMonthYear}</span>
                 <Button onClick={onGoForward}>Вперед</Button>
             </div>
 
@@ -32,8 +33,12 @@ export const Calendar = ({ period, onChange }: CalendarProps): JSX.Element => {
             <ul className="list calendar-body">
                 {calendarCells.map((day, index) => {
                     return (
-                        <li className="list__item" key={`day-${index}`}>
-                            {day}
+                        <li
+                            className="list__item"
+                            key={`day-${index}`}
+                            data-active={day && day.hasWorkout}
+                        >
+                            {day ? day?.day : ''}
                         </li>
                     );
                 })}
