@@ -1,4 +1,7 @@
 export interface CalendarProps {
-    period: string;
-    onChange: (newPeriod: string) => void;
+    period: {
+        month: number;
+        year: number;
+    };
+    onChange: (newPeriod: { month: number; year: number }) => void;
 }

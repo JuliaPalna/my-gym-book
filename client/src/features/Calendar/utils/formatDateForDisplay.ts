@@ -1,5 +1,6 @@
-export function formatDateForDisplay(dateString: string): string {
-    const currentDate = new Date(`${dateString}-01`);
+export function formatDateForDisplay(period: { month: number; year: number }) {
+    // const currentDate = new Date(`${dateString}-01`);
+    const currentDate = new Date(`${period.year}-${period.month}`);
 
     if (isNaN(currentDate.getTime())) {
         return 'Ошибка. Некорректная дата';

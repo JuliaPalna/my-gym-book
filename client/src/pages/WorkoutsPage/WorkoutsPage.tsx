@@ -1,11 +1,16 @@
 import { useState, type JSX } from 'react';
 import { Button } from '../../shared';
-import { Calendar } from '../../features';
+import { Calendar, WorkoutsAnalytic } from '../../features';
+import { getCurrentMonthYear } from '../../features/Calendar/utils';
+import type { MonthYearProps } from './type';
 
 export const WorkoutsPage = (): JSX.Element => {
-    const [selectedMonth, setSelectedMonth] = useState<string>('');
+    const monthYear: MonthYearProps = getCurrentMonthYear();
 
-    const onAddNewWorkout = () => {};
+    const [selectedMonth, setSelectedMonth] =
+        useState<MonthYearProps>(monthYear);
+
+    const onAddNewWorkout = (): void => {};
 
     return (
         <>
@@ -17,7 +22,7 @@ export const WorkoutsPage = (): JSX.Element => {
                 Создать тренировку вручную
             </Button>
 
-            {/* <TrainingAnalytics /> */}
+            <WorkoutsAnalytic />
         </>
     );
 };
