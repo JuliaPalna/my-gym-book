@@ -1,10 +1,16 @@
 import { useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { formatDateForDisplay, getCellsListForCalendar } from './utils';
+import { workoutsSelector } from '../../pages';
 import type { calendarCellsProps, CalendarProps } from './type';
-import { activityData } from '../../app/data';
+import type { WorkoutsStateProps } from '../../app/providers';
 
 export const useCalendar = ({ period, onChange }: CalendarProps) => {
-    const activityDays = activityData;
+    const navigate = useNavigate();
+    const workoutsData: WorkoutsStateProps = useSelector(workoutsSelector);
+
+    const { activityDays } = workoutsData;
     const { year, month } = period;
 
     const isValid = !isNaN(year) && !isNaN(month) && month >= 1 && month <= 12;
@@ -71,10 +77,15 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
         onChange({ ...period, month: month + 1 });
     }, [year, month, onChange, isValid, period]);
 
+    const onDayClick = () => {
+        navigate(`/workouts/1`);
+    };
+
     return {
         displayMonthYear,
         calendarCells,
         onGoBack,
         onGoForward,
+        onDayClick,
     };
 };

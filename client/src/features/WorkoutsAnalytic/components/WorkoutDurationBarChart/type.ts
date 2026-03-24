@@ -1,6 +1,6 @@
 export interface WorkoutDurationBarChartProps {
     dataDuration: {
-        date: number[];
+        days: number[];
         minutes: number[];
     };
 }

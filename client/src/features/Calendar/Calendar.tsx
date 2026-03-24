@@ -6,11 +6,16 @@ import type { CalendarProps } from './type';
 import './styles/index.css';
 
 export const Calendar = ({ period, onChange }: CalendarProps): JSX.Element => {
-    const { displayMonthYear, calendarCells, onGoBack, onGoForward } =
-        useCalendar({
-            period,
-            onChange,
-        });
+    const {
+        displayMonthYear,
+        calendarCells,
+        onGoBack,
+        onGoForward,
+        onDayClick,
+    } = useCalendar({
+        period,
+        onChange,
+    });
 
     return (
         <>
@@ -30,7 +35,7 @@ export const Calendar = ({ period, onChange }: CalendarProps): JSX.Element => {
                 })}
             </ul>
 
-            <ul className="list calendar-body">
+            <ul className="list calendar-body" onClick={onDayClick}>
                 {calendarCells.map((day, index) => {
                     return (
                         <li

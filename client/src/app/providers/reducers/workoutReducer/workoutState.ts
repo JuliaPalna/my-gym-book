@@ -1,6 +1,9 @@
-export const workoutInitialState = {
-    id: '',
-    title: '',
-};
+import type { WorkoutStateProps } from './type';
 
-export type WorkoutState = typeof workoutInitialState;
+export const workoutInitialState: WorkoutStateProps = {
+    id: '',
+    duration: 0,
+    createdAt: Date.now(),
+    description: '',
+    types: [],
+};

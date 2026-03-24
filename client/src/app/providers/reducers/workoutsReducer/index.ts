@@ -1,2 +1,2 @@
-export * from './workoutReducer';
 export * from './workoutsReducer';
+export * from './type';

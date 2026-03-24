@@ -1,12 +1,7 @@
-import type { WorkoutState } from './workoutState';
-
-interface SetWorkoutAction {
-    type: 'SET_WORKOUT';
-    payload: Partial<WorkoutState>;
+export interface WorkoutStateProps {
+    id: string;
+    createdAt: number;
+    duration: number;
+    description: string;
+    types: [];
 }
-
-interface ResetWorkoutAction {
-    type: 'RESET_WORKOUT';
-}
-
-export type WorkoutAction = SetWorkoutAction | ResetWorkoutAction;

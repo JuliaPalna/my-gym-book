@@ -4,8 +4,6 @@ import { WorkoutForm } from '../../features';
 export const WorkoutPage = (): JSX.Element => {
     return (
         <>
-            <p>WorkoutPage</p>
-
             <WorkoutForm />
         </>
     );

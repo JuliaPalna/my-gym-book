@@ -1,5 +1,5 @@
-interface ActivityDataProps {
-    date: string;
+interface ActivityDaysProps {
+    createdAt: Date;
     workouts: {
         types: string[];
         durationMinutes: number;
@@ -12,15 +12,13 @@ interface ActivityDataProps {
 
 interface MonthStats {
     totalWorkout: number;
-    totalDurationMinutes: number;
-    activeDays: number;
     averageDurationWorkout: number;
     typeDurationMinutes: Record<string, number>;
 }
 
-export const activityData: ActivityDataProps[] = [
+export const activityDays: ActivityDaysProps[] = [
     {
-        date: '2026-03-01',
+        createdAt: new Date('2026-03-01'),
         workouts: [
             {
                 types: ['running'],
@@ -33,7 +31,7 @@ export const activityData: ActivityDataProps[] = [
         },
     },
     {
-        date: '2026-03-05',
+        createdAt: new Date('2026-03-05'),
         workouts: [
             {
                 types: ['running', 'legs'],
@@ -51,7 +49,7 @@ export const activityData: ActivityDataProps[] = [
     },
 ];
 
-export function calculateMonthStats(days: ActivityDataProps[]): MonthStats {
+export function calculateMonthStats(days: ActivityDaysProps[]): MonthStats {
     const totalWorkout: number = days.reduce(
         (accumulator: number, day) => accumulator + day.summary.workoutCount,
         0,
@@ -63,8 +61,6 @@ export function calculateMonthStats(days: ActivityDataProps[]): MonthStats {
         0,
     );
 
-    const activeDays: number = days.length;
-
     const averageDurationWorkout: number = calculateAverageValue(
         totalWorkout,
         totalDurationMinutes,
@@ -74,8 +70,6 @@ export function calculateMonthStats(days: ActivityDataProps[]): MonthStats {
 
     return {
         totalWorkout,
-        totalDurationMinutes,
-        activeDays,
         averageDurationWorkout,
         typeDurationMinutes,
     };
@@ -86,7 +80,7 @@ function calculateAverageValue(whole: number, part: number): number {
 }
 
 function calculateTypeDurationMinutes(
-    days: ActivityDataProps[],
+    days: ActivityDaysProps[],
 ): Record<string, number> {
     const typeMinutes: Record<string, number> = {};
 
@@ -104,14 +98,4 @@ function calculateTypeDurationMinutes(
     return typeMinutes;
 }
 
-export const monthStats: MonthStats = calculateMonthStats(activityData);
-
-export const workoutDurationBarChart = {
-    date: activityData.map((date) => new Date(date.date).getDate()),
-    minutes: activityData.map((date) => date.summary.totalDurationMinutes),
-};
-
-export const workoutTypesDurationPieChart = {
-    types: Object.keys(monthStats.typeDurationMinutes),
-    minutes: Object.values(monthStats.typeDurationMinutes),
-};
+export const monthStats: MonthStats = calculateMonthStats(activityDays);

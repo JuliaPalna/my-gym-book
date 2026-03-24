@@ -32,12 +32,12 @@ export const WorkoutForm = (): JSX.Element => {
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FieldWrapper
-                    htmlFor="date"
+                    htmlFor="createdAt"
                     title="Дата"
-                    error={formState.errors.date?.message}
+                    error={formState.errors.createdAt?.message}
                 >
                     <Input
-                        {...register('date', {
+                        {...register('createdAt', {
                             onChange: onResetErrorServer,
                         })}
                         autoComplete="off"
@@ -72,12 +72,12 @@ export const WorkoutForm = (): JSX.Element => {
                 </FieldWrapper>
 
                 <FieldWrapper
-                    htmlFor="tags"
+                    htmlFor="types"
                     title="Тэги"
-                    error={formState.errors.tags?.message}
+                    error={formState.errors.types?.message}
                 >
                     <Controller
-                        name="tags"
+                        name="types"
                         control={control}
                         render={({ field }) => (
                             <SelectOptions
