@@ -1,5 +1,5 @@
 import { ACTION_TYPE } from '../../../constants';
-import { workoutsInitialState } from './workoutsState';
+import { workoutsInitialState } from './workoutsInitialState';
 import type { WorkoutsAction, WorkoutsStateProps } from '../../../../entities';
 
 export const workoutsReducer = (

@@ -1,12 +1,11 @@
 import type { JSX } from 'react';
+import { useSelector } from 'react-redux';
 import { Button, ErrorMessage } from '../../shared';
+import { usersSelector } from '../../entities';
+import { timestampToInputValue } from '../../utils';
 
 export const UsersPage = (): JSX.Element => {
-    const users = [
-        { id: 1, name: 'David', registrationAt: '2022-06-20' },
-        { id: 2, name: 'Lubov', registrationAt: '2025-07-10' },
-        { id: 3, name: 'Egor', registrationAt: '2019-01-11' },
-    ];
+    const users = useSelector(usersSelector);
 
     const onSaveUser = ({ id }: { id: number }): void => {};
 
@@ -22,11 +21,19 @@ export const UsersPage = (): JSX.Element => {
                 <ErrorMessage>Пользователи не найдены</ErrorMessage>
             ) : (
                 <ul>
-                    {users.map(({ id, name, registrationAt }) => {
+                    {users.map((user) => {
+                        if (!user) {
+                            return;
+                        }
+
+                        const { id, name, registrationAt } = user;
+
                         return (
                             <li key={id}>
                                 <span>{name}</span>
-                                <span>{registrationAt}</span>
+                                <span>
+                                    {timestampToInputValue(registrationAt)}
+                                </span>
 
                                 <div>
                                     <Button onClick={() => onSaveUser({ id })}>

@@ -1,12 +1,13 @@
 import type { WorkoutAction, WorkoutStateProps } from '../../../../entities';
-import { workoutInitialState } from './workoutState';
+import { ACTION_TYPE } from '../../../constants';
+import { workoutInitialState } from './workoutInitialState';
 
 export const workoutReducer = (
     state: WorkoutStateProps = workoutInitialState,
     action: WorkoutAction,
 ): WorkoutStateProps => {
     switch (action.type) {
-        case 'SET_WORKOUT': {
+        case ACTION_TYPE.SET_WORKOUT: {
             return {
                 ...state,
                 ...action.payload,

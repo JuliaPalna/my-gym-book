@@ -6,11 +6,16 @@ import {
     type Action,
 } from 'redux';
 import { thunk, type ThunkAction, type ThunkDispatch } from 'redux-thunk';
-import { workoutReducer, workoutsReducer } from './providers/reducers';
+import {
+    workoutReducer,
+    workoutsReducer,
+    usersReducer,
+} from './providers/reducers';
 
 const rootReducer = combineReducers({
     workout: workoutReducer,
     workouts: workoutsReducer,
+    users: usersReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
