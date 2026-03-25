@@ -3,8 +3,7 @@ import {
     WorkoutDurationBarChart,
     WorkoutDurationTypesPieChart,
 } from './components';
-import { workoutsSelector } from '../../pages';
-import type { WorkoutsStateProps } from '../../app/providers';
+import { workoutsSelector, type WorkoutsStateProps } from '../../entities';
 
 export const WorkoutsAnalytic = () => {
     const workoutsData: WorkoutsStateProps = useSelector(workoutsSelector);

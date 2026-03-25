@@ -2,9 +2,8 @@ import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { formatDateForDisplay, getCellsListForCalendar } from './utils';
-import { workoutsSelector } from '../../pages';
 import type { calendarCellsProps, CalendarProps } from './type';
-import type { WorkoutsStateProps } from '../../app/providers';
+import { workoutsSelector, type WorkoutsStateProps } from '../../entities';
 
 export const useCalendar = ({ period, onChange }: CalendarProps) => {
     const navigate = useNavigate();
@@ -36,7 +35,7 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
                 }
 
                 const isActive = activityDays.find((item) => {
-                    const date = new Date(item.date).getDate();
+                    const date = new Date(item.createdAt).getDate();
 
                     return date === cell.day;
                 });

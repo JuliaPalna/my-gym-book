@@ -24,7 +24,7 @@ export const WorkoutDurationBarChart = ({
     dataDuration,
 }: WorkoutDurationBarChartProps): JSX.Element => {
     const data = {
-        labels: dataDuration.date,
+        labels: dataDuration.days,
         datasets: [
             {
                 label: 'Минуты',

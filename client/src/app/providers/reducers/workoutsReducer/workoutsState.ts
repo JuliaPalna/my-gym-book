@@ -1,5 +1,5 @@
+import type { WorkoutsStateProps } from '../../../../entities';
 import { activityDays, monthStats } from '../../../data';
-import type { WorkoutsStateProps } from './type';
 
 export const workoutsInitialState: WorkoutsStateProps = {
     activityDays,

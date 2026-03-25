@@ -1,4 +1,5 @@
 import type { JSX } from 'react';
+import { Controller } from 'react-hook-form';
 import {
     Button,
     ErrorMessage,
@@ -7,9 +8,8 @@ import {
     SelectOptions,
 } from '../../shared';
 import { useWorkoutForm } from './useWorkoutForm';
-import { workoutTags } from './constants';
 import { transformedOptionsForSelect } from './utils';
-import { Controller } from 'react-hook-form';
+import { workoutTags } from '../../app/constants';
 
 export const WorkoutForm = (): JSX.Element => {
     const {
@@ -28,23 +28,23 @@ export const WorkoutForm = (): JSX.Element => {
 
     return (
         <>
-            <h1>Тренировка</h1>
+            <h1>Тренировки</h1>
+
+            <FieldWrapper
+                htmlFor="createdAt"
+                title="Дата"
+                error={formState.errors.createdAt?.message}
+            >
+                <Input
+                    {...register('createdAt', {
+                        onChange: onResetErrorServer,
+                    })}
+                    autoComplete="off"
+                    type="date"
+                />
+            </FieldWrapper>
 
             <form onSubmit={handleSubmit(onSubmit)}>
-                <FieldWrapper
-                    htmlFor="createdAt"
-                    title="Дата"
-                    error={formState.errors.createdAt?.message}
-                >
-                    <Input
-                        {...register('createdAt', {
-                            onChange: onResetErrorServer,
-                        })}
-                        autoComplete="off"
-                        type="date"
-                    />
-                </FieldWrapper>
-
                 <FieldWrapper
                     htmlFor="duration"
                     title="Продолжительность"
@@ -54,19 +54,7 @@ export const WorkoutForm = (): JSX.Element => {
                         {...register('duration', {
                             onChange: onResetErrorServer,
                         })}
-                        autoComplete="off"
-                    />
-                </FieldWrapper>
-
-                <FieldWrapper
-                    htmlFor="description"
-                    title="Описание"
-                    error={formState.errors.description?.message}
-                >
-                    <textarea
-                        {...register('description', {
-                            onChange: onResetErrorServer,
-                        })}
+                        type="number"
                         autoComplete="off"
                     />
                 </FieldWrapper>
@@ -88,6 +76,19 @@ export const WorkoutForm = (): JSX.Element => {
                                 name={field.name}
                             />
                         )}
+                    />
+                </FieldWrapper>
+
+                <FieldWrapper
+                    htmlFor="description"
+                    title="Описание"
+                    error={formState.errors.description?.message}
+                >
+                    <textarea
+                        {...register('description', {
+                            onChange: onResetErrorServer,
+                        })}
+                        autoComplete="off"
                     />
                 </FieldWrapper>
 

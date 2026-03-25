@@ -1,5 +1,5 @@
 import { object, setLocale, string, type InferType } from 'yup';
-import { regexAuthorizationForm } from '../constants';
+import { regexAuthorizationForm } from './constants';
 
 setLocale({
     string: {

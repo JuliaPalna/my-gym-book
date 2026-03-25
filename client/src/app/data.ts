@@ -1,5 +1,5 @@
 interface ActivityDaysProps {
-    createdAt: Date;
+    createdAt: number;
     workouts: {
         types: string[];
         durationMinutes: number;
@@ -18,7 +18,7 @@ interface MonthStats {
 
 export const activityDays: ActivityDaysProps[] = [
     {
-        createdAt: new Date('2026-03-01'),
+        createdAt: Date.now(),
         workouts: [
             {
                 types: ['running'],
@@ -31,7 +31,7 @@ export const activityDays: ActivityDaysProps[] = [
         },
     },
     {
-        createdAt: new Date('2026-03-05'),
+        createdAt: Date.now(),
         workouts: [
             {
                 types: ['running', 'legs'],

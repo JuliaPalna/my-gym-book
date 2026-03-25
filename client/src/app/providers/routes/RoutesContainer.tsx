@@ -7,8 +7,8 @@ import {
     RegistrationPage,
     UsersPage,
     WorkoutPage,
+    WorkoutsPage,
 } from '../../../pages';
-import { WorkoutsPage } from '../../../pages/WorkoutsPage';
 
 export const RoutesContainer = (): JSX.Element => {
     return (

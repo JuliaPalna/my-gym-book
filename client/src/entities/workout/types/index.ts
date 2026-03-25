@@ -1,5 +1,5 @@
 export interface WorkoutStateProps {
-    id: string;
+    id?: string;
     createdAt: number;
     duration: number;
     description: string;

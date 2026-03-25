@@ -1,6 +1,4 @@
-// import type { WorkoutAction } from './type';
-import type { WorkoutAction } from '../../../../pages';
-import type { WorkoutStateProps } from './type';
+import type { WorkoutAction, WorkoutStateProps } from '../../../../entities';
 import { workoutInitialState } from './workoutState';
 
 export const workoutReducer = (

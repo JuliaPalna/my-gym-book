@@ -1,5 +1,5 @@
-import { object, setLocale, string, type InferType, array, number } from 'yup';
-import { regexWorkoutForm } from '../constants';
+import { object, setLocale, string, type InferType, number, array } from 'yup';
+import { regexWorkoutForm } from './constants';
 
 setLocale({
     string: {
@@ -9,16 +9,18 @@ setLocale({
 });
 
 export const workoutSchema = object({
-    createdAt: string().required('Дата обязательна'),
-    duration: number().required(),
+    duration: number().required('Обязательное поле').min(1, 'Минимум 1 минута'),
     description: string()
         .trim()
-        .required('Обязательное поле для заполнения')
+        .required('Обязательное поле')
         .matches(regexWorkoutForm.description, 'Введите корректные символы')
         .max(30),
     types: array()
         .required('Необходимо выбрать тип тренировки')
-        .min(1, 'Выберите хотя бы один тег'),
+        .min(1, 'Выберите тег'),
+    createdAt: string()
+        .required()
+        .matches(regexWorkoutForm.createdAt, 'Некорректная дата'),
 });
 
 export type workoutFormValues = InferType<typeof workoutSchema>;
