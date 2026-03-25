@@ -7,15 +7,17 @@ import {
 } from 'redux';
 import { thunk, type ThunkAction, type ThunkDispatch } from 'redux-thunk';
 import {
+    authorizedUserReducer,
+    usersReducer,
     workoutReducer,
     workoutsReducer,
-    usersReducer,
 } from './providers/reducers';
 
 const rootReducer = combineReducers({
     workout: workoutReducer,
     workouts: workoutsReducer,
     users: usersReducer,
+    authorizedUser: authorizedUserReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
