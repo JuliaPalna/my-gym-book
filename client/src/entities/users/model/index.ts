@@ -1,2 +1,2 @@
-export * from './usesrsAction';
+export * from './usersAction';
 export * from './usersSelector';
