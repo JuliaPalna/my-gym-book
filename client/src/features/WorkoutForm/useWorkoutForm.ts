@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { workoutSchema, type workoutFormValues } from './workoutSchema';
+import { workoutSchema, type WorkoutFormValues } from './workoutSchema';
 import { workoutSelector, type WorkoutStateProps } from '../../entities';
 import { inputValueToTimestamp, timestampToInputValue } from '../../utils';
 
@@ -18,7 +18,7 @@ export const useWorkoutForm = () => {
         reset,
         trigger,
         watch,
-    } = useForm<workoutFormValues>({
+    } = useForm<WorkoutFormValues>({
         defaultValues: {
             createdAt: '',
             duration: 1,
@@ -50,9 +50,7 @@ export const useWorkoutForm = () => {
         setErrorServer(null);
     };
 
-    const onSubmit = (data: workoutFormValues): void => {
-        console.log(data);
-
+    const onSubmit = (data: WorkoutFormValues): void => {
         const result = {
             ...data,
             createdAt: inputValueToTimestamp(data.createdAt),

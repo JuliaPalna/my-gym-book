@@ -1,13 +1,13 @@
 import { useEffect, useState, type JSX } from 'react';
 // import { useDispatch } from 'react-redux';
-import { Button } from '../../shared';
+import { Button, Title } from '../../shared';
 import { Calendar, WorkoutsAnalytic } from '../../features';
-import { getCurrentMonthYear } from '../../features/Calendar/utils';
-import type { MonthYearProps } from './type';
+import type { MonthYearProps } from '../../features/Calendar/type';
+// import { getCurrentMonthYear } from '../../features/Calendar/utils';
 
 export const WorkoutsPage = (): JSX.Element => {
     // const dispatch = useDispatch();
-    const monthYear: MonthYearProps = getCurrentMonthYear();
+    const monthYear: MonthYearProps = '2026-04';
     const [selectedMonth, setSelectedMonth] =
         useState<MonthYearProps>(monthYear);
 
@@ -21,15 +21,26 @@ export const WorkoutsPage = (): JSX.Element => {
 
     return (
         <>
-            <h1>Тренировки</h1>
+            <section className="h-[calc(100vh-10rem)] flex flex-col justify-around">
+                <Title>Тренировки</Title>
 
-            <Calendar period={selectedMonth} onChange={setSelectedMonth} />
+                <div className="m-auto max-w-sm py-1 sm:p-6 lg:px-8">
+                    <Calendar
+                        period={selectedMonth}
+                        onChange={setSelectedMonth}
+                    />
+                </div>
 
-            <Button onClick={onAddNewWorkout}>
-                Создать тренировку вручную
-            </Button>
+                <div className="m-auto mt-10 lg:mt-20 ">
+                    <Button onClick={onAddNewWorkout}>
+                        Создать тренировку вручную
+                    </Button>
+                </div>
+            </section>
 
-            <WorkoutsAnalytic />
+            <section className="py-10">
+                <WorkoutsAnalytic />
+            </section>
         </>
     );
 };

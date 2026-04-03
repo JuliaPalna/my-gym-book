@@ -1,10 +1,67 @@
 import { type JSX } from 'react';
-import { RegistrationForm } from '../../features';
+import { Button, ErrorMessage, FieldWrapper, Input, Title } from '../../shared';
+import { useRegistrationPage } from './useRegistrationPage';
 
 export const RegistrationPage = (): JSX.Element => {
+    const { formState, register, errorServer, onSubmit, onResetErrorServer } =
+        useRegistrationPage();
+
     return (
         <>
-            <RegistrationForm />
+            <Title>Регистрация</Title>
+
+            <form
+                onSubmit={onSubmit}
+                className="flex flex-col justify-center gap-5
+                min-h-full max-w-xl m-auto  px-1 py-12 lg:px-8"
+            >
+                <FieldWrapper
+                    htmlFor="login"
+                    title="Логин"
+                    error={formState.errors.login?.message}
+                >
+                    <Input
+                        {...register('login', {
+                            onChange: onResetErrorServer,
+                        })}
+                        autoComplete="username"
+                    />
+                </FieldWrapper>
+
+                <FieldWrapper
+                    htmlFor="password"
+                    title="Пароль"
+                    error={formState.errors.password?.message}
+                >
+                    <Input
+                        {...register('password', {
+                            onChange: onResetErrorServer,
+                        })}
+                        type="password"
+                        autoComplete="current-password"
+                    />
+                </FieldWrapper>
+
+                <FieldWrapper
+                    htmlFor="passwordConfirm"
+                    title="Пароль повторно"
+                    error={formState.errors.passwordConfirm?.message}
+                >
+                    <Input
+                        {...register('passwordConfirm', {
+                            onChange: onResetErrorServer,
+                        })}
+                        type="password"
+                        autoComplete="passwordConfirm"
+                    />
+                </FieldWrapper>
+
+                <Button type="submit" disabled={!formState.isValid}>
+                    Зарегистрироваться
+                </Button>
+
+                {errorServer && <ErrorMessage>{errorServer}</ErrorMessage>}
+            </form>
         </>
     );
 };

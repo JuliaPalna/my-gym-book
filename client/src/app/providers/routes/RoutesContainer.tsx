@@ -2,8 +2,8 @@ import { type JSX } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import {
     AuthorizationPage,
-    ErrorPage,
     MainPage,
+    NotFoundPage,
     RegistrationPage,
     UsersPage,
     WorkoutPage,
@@ -23,7 +23,7 @@ export const RoutesContainer = (): JSX.Element => {
 
             <Route path="/admin/users" element={<UsersPage />} />
 
-            <Route path="*" element={<ErrorPage />} />
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
 };

@@ -15,20 +15,20 @@ export function WorkoutDurationTypesPieChart({
                 label: 'Минуты',
                 data: dataDuration.minutes,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(250,204,21, 0.3)',
+                    'rgba(34,211,238, 0.3)',
+                    'rgba(167,139,250, 0.3)',
+                    'rgba(251,14,60, 0.3)',
+                    'rgba(163,230,53, 0.3)',
+                    'rgba(244,144,182, 0.3)',
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
+                    'rgba(250,204,21)',
+                    'rgba(34,211,238)',
+                    'rgba(167,139,250)',
+                    'rgba(251,14,60)',
+                    'rgba(163,230,53)',
+                    'rgba(244,144,182)',
                 ],
                 borderWidth: 1,
             },
@@ -40,10 +40,19 @@ export function WorkoutDurationTypesPieChart({
         plugins: {
             legend: {
                 position: 'top' as const,
+                labels: {
+                    font: { size: 13 },
+                    color: 'rgb(74,85,101)',
+                    padding: 16,
+                },
             },
             title: {
                 display: true,
                 text: 'Распределение нагрузки по типам',
+                font: {
+                    size: 16,
+                },
+                color: 'rgb(74,85,101)',
             },
         },
     };

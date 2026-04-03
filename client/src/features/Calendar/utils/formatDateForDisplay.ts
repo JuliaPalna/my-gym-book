@@ -1,9 +1,10 @@
-export function formatDateForDisplay(period: { month: number; year: number }) {
-    // const currentDate = new Date(`${dateString}-01`);
-    const currentDate = new Date(`${period.year}-${period.month}`);
+import type { MonthYearProps } from '../type';
+
+export function formatDateForDisplay(period: MonthYearProps): null | string {
+    const currentDate = new Date(period);
 
     if (isNaN(currentDate.getTime())) {
-        return 'Ошибка. Некорректная дата';
+        return null;
     }
 
     const formatted: string = new Intl.DateTimeFormat('ru-RU', {

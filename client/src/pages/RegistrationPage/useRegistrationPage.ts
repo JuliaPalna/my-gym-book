@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-    authorizationSchema,
-    type authorizationFormValues,
-} from './authorizationSchema';
 
-export const useAuthorizationForm = () => {
+import {
+    registrationSchema,
+    type RegistrationValuesProps,
+} from './registrationSchema';
+
+export const useRegistrationPage = () => {
     const { register, handleSubmit, formState } =
-        useForm<authorizationFormValues>({
+        useForm<RegistrationValuesProps>({
             defaultValues: {
                 login: '',
                 password: '',
             },
-            resolver: yupResolver(authorizationSchema),
+            resolver: yupResolver(registrationSchema),
             mode: 'onChange',
         });
 
@@ -23,15 +24,16 @@ export const useAuthorizationForm = () => {
         setErrorServer(null);
     };
 
-    const onSubmit = (data: authorizationFormValues): void => {
-        console.log(data);
-    };
+    const onSubmitRegistrationUser = (
+        data: RegistrationValuesProps,
+    ): void => {};
+
+    const onSubmit = handleSubmit(onSubmitRegistrationUser);
 
     return {
         formState,
         register,
         errorServer,
-        handleSubmit,
         onSubmit,
         onResetErrorServer,
     };

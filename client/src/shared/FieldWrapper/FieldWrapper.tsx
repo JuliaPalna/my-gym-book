@@ -9,10 +9,17 @@ export const FieldWrapper = ({
     children,
 }: FieldWrapperProps): JSX.Element => {
     return (
-        <div>
-            <label htmlFor={htmlFor}>{title}</label>
+        <div className="flex flex-col justify-center min-h-full gap-1.5">
+            <label
+                htmlFor={htmlFor}
+                className="block text-sm/6 font-medium text-neutral-900"
+            >
+                {title}
+            </label>
+
             {children}
-            {error && <ErrorMessage>{error}</ErrorMessage>}
+
+            <div>{error && <ErrorMessage>{error}</ErrorMessage>}</div>
         </div>
     );
 };

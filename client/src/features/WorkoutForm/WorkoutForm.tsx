@@ -6,6 +6,7 @@ import {
     FieldWrapper,
     Input,
     SelectOptions,
+    Title,
 } from '../../shared';
 import { useWorkoutForm } from './useWorkoutForm';
 import { transformedOptionsForSelect } from './utils';
@@ -28,23 +29,27 @@ export const WorkoutForm = (): JSX.Element => {
 
     return (
         <>
-            <h1>Тренировки</h1>
+            <Title>Тренировка</Title>
 
-            <FieldWrapper
-                htmlFor="createdAt"
-                title="Дата"
-                error={formState.errors.createdAt?.message}
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col justify-center gap-5
+                min-h-full max-w-xl m-auto  px-1 py-12 lg:px-8"
             >
-                <Input
-                    {...register('createdAt', {
-                        onChange: onResetErrorServer,
-                    })}
-                    autoComplete="off"
-                    type="date"
-                />
-            </FieldWrapper>
+                <FieldWrapper
+                    htmlFor="createdAt"
+                    title="Дата"
+                    error={formState.errors.createdAt?.message}
+                >
+                    <Input
+                        {...register('createdAt', {
+                            onChange: onResetErrorServer,
+                        })}
+                        autoComplete="off"
+                        type="date"
+                    />
+                </FieldWrapper>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
                 <FieldWrapper
                     htmlFor="duration"
                     title="Продолжительность"
@@ -89,6 +94,12 @@ export const WorkoutForm = (): JSX.Element => {
                             onChange: onResetErrorServer,
                         })}
                         autoComplete="off"
+                        placeholder="Введите..."
+                        className="block w-full h-25 px-1 py-1.5
+                        bg-white text-base sm:text-sm/6
+                        text-neutral-900 placeholder:text-neutral-400
+                        outline-1 -outline-offset-1 outline-neutral-300
+                        focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 transition-colors"
                     />
                 </FieldWrapper>
 

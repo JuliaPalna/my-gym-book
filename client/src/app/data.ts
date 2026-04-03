@@ -1,3 +1,5 @@
+import type { RoleUserType } from './constants';
+
 interface ActivityDaysProps {
     createdAt: number;
     workouts: {
@@ -99,3 +101,41 @@ function calculateTypeDurationMinutes(
 }
 
 export const monthStats: MonthStats = calculateMonthStats(activityDays);
+
+// --------------------------------------------------------
+interface User {
+    id: string;
+    roleId: RoleUserType;
+    login: string;
+    registeredAt: number;
+}
+
+export const users: User[] = [
+    {
+        id: '1',
+        roleId: 'admin',
+        login: 'admin',
+        registeredAt: Date.now(),
+    },
+    {
+        id: '2',
+        roleId: 'reader',
+        login: 'user1',
+        registeredAt: Date.now(),
+    },
+];
+
+export const userRoles = [
+    {
+        id: 'admin',
+        name: 'Администратор',
+    },
+    {
+        id: 'reader',
+        name: 'Читатель',
+    },
+    {
+        id: 'guest',
+        name: 'Гость',
+    },
+];

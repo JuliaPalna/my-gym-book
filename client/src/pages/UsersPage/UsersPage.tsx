@@ -1,41 +1,57 @@
 import type { JSX } from 'react';
 import { useSelector } from 'react-redux';
-import { Button, ErrorMessage } from '../../shared';
+import { Button, ErrorMessage, Title } from '../../shared';
 import { usersSelector } from '../../entities';
 import { timestampToInputValue } from '../../utils';
 
 export const UsersPage = (): JSX.Element => {
     const users = useSelector(usersSelector);
 
-    const onSaveUser = ({ id }: { id: number }): void => {};
+    const onSaveUser = ({ id }: { id: string }): void => {};
 
-    const onRemoveUser = ({ id }: { id: number }): void => {};
+    const onRemoveUser = ({ id }: { id: string }): void => {};
 
     return (
         <>
-            <h1>Админ</h1>
-
-            <h2>Пользователи</h2>
+            <Title>Пользователи</Title>
 
             {users.length === 0 ? (
                 <ErrorMessage>Пользователи не найдены</ErrorMessage>
             ) : (
-                <ul>
+                <ul className="grid grid-cols-2 gap-4 mt-10 sm:grid-cols-3">
+                    <li key="th-login" className="font-bold">
+                        Логин
+                    </li>
+                    <li key="th-date" className="font-bold">
+                        Дата регистрации
+                    </li>
+                    <li key="th-gb" className="hidden sm:block"></li>
+
                     {users.map((user) => {
                         if (!user) {
                             return;
                         }
 
-                        const { id, name, registrationAt } = user;
+                        const { id, login, registeredAt } = user;
 
                         return (
-                            <li key={id}>
-                                <span>{name}</span>
-                                <span>
-                                    {timestampToInputValue(registrationAt)}
-                                </span>
+                            <>
+                                <li key={id}>
+                                    <span>{login}</span>
+                                </li>
 
-                                <div>
+                                <li key={`${id}-${registeredAt}`}>
+                                    <span>
+                                        {timestampToInputValue(registeredAt)}
+                                    </span>
+                                </li>
+
+                                <li
+                                    key={`${id}-gb`}
+                                    className=" col-span-2 sm:col-span-1
+                                    flex justify-between gap-3
+                                    not-last:border-b-2 border-b-neutral-500 sm:border-none not-last:pb-6"
+                                >
                                     <Button onClick={() => onSaveUser({ id })}>
                                         Сохранить
                                     </Button>
@@ -45,8 +61,8 @@ export const UsersPage = (): JSX.Element => {
                                     >
                                         Удалить
                                     </Button>
-                                </div>
-                            </li>
+                                </li>
+                            </>
                         );
                     })}
                 </ul>

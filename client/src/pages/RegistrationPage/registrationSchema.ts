@@ -1,5 +1,5 @@
 import { object, setLocale, string, ref, type InferType } from 'yup';
-import { regexAuthorizationForm } from '../AuthorizationForm/constants';
+import { regexAuthorizationForm } from '../constants';
 
 setLocale({
     string: {
@@ -16,7 +16,7 @@ export const registrationSchema = object({
         .min(3)
         .max(10),
     password: string()
-        .required()
+        .required('Обязательное поле для заполнения')
         .matches(regexAuthorizationForm.password, 'Неверный пароль')
         .min(5)
         .max(30),
@@ -25,4 +25,4 @@ export const registrationSchema = object({
         .oneOf([ref('password')], 'Пароли не совпадают'),
 });
 
-export type registrationFormValues = InferType<typeof registrationSchema>;
+export type RegistrationValuesProps = InferType<typeof registrationSchema>;

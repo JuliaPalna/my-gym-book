@@ -1,5 +1,5 @@
 import { object, setLocale, string, type InferType } from 'yup';
-import { regexAuthorizationForm } from './constants';
+import { regexAuthorizationForm } from '../constants';
 
 setLocale({
     string: {
@@ -16,10 +16,10 @@ export const authorizationSchema = object({
         .min(3)
         .max(10),
     password: string()
-        .required()
+        .required('Обязательное поле для заполнения')
         .matches(regexAuthorizationForm.password, 'Неверный пароль')
         .min(5)
         .max(30),
 });
 
-export type authorizationFormValues = InferType<typeof authorizationSchema>;
+export type AuthorizationValuesProps = InferType<typeof authorizationSchema>;

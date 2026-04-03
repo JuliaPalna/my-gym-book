@@ -4,6 +4,7 @@ interface GetCalendarCellsProps {
 }
 
 interface CalendarCell {
+    fullDate: string;
     day: number;
 }
 
@@ -32,7 +33,10 @@ export function getCellsListForCalendar({
     }
 
     for (let i = 1; i <= countDaysInMonth; i++) {
-        cellsList.push({ day: i });
+        cellsList.push({
+            fullDate: `${year}-${String(month).padStart(2, '0')}-${String(i).padStart(2, '0')}`,
+            day: i,
+        });
     }
 
     for (let i = 1; i <= countEmptyCellsAfter; i++) {

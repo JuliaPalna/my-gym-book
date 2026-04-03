@@ -1,3 +1,4 @@
 import type { UsersStateProps } from '../../../../entities';
 
-export const usersInitialState: UsersStateProps = [];
+import { users } from '../../../data';
+export const usersInitialState: UsersStateProps = [...users];

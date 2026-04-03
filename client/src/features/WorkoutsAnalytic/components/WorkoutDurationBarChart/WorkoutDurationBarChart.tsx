@@ -29,8 +29,8 @@ export const WorkoutDurationBarChart = ({
             {
                 label: 'Минуты',
                 data: dataDuration.minutes,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255,137,4, 0.3)',
+                borderColor: 'rgba(255,137,4)',
                 borderWidth: 1,
             },
         ],
@@ -41,10 +41,19 @@ export const WorkoutDurationBarChart = ({
         plugins: {
             legend: {
                 position: 'top' as const,
+                labels: {
+                    font: { size: 13 },
+                    color: 'rgb(74,85,101)',
+                    padding: 16,
+                },
             },
             title: {
                 display: true,
                 text: 'Продолжительность тренировок по дням',
+                font: {
+                    size: 16,
+                },
+                color: 'rgb(74,85,101)',
             },
         },
         scales: {
@@ -58,7 +67,7 @@ export const WorkoutDurationBarChart = ({
 
     return (
         <>
-            <Bar options={options} data={data} />
+            <Bar options={options} data={data} className="text-base" />
         </>
     );
 };

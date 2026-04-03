@@ -2,3 +2,4 @@ export * from './Button';
 export * from './ErrorMessage';
 export * from './Input';
 export * from './SelectOptions';
+export * from './Title';

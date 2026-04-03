@@ -1,6 +1,7 @@
 export interface ButtonProps {
     disabled?: boolean;
-    children: string;
+    children: React.ReactElement | string;
     onClick?: () => void;
     type?: 'button' | 'submit';
+    isLink?: boolean;
 }

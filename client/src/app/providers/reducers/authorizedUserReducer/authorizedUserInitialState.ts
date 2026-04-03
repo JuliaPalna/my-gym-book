@@ -3,7 +3,7 @@ import { ROLE_USER } from '../../../constants';
 
 export const authorizedUserInitialState: authorizedUserStateProps = {
     id: null,
-    login: null,
     roleId: ROLE_USER.GUEST,
+    login: null,
     session: null,
 };

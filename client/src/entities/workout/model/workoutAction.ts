@@ -9,7 +9,7 @@ interface SetWorkoutAction {
 export const setWorkoutAction = (
     data: WorkoutsStateProps,
 ): SetWorkoutAction => ({
-    type: ACTION_TYPE.SET_WORKOUTS,
+    type: ACTION_TYPE.SET_WORKOUT,
     payload: data,
 });
 

@@ -5,5 +5,5 @@ interface ErrorMessageProps {
 }
 
 export const ErrorMessage = ({ children }: ErrorMessageProps): JSX.Element => {
-    return <p>{children}</p>;
+    return <p className="text-red-800 font-light text-sm">{children}</p>;
 };

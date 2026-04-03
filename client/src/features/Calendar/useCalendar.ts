@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { formatDateForDisplay, getCellsListForCalendar } from './utils';
-import type { calendarCellsProps, CalendarProps } from './type';
+import type { CalendarCellsProps, CalendarProps } from './type';
 import { workoutsSelector, type WorkoutsStateProps } from '../../entities';
 
 export const useCalendar = ({ period, onChange }: CalendarProps) => {
@@ -10,12 +10,18 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
     const workoutsData: WorkoutsStateProps = useSelector(workoutsSelector);
 
     const { activityDays } = workoutsData;
-    const { year, month } = period;
+    const [year, month] = period.split('-').map((item) => Number(item));
 
     const isValid = !isNaN(year) && !isNaN(month) && month >= 1 && month <= 12;
 
     const displayMonthYear = useMemo(() => {
-        return isValid ? formatDateForDisplay(period) : 'Ошибка даты';
+        const formatDate = formatDateForDisplay(period);
+
+        if (!isValid || !formatDate) {
+            return 'Некорректная дата';
+        }
+
+        return formatDate;
     }, [period, isValid]);
 
     const calendarCells = useMemo(() => {
@@ -28,16 +34,18 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
             month,
         });
 
-        const cellsListCalendarWithActiveDay: calendarCellsProps =
+        const cellsListCalendarWithActiveDay: CalendarCellsProps =
             initialCellsListCalendar.map((cell) => {
-                if (!cell || cell.day === null) {
+                if (!cell || cell.fullDate === null) {
                     return '';
                 }
 
                 const isActive = activityDays.find((item) => {
-                    const date = new Date(item.createdAt).getDate();
+                    const date = new Date(item.createdAt)
+                        .toISOString()
+                        .split('T')[0];
 
-                    return date === cell.day;
+                    return date === cell.fullDate;
                 });
 
                 return {
@@ -55,12 +63,12 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
         }
 
         if (month === 1) {
-            onChange({ year: year - 1, month: 12 });
+            onChange(`${year - 1}-12`);
             return;
         }
 
-        onChange({ ...period, month: month - 1 });
-    }, [year, month, onChange, isValid, period]);
+        onChange(`${year}-${month - 1}`);
+    }, [year, month, onChange, isValid]);
 
     const onGoForward = useCallback((): void => {
         if (!isValid) {
@@ -68,13 +76,12 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
         }
 
         if (month === 12) {
-            onChange({ year: year + 1, month: 1 });
-
+            onChange(`${year + 1}-01`);
             return;
         }
 
-        onChange({ ...period, month: month + 1 });
-    }, [year, month, onChange, isValid, period]);
+        onChange(`${year}-${month + 1}`);
+    }, [year, month, onChange, isValid]);
 
     const onDayClick = () => {
         navigate(`/workouts/1`);

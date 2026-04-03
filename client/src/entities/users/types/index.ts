@@ -1,7 +1,10 @@
+import type { RoleUserType } from '../../../app/constants';
+
 export interface UserStateProps {
-    id: number;
-    name: string;
-    registrationAt: number;
+    id: string;
+    roleId: RoleUserType;
+    login: string;
+    registeredAt: number;
 }
 
 export type UsersStateProps = (UserStateProps | undefined)[];

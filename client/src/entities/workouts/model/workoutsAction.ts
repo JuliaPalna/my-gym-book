@@ -1,5 +1,5 @@
 import { ACTION_TYPE } from '../../../app/constants';
-import type { WorkoutsStateProps } from '../../../app/providers';
+import type { WorkoutsStateProps } from '../types';
 
 interface SetWorkoutsAction {
     type: typeof ACTION_TYPE.SET_WORKOUTS;

@@ -2,10 +2,15 @@ import type { JSX } from 'react';
 
 export const Footer = (): JSX.Element => {
     return (
-        <footer>
-            <address>
-                Email: <a href="mailto:info@example.com">info@example.com</a>
-            </address>
+        <footer className="py-3 px-1.5 sm:p-6 lg:px-8 w-full bg-white z-50">
+            <div className="pb-3">
+                <address>
+                    Email:{' '}
+                    <a href="mailto:info@example.com">info@example.com</a>
+                </address>
+            </div>
+
+            <div>2026</div>
         </footer>
     );
 };
