@@ -13,7 +13,7 @@ export const App = (): JSX.Element => {
 
             <main
                 className="@container grow max-w-7xl w-full
-            pt-40 sm:pt-32 px-3 sm:px-10 lg:px-10 text-base "
+            pt-25 sm:pt-32 px-3 sm:px-10 lg:px-10 text-base "
             >
                 <RoutesContainer />
             </main>

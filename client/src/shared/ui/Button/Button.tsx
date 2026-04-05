@@ -14,9 +14,9 @@ export const Button = ({
             disabled={disabled}
             type={type}
             className={`flex justify-center items-center
-            w-full px-3 py-1.5
+            w-full h-full px-3 py-1.5
             font-semibold
-            enabled:hover:scale-110
+            enabled:hover:scale-120
             transition-transform
             cursor-pointer
                 ${
@@ -24,7 +24,8 @@ export const Button = ({
                     `text-white text-sm/6
                 bg-teal-800 disabled:bg-neutral-400
                 enabled:hover:bg-teal-800/70 enabled:hover:scale-none
-                transition-colors`
+                transition-colors
+                `
                 }
             `}
         >

@@ -1,18 +1,18 @@
-import type { JSX } from 'react';
+import { useState, type JSX } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Button } from '../../shared';
+import { BurgerMenu, NavigationMenu } from './components';
 import { useHeader } from './useHeader';
+import { navigationList } from './constants';
 
 export const Header = (): JSX.Element => {
+    const [isOpenNavigationMenu, setIsOpenNavigationMenu] = useState(false);
     const { authorizedUser, onLogout } = useHeader();
 
     const isAuthorizedUser = authorizedUser;
 
-    const navigation = [
-        { name: 'Тренировки', href: '/workouts' },
-        { name: 'Админ', href: '/admin/users' },
-        { name: 'Создать тренировку', href: '/workout' },
-    ];
+    const onToggleNavigationMenu = () =>
+        setIsOpenNavigationMenu(!isOpenNavigationMenu);
 
     return (
         <header
@@ -22,6 +22,13 @@ export const Header = (): JSX.Element => {
             border-b-3 border-b-neutral-600/20
             bg-white sm:shadow-2xl sm:border-none"
         >
+            <BurgerMenu onOpen={onToggleNavigationMenu} />
+
+            <NavigationMenu
+                isOpen={isOpenNavigationMenu}
+                onClose={onToggleNavigationMenu}
+            />
+
             <div>
                 <Link to="/">
                     <span className="sr-only">Your Company</span>
@@ -33,20 +40,24 @@ export const Header = (): JSX.Element => {
                 </Link>
             </div>
 
-            <nav aria-label="Global">
-                <ul className="flex flex-col sm:flex-row justify-between items-center flex-nowrap">
-                    {navigation.map((item) => (
-                        <li key={item.name} className="w-full">
+            <nav aria-label="Global" className="hidden sm:block">
+                <ul className="flex flex-row justify-between items-center flex-nowrap gap-4">
+                    {navigationList.map((item, index) => (
+                        <li key={index}>
                             <NavLink
                                 to={item.href}
                                 className={({ isActive }) => {
-                                    return `block  px-3 py-1.5 sm:py-2
-                                    text-md  font-medium text-center text-nowrap
-                                    transition-colors
+                                    return `block relative py-2
+                                    border-b-2 border-transparent
+                                    text-md font-medium text-center text-nowrap
+                                    transition-colors duration-200
                                     ${
                                         isActive
-                                            ? 'bg-teal-800 text-white'
-                                            : 'hover:bg-teal-800/20'
+                                            ? 'border-b-teal-600 text-teal-600'
+                                            : `before:content-[""] before:absolute
+                                            before:-bottom-0.5  before:inset-x-0 before:h-0.5
+                                            before:scale-x-0 hover:before:scale-x-100
+                                            before:bg-teal-600 before:transition-transform`
                                     }
                                     `;
                                 }}

@@ -27,7 +27,7 @@ export const WorkoutDurationBarChart = ({
         labels: dataDuration.days,
         datasets: [
             {
-                label: 'Минуты',
+                label: 'Минут',
                 data: dataDuration.minutes,
                 backgroundColor: 'rgba(255,137,4, 0.3)',
                 borderColor: 'rgba(255,137,4)',
