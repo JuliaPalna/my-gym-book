@@ -1,15 +1,24 @@
-import type { JSX } from 'react';
+import { useState, type JSX } from 'react';
 import { useSelector } from 'react-redux';
-import { Button, ErrorMessage, Title } from '../../shared';
+import { Button, ErrorMessage, Title, ConfirmDeleteModal } from '../../shared';
 import { usersSelector } from '../../entities';
 import { timestampToInputValue } from '../../utils';
 
 export const UsersPage = (): JSX.Element => {
     const users = useSelector(usersSelector);
+    const [isOpenModalToConfirmDelete, setIsOpenModalToConfirmDelete] =
+        useState<boolean>(false);
 
     const onSaveUser = ({ id }: { id: string }): void => {};
 
-    const onRemoveUser = ({ id }: { id: string }): void => {};
+    const onToggleModalToConfirmDelete = (): void => {
+        setIsOpenModalToConfirmDelete(!isOpenModalToConfirmDelete);
+    };
+
+    const onRemoveUser = () => {
+        console.log('remove');
+        onToggleModalToConfirmDelete();
+    };
 
     return (
         <>
@@ -57,7 +66,7 @@ export const UsersPage = (): JSX.Element => {
                                     </Button>
 
                                     <Button
-                                        onClick={() => onRemoveUser({ id })}
+                                        onClick={onToggleModalToConfirmDelete}
                                     >
                                         У
                                     </Button>
@@ -66,6 +75,14 @@ export const UsersPage = (): JSX.Element => {
                         );
                     })}
                 </ul>
+            )}
+
+            {isOpenModalToConfirmDelete && (
+                <ConfirmDeleteModal
+                    message="Подтвердите удаление пользователя?"
+                    onConfirm={onRemoveUser}
+                    onCancel={onToggleModalToConfirmDelete}
+                />
             )}
         </>
     );

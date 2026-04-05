@@ -12,7 +12,7 @@ export const App = (): JSX.Element => {
             <Header />
 
             <main
-                className="@container grow max-w-7xl w-full
+                className="relative @container grow max-w-7xl w-full
             pt-25 sm:pt-32 px-3 sm:px-10 lg:px-10 text-base "
             >
                 <RoutesContainer />

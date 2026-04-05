@@ -16,7 +16,7 @@ export const Header = (): JSX.Element => {
 
     return (
         <header
-            className="fixed inset-x-0 top-0 z-50
+            className="fixed inset-x-0 top-0 z-10
             flex justify-between items-center sm:gap-1
             py-3 px-1.5 sm:p-6 lg:px-8
             border-b-3 border-b-neutral-600/20
@@ -24,10 +24,12 @@ export const Header = (): JSX.Element => {
         >
             <BurgerMenu onOpen={onToggleNavigationMenu} />
 
-            <NavigationMenu
-                isOpen={isOpenNavigationMenu}
-                onClose={onToggleNavigationMenu}
-            />
+            <div className="block sm:hidden">
+                <NavigationMenu
+                    isOpen={isOpenNavigationMenu}
+                    onClose={onToggleNavigationMenu}
+                />
+            </div>
 
             <div>
                 <Link to="/">
