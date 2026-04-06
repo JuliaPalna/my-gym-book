@@ -6,12 +6,14 @@ export interface CalendarProps {
     onChange: (newPeriod: MonthYearProps) => void;
 }
 
-export type CalendarCellsProps = (
-    | ''
-    | {
-          hasWorkout: boolean;
-          //   fullDate: FullDateProps;
-          fullDate: string;
-          day: number;
-      }
-)[];
+export type CalendarCellsProps = {
+    data:
+        | ''
+        | {
+              hasWorkout: boolean;
+              //   fullDate: FullDateProps;
+              fullDate: string;
+              day: number;
+          };
+    id: number;
+}[];

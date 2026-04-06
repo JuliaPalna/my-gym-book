@@ -35,9 +35,9 @@ export const NavigationMenu = ({
 
                 <nav className="pt-8">
                     <ul className="flex flex-col" onClick={onClose}>
-                        {navigationList.map((item, index) => {
+                        {navigationList.map((item) => {
                             return (
-                                <li key={index} className="bg-transparent">
+                                <li key={item.id} className="bg-transparent">
                                     <NavLink
                                         to={item.href}
                                         className={({ isActive }) => {

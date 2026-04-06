@@ -44,8 +44,8 @@ export const Header = (): JSX.Element => {
 
             <nav aria-label="Global" className="hidden sm:block">
                 <ul className="flex flex-row justify-between items-center flex-nowrap gap-4">
-                    {navigationList.map((item, index) => (
-                        <li key={index}>
+                    {navigationList.map((item) => (
+                        <li key={item.id}>
                             <NavLink
                                 to={item.href}
                                 className={({ isActive }) => {

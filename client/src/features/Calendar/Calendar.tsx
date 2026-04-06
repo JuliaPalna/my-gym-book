@@ -36,11 +36,11 @@ export const Calendar = ({ period, onChange }: CalendarProps): JSX.Element => {
                 className="grid grid-cols-7 py-1 text-center place-items-center
                 text-base uppercase"
             >
-                {Object.values(NAME_DAYS_WEEK).map((dayWeek) => {
+                {Object.entries(NAME_DAYS_WEEK).map((keys, dayWeek) => {
                     return (
                         <li
                             className="flex justify-center items-center h-12"
-                            key={`header-${dayWeek}`}
+                            key={`header-${keys}`}
                         >
                             {dayWeek}
                         </li>
@@ -55,10 +55,10 @@ export const Calendar = ({ period, onChange }: CalendarProps): JSX.Element => {
                 border-neutral-300 rounded-xl overflow-hidden text-base"
                 onClick={onDayClick}
             >
-                {calendarCells.map((data, index) => {
+                {calendarCells.map(({ data, id }) => {
                     return (
                         <li
-                            key={`day-${index}`}
+                            key={`day-${id}`}
                             data-active={
                                 data && data?.hasWorkout ? 'true' : undefined
                             }

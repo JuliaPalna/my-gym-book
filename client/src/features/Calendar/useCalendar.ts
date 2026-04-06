@@ -35,9 +35,9 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
         });
 
         const cellsListCalendarWithActiveDay: CalendarCellsProps =
-            initialCellsListCalendar.map((cell) => {
+            initialCellsListCalendar.map((cell, index) => {
                 if (!cell || cell.fullDate === null) {
-                    return '';
+                    return { data: '', id: index };
                 }
 
                 const isActive = activityDays.find((item) => {
@@ -49,8 +49,11 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
                 });
 
                 return {
-                    ...cell,
-                    hasWorkout: !!isActive,
+                    data: {
+                        ...cell,
+                        hasWorkout: !!isActive,
+                    },
+                    id: index,
                 };
             });
 
