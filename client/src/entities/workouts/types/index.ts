@@ -1,4 +1,4 @@
-interface ActivityDaysProps {
+interface ActivityDays {
     createdAt: number;
     workouts: {
         types: string[];
@@ -17,6 +17,6 @@ interface MonthStats {
 }
 
 export interface WorkoutsStateProps {
-    activityDays: ActivityDaysProps[];
+    activityDays: ActivityDays[];
     monthStats: MonthStats;
 }

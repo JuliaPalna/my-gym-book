@@ -1,0 +1,74 @@
+import { ROLES_USER } from '../../../app/constants';
+import { Button, ConfirmDeleteModal } from '../../../shared';
+import { timestampToInputValue } from '../../../utils';
+import type { ListItemProps } from './type';
+import { useListItemUser } from './useListItemUser';
+
+export const ListItemUser: React.FC<ListItemProps> = ({ user }) => {
+    const { login, registeredAt } = user;
+    const {
+        roleSelected,
+        errorRemove,
+        isUpdating,
+        isOpenModal,
+        isRemoving,
+        onOpenModal,
+        onCloseModal,
+        onSave,
+        onRemove,
+        onChangeRoleSelected,
+    } = useListItemUser(user);
+
+    return (
+        <li
+            className="grid grid-cols-2 gap-1 sm:grid-cols-4
+            border-t-2 border-neutral-400 py-2"
+        >
+            <span className="col-end-2">{login}</span>
+
+            <span className="col-end-2 row-start-2 sm:col-auto sm:row-auto">
+                {timestampToInputValue(registeredAt)}
+            </span>
+
+            <select
+                defaultValue={roleSelected}
+                onChange={onChangeRoleSelected}
+                className="col-end-2 row-start-3 sm:col-auto sm:row-auto"
+            >
+                <option key="default" disabled>
+                    Выбрать
+                </option>
+
+                {Object.values(ROLES_USER).map((role) => {
+                    return (
+                        <option key={role.id} value={role.id}>
+                            {role.title}
+                        </option>
+                    );
+                })}
+            </select>
+
+            <div
+                className="col-start-2 row-start-1 row-end-4 sm:col-auto sm:row-auto
+                flex flex-col sm:flex-row gap-1"
+            >
+                <Button disabled={isUpdating} onClick={onSave}>
+                    С
+                </Button>
+                <Button disabled={isOpenModal} onClick={onOpenModal}>
+                    Y
+                </Button>
+            </div>
+
+            {isOpenModal && (
+                <ConfirmDeleteModal
+                    message="Подтвердите удаление пользователя?"
+                    onConfirm={onRemove}
+                    onCancel={onCloseModal}
+                    isConfirm={isRemoving}
+                    error={errorRemove}
+                />
+            )}
+        </li>
+    );
+};

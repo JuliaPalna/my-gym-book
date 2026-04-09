@@ -1,18 +1,19 @@
-import { type JSX } from 'react';
-
-export const MainPage = (): JSX.Element => {
+export const MainPage: React.FC = () => {
     const features = [
         {
+            id: 'calc',
             name: 'Календарь',
             description: 'slenlsengljwenglwngw klnglnwek welkmgwekmg wetmwmtl',
             icon: <img src="#" alt="drger" />,
         },
         {
+            id: 'analytic',
             name: 'Аналитика',
             description: 'slenlsengljwenglwngw klnglnwek welkmgwekmg wetmwmtl',
             icon: <img src="#" alt="drger" />,
         },
         {
+            id: 'timer',
             name: 'Таймер',
             description: 'welkmgwekmg wetmwmtl',
             icon: <img src="#" alt="drger" />,
@@ -41,17 +42,12 @@ export const MainPage = (): JSX.Element => {
             <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
                 <dl className="grid max-w-xl grid-cols-1 gap-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
                     {features.map((feature) => (
-                        <div key={feature.name} className="relative sm:pl-16">
+                        <div key={feature.id} className="relative sm:pl-16">
                             <dt className="text-base/7 font-semibold text-neutral-900">
                                 <div
                                     className="hidden  sm:absolute sm:top-0 sm:left-0  sm:size-10
                                 sm:flex sm:items-center sm:justify-center sm:rounded-lg sm:bg-teal-600"
-                                >
-                                    <img
-                                        aria-hidden="true"
-                                        className="size-6 text-white"
-                                    />
-                                </div>
+                                ></div>
                                 <p className="text-2xl">{feature.name}</p>
                             </dt>
 

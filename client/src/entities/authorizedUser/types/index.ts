@@ -1,8 +1,8 @@
-import { type RoleUserType } from '../../../app/constants';
+import { type TypeRoleUser } from '../../../app/constants';
 
 export interface authorizedUserStateProps {
     id: null | number;
     login: null | string;
-    roleId: RoleUserType;
+    roleId: TypeRoleUser;
     session: null | string;
 }

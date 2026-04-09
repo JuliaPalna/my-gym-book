@@ -1,12 +1,16 @@
 import { Button } from '../Button';
+import { ErrorMessage } from '../ErrorMessage';
+import { Loader } from '../Loader';
 import { OverlayShading } from '../OverlayShading';
 import type { ConfirmDeleteModalProps } from './type';
 
-export const ConfirmDeleteModal = ({
+export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
     message,
+    isConfirm = false,
+    error = null,
     onConfirm,
     onCancel,
-}: ConfirmDeleteModalProps) => {
+}) => {
     return (
         <>
             <OverlayShading onCloseModule={onCancel} />
@@ -19,9 +23,13 @@ export const ConfirmDeleteModal = ({
                 <span className="text-center pb-5">{message}</span>
 
                 <div className="flex flex-col sm:flex-row gap-2">
-                    <Button onClick={onConfirm}>Подтвердить</Button>
+                    <Button onClick={onConfirm} disabled={isConfirm}>
+                        {isConfirm ? <Loader /> : 'Подтвердить'}
+                    </Button>
                     <Button onClick={onCancel}>Отмена</Button>
                 </div>
+
+                {error && <ErrorMessage>{error}</ErrorMessage>}
             </div>
         </>
     );

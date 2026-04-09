@@ -1,17 +1,33 @@
-import type { usersAction, UsersStateProps } from '../../../../entities';
+import type {
+    RemoveUsersAction,
+    SetUsersAction,
+    UpdateUsersAction,
+    UserProps,
+} from '../../../../entities';
 import { ACTION_TYPE } from '../../../constants';
 import { usersInitialState } from './usersInitialState';
 
 export const usersReducer = (
-    state: UsersStateProps = usersInitialState,
-    action: usersAction,
-): UsersStateProps => {
+    state: UserProps[] = usersInitialState,
+    action: SetUsersAction | RemoveUsersAction | UpdateUsersAction,
+): UserProps[] => {
     switch (action.type) {
         case ACTION_TYPE.SET_USERS: {
-            return {
-                ...state,
-                ...action.payload,
-            };
+            return action.payload;
+        }
+
+        case ACTION_TYPE.REMOVE_USER: {
+            return state.filter((user) => user?.id !== action.payload);
+        }
+
+        case ACTION_TYPE.UPDATE_USER: {
+            return state.map((user) => {
+                if (user.id === action.payload.id) {
+                    return action.payload;
+                }
+
+                return user;
+            });
         }
 
         default: {

@@ -1,6 +1,6 @@
-import type { RoleUserType } from './constants';
+import type { TypeRoleUser } from './constants';
 
-interface ActivityDaysProps {
+interface ActivityDays {
     createdAt: number;
     workouts: {
         types: string[];
@@ -18,7 +18,7 @@ interface MonthStats {
     typeDurationMinutes: Record<string, number>;
 }
 
-export const activityDays: ActivityDaysProps[] = [
+export const activityDays: ActivityDays[] = [
     {
         createdAt: Date.now(),
         workouts: [
@@ -51,7 +51,7 @@ export const activityDays: ActivityDaysProps[] = [
     },
 ];
 
-export function calculateMonthStats(days: ActivityDaysProps[]): MonthStats {
+export function calculateMonthStats(days: ActivityDays[]): MonthStats {
     const totalWorkout: number = days.reduce(
         (accumulator: number, day) => accumulator + day.summary.workoutCount,
         0,
@@ -82,7 +82,7 @@ function calculateAverageValue(whole: number, part: number): number {
 }
 
 function calculateTypeDurationMinutes(
-    days: ActivityDaysProps[],
+    days: ActivityDays[],
 ): Record<string, number> {
     const typeMinutes: Record<string, number> = {};
 
@@ -103,39 +103,9 @@ function calculateTypeDurationMinutes(
 export const monthStats: MonthStats = calculateMonthStats(activityDays);
 
 // --------------------------------------------------------
-interface User {
+export interface User {
     id: string;
-    roleId: RoleUserType;
+    roleId: TypeRoleUser;
     login: string;
     registeredAt: number;
 }
-
-export const users: User[] = [
-    {
-        id: '1',
-        roleId: 'admin',
-        login: 'admin',
-        registeredAt: Date.now(),
-    },
-    {
-        id: '2',
-        roleId: 'reader',
-        login: 'user1',
-        registeredAt: Date.now(),
-    },
-];
-
-export const userRoles = [
-    {
-        id: 'admin',
-        name: 'Администратор',
-    },
-    {
-        id: 'reader',
-        name: 'Читатель',
-    },
-    {
-        id: 'guest',
-        name: 'Гость',
-    },
-];

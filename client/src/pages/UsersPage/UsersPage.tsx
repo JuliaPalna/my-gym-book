@@ -1,24 +1,21 @@
-import { useState, type JSX } from 'react';
-import { useSelector } from 'react-redux';
-import { Button, ErrorMessage, Title, ConfirmDeleteModal } from '../../shared';
-import { usersSelector } from '../../entities';
-import { timestampToInputValue } from '../../utils';
+import { ErrorMessage, Title, Loader } from '../../shared';
+import { ListItemUser } from './components';
+import { useUsersPage } from './useUsersPage';
 
-export const UsersPage = (): JSX.Element => {
-    const users = useSelector(usersSelector);
-    const [isOpenModalToConfirmDelete, setIsOpenModalToConfirmDelete] =
-        useState<boolean>(false);
+export const UsersPage: React.FC = () => {
+    const { users, isLoading, error } = useUsersPage();
 
-    const onSaveUser = ({ id }: { id: string }): void => {};
+    if (isLoading) {
+        return (
+            <div className="flex justify-center">
+                <Loader />
+            </div>
+        );
+    }
 
-    const onToggleModalToConfirmDelete = (): void => {
-        setIsOpenModalToConfirmDelete(!isOpenModalToConfirmDelete);
-    };
-
-    const onRemoveUser = () => {
-        console.log('remove');
-        onToggleModalToConfirmDelete();
-    };
+    if (error) {
+        return <ErrorMessage>{`Ошибка: ${error}`}</ErrorMessage>;
+    }
 
     return (
         <>
@@ -28,12 +25,20 @@ export const UsersPage = (): JSX.Element => {
                 <ErrorMessage>Пользователи не найдены</ErrorMessage>
             ) : (
                 <ul className="flex flex-col gap-4 mt-10 ">
-                    <li className="grid grid-cols-2 gap-1 sm:grid-cols-3">
+                    <li
+                        key={'header'}
+                        className="grid grid-cols-2 gap-1 sm:grid-cols-4"
+                    >
                         <span className="font-bold col-start-1 col-end-3 sm:col-auto sm:row-auto">
                             Логин
                         </span>
+
                         <span className="font-bold col-start-1 col-end-3 row-start-2 sm:col-auto sm:row-auto">
                             Дата регистрации
+                        </span>
+
+                        <span className="font-bold col-start-1 col-end-3 row-start-3 sm:col-auto sm:row-auto">
+                            Роль
                         </span>
                         <span className="hidden"></span>
                     </li>
@@ -43,46 +48,9 @@ export const UsersPage = (): JSX.Element => {
                             return;
                         }
 
-                        const { id, login, registeredAt } = user;
-
-                        return (
-                            <li
-                                key={id}
-                                className="grid grid-cols-2 gap-1 sm:grid-cols-3
-                                border-t-2 border-neutral-400 py-2"
-                            >
-                                <span className="col-end-2">{login}</span>
-
-                                <span className="col-end-2 row-start-2 sm:col-auto sm:row-auto">
-                                    {timestampToInputValue(registeredAt)}
-                                </span>
-
-                                <div
-                                    className="col-start-2 row-start-1 row-end-3 sm:col-auto sm:row-auto
-                                    flex flex-col sm:flex-row gap-1"
-                                >
-                                    <Button onClick={() => onSaveUser({ id })}>
-                                        С
-                                    </Button>
-
-                                    <Button
-                                        onClick={onToggleModalToConfirmDelete}
-                                    >
-                                        У
-                                    </Button>
-                                </div>
-                            </li>
-                        );
+                        return <ListItemUser key={user.id} user={user} />;
                     })}
                 </ul>
-            )}
-
-            {isOpenModalToConfirmDelete && (
-                <ConfirmDeleteModal
-                    message="Подтвердите удаление пользователя?"
-                    onConfirm={onRemoveUser}
-                    onCancel={onToggleModalToConfirmDelete}
-                />
             )}
         </>
     );

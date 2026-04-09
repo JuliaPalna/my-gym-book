@@ -6,6 +6,8 @@ export const ACTION_TYPE = {
     SET_WORKOUT: 'SET_WORKOUT',
 
     SET_USERS: 'SET_USERS',
-};
+    REMOVE_USER: 'REMOVE_USER',
+    UPDATE_USER: 'UPDATE_USER',
+} as const;
 
 export type ActionType = (typeof ACTION_TYPE)[keyof typeof ACTION_TYPE];

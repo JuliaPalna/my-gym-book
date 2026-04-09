@@ -1,10 +1,17 @@
-import type { RoleUserType } from '../../../app/constants';
+import type { TypeRoleUser } from '../../../app/constants';
 
-export interface UserStateProps {
+export interface UserProps {
     id: string;
-    roleId: RoleUserType;
+    roleId: TypeRoleUser;
     login: string;
     registeredAt: number;
 }
 
-export type UsersStateProps = (UserStateProps | undefined)[];
+export type UsersProps = UserProps[];
+
+export interface AxiosResponseUser {
+    id: string;
+    login: string;
+    role_id: TypeRoleUser;
+    registered_at: number;
+}
