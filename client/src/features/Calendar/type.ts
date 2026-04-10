@@ -1,19 +1,16 @@
-export type MonthYearProps = `${number}-${number}`;
-export type FullDateProps = `${number}-${number}-${number}`;
+export type PeriodProps = { month: number; year: number };
+export type FullDateProps = { date: number; month: number; year: number };
 
 export interface CalendarProps {
-    period: MonthYearProps;
-    onChange: (newPeriod: MonthYearProps) => void;
+    period: PeriodProps;
+    onChangePeriod: (newPeriod: PeriodProps) => void;
 }
 
-export type CalendarCellsProps = {
-    data:
-        | ''
-        | {
-              hasWorkout: boolean;
-              //   fullDate: FullDateProps;
-              fullDate: string;
-              day: number;
-          };
-    id: number;
-}[];
+export interface CellData {
+    fullDate: string;
+    day: number;
+}
+
+export interface CalendarCell extends CellData {
+    hasWorkout: boolean;
+}

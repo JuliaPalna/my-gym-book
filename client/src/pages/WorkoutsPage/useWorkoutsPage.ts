@@ -3,13 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useFetch } from '../../app/hooks';
 import { setWorkoutsAction, type AppDispatch } from '../../entities';
-import type { MonthYearProps } from '../../features/Calendar/type';
-// import { getCurrentMonthYear } from '../../features/Calendar/utils';
+import type { PeriodProps } from '../../features';
+import { getInitialPeriod } from './utils';
 
 export const useWorkoutsPage = () => {
-    const monthYear: MonthYearProps = '2026-04';
-    const [selectedMonth, setSelectedMonth] =
-        useState<MonthYearProps>(monthYear);
+    const [selectedPeriod, setSelectedPeriod] =
+        useState<PeriodProps>(getInitialPeriod());
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -22,17 +21,17 @@ export const useWorkoutsPage = () => {
 
     useEffect(() => {
         fetchWorkouts();
-    }, [selectedMonth]);
+    }, [selectedPeriod]);
 
     const onAddNewWorkout = (): void => {
         navigate('/workout');
     };
 
     return {
-        selectedMonth,
+        selectedPeriod,
         error,
         isLoading,
-        setSelectedMonth,
+        setSelectedPeriod,
         onAddNewWorkout,
     };
 };

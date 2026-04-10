@@ -1,13 +1,18 @@
-import type { MonthYearProps } from '../type';
+import type { PeriodProps } from '../type';
+import { checkValidPeriod } from './checkValidPeriod';
 
-export function formatDateForDisplay(period: MonthYearProps): null | string {
-    const currentDate = new Date(period);
+export function formatDateForDisplay(period: PeriodProps): null | string {
+    if (!checkValidPeriod(period)) {
+        return null;
+    }
+
+    const currentDate: Date = new Date(period.year, period.month - 1, 1);
 
     if (isNaN(currentDate.getTime())) {
         return null;
     }
 
-    const formatted = new Intl.DateTimeFormat('ru-RU', {
+    const formatted: string = new Intl.DateTimeFormat('ru-RU', {
         month: 'long',
         year: 'numeric',
     }).format(currentDate);

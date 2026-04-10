@@ -1,13 +1,17 @@
+import { useSelector } from 'react-redux';
 import { Button, ErrorMessage, Loader } from '../../shared';
 import { Calendar, WorkoutsAnalytics } from '../../features';
 import { useWorkoutsPage } from './useWorkoutsPage';
+import { workoutsSelector, type WorkoutsPerMonth } from '../../entities';
 
 export const WorkoutsPage: React.FC = () => {
+    const { workouts }: WorkoutsPerMonth = useSelector(workoutsSelector);
+
     const {
-        selectedMonth,
+        selectedPeriod,
         error,
         isLoading,
-        setSelectedMonth,
+        setSelectedPeriod,
         onAddNewWorkout,
     } = useWorkoutsPage();
 
@@ -28,8 +32,8 @@ export const WorkoutsPage: React.FC = () => {
             <section className="h-[calc(100vh-10rem)] flex flex-col justify-around">
                 <div className="m-auto max-w-sm py-1 sm:p-6 lg:px-8">
                     <Calendar
-                        period={selectedMonth}
-                        onChange={setSelectedMonth}
+                        period={selectedPeriod}
+                        onChangePeriod={setSelectedPeriod}
                     />
                 </div>
 
@@ -41,7 +45,15 @@ export const WorkoutsPage: React.FC = () => {
             </section>
 
             <section className="py-10">
-                <WorkoutsAnalytics />
+                <p>Аналитика за месяц</p>
+
+                {workouts.length > 0 ? (
+                    <WorkoutsAnalytics />
+                ) : (
+                    <p className="text-center">
+                        Нет тренировок за выбранный период
+                    </p>
+                )}
             </section>
         </>
     );

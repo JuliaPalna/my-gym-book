@@ -1,93 +1,54 @@
-import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { formatDateForDisplay, getCellsListForCalendar } from './utils';
-import type { CalendarCellsProps, CalendarProps } from './type';
-import { workoutsSelector, type WorkoutsPerMonth } from '../../entities';
+import {
+    checkValidPeriod,
+    formatDateForDisplay,
+    getCalendarCellsWithActiveDays,
+} from './utils';
+import { workoutsSelector } from '../../entities';
+import type { CalendarCell, CalendarProps } from './type';
 
-export const useCalendar = ({ period, onChange }: CalendarProps) => {
+export const useCalendar = ({ period, onChangePeriod }: CalendarProps) => {
+    const { workouts } = useSelector(workoutsSelector);
     const navigate = useNavigate();
-    const workoutsPerMonth: WorkoutsPerMonth = useSelector(workoutsSelector);
 
-    const { workouts } = workoutsPerMonth;
-    const [year, month] = period.split('-').map((item) => Number(item));
+    const isValidPeriod: boolean = checkValidPeriod(period);
 
-    const isValid = !isNaN(year) && !isNaN(month) && month >= 1 && month <= 12;
+    const displayMonthYear: string =
+        formatDateForDisplay(period) || 'Некорректная дата';
 
-    const displayMonthYear = useMemo(() => {
-        const formatDate = formatDateForDisplay(period);
+    const calendarCells: (CalendarCell | '')[] = getCalendarCellsWithActiveDays(
+        { period, workouts },
+    );
 
-        if (!isValid || !formatDate) {
-            return 'Некорректная дата';
-        }
+    const onOpenWorkoutsByDay = (): void => {
+        navigate(`/workouts/:{id}`);
+    };
 
-        return formatDate;
-    }, [period, isValid]);
-
-    const calendarCells = useMemo(() => {
-        if (!isValid) {
-            return [];
-        }
-
-        const initialCellsListCalendar = getCellsListForCalendar({
-            year,
-            month,
-        });
-
-        const cellsListCalendarWithActiveDay: CalendarCellsProps =
-            initialCellsListCalendar.map((cell, index) => {
-                if (!cell || cell.fullDate === null) {
-                    return { data: '', id: index };
-                }
-
-                const isActive = workouts.find((item) => {
-                    const date = new Date(item.startedAt)
-                        .toISOString()
-                        .split('T')[0];
-
-                    return date === cell.fullDate;
-                });
-
-                return {
-                    data: {
-                        ...cell,
-                        hasWorkout: !!isActive,
-                    },
-                    id: index,
-                };
-            });
-
-        return cellsListCalendarWithActiveDay;
-    }, [year, month, isValid, workouts]);
-
-    const onGoBack = useCallback((): void => {
-        if (!isValid) {
+    const onGoBack = (): void => {
+        if (!isValidPeriod) {
             return;
         }
 
-        if (month === 1) {
-            onChange(`${year - 1}-12`);
+        if (period.month === 1) {
+            onChangePeriod({ year: period.year - 1, month: 12 });
             return;
         }
 
-        onChange(`${year}-${month - 1}`);
-    }, [year, month, onChange, isValid]);
+        onChangePeriod({ ...period, month: period.month - 1 });
+    };
 
-    const onGoForward = useCallback((): void => {
-        if (!isValid) {
+    const onGoForward = (): void => {
+        if (!isValidPeriod) {
             return;
         }
 
-        if (month === 12) {
-            onChange(`${year + 1}-01`);
+        if (period.month === 12) {
+            onChangePeriod({ year: period.year + 1, month: 1 });
             return;
         }
 
-        onChange(`${year}-${month + 1}`);
-    }, [year, month, onChange, isValid]);
-
-    const onDayClick = () => {
-        navigate(`/workouts/1`);
+        onChangePeriod({ ...period, month: period.month + 1 });
     };
 
     return {
@@ -95,6 +56,6 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
         calendarCells,
         onGoBack,
         onGoForward,
-        onDayClick,
+        onOpenWorkoutsByDay,
     };
 };

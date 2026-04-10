@@ -19,8 +19,13 @@ export const setWorkoutsAction = () => {
     return async (
         dispatch: Dispatch<SetWorkoutsPerMonthAction>,
     ): Promise<void> => {
-        const loadedWorkouts: AxiosResponse<AxiosResponseWorkout[]> =
-            await fetchWorkoutsPerMothApi();
+        const loadedWorkouts: AxiosResponse<
+            AxiosResponseWorkout[] | undefined
+        > = await fetchWorkoutsPerMothApi();
+
+        if (!loadedWorkouts.data) {
+            return;
+        }
 
         const workouts: Workout[] = loadedWorkouts.data.map((workout) => {
             return {

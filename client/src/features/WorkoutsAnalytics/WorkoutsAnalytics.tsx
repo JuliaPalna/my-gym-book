@@ -1,4 +1,3 @@
-import { Title } from '../../shared';
 import { DurationBarChart, DurationPieChart } from './components';
 import { useWorkoutsAnalytics } from './useWorkoutsAnalytics';
 
@@ -8,8 +7,6 @@ export const WorkoutsAnalytics: React.FC = () => {
 
     return (
         <>
-            <Title>Аналитика за месяц</Title>
-
             <div className="mt-10 flex flex-col sm:flex-row gap-4 ">
                 <div className=" flex-1 flex flex-col gap-1 sm:gap-4">
                     <span className="font-bold text-3xl">

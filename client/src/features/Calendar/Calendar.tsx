@@ -1,19 +1,22 @@
-import { type JSX } from 'react';
 import { Button } from '../../shared';
 import { useCalendar } from './useCalendar';
 import { NAME_DAYS_WEEK } from './constants';
 import type { CalendarProps } from './type';
+import type React from 'react';
 
-export const Calendar = ({ period, onChange }: CalendarProps): JSX.Element => {
+export const Calendar: React.FC<CalendarProps> = ({
+    period,
+    onChangePeriod,
+}) => {
     const {
         displayMonthYear,
         calendarCells,
         onGoBack,
         onGoForward,
-        onDayClick,
+        onOpenWorkoutsByDay,
     } = useCalendar({
         period,
-        onChange,
+        onChangePeriod,
     });
 
     return (
@@ -36,13 +39,13 @@ export const Calendar = ({ period, onChange }: CalendarProps): JSX.Element => {
                 className="grid grid-cols-7 py-1 text-center place-items-center
                 text-base uppercase"
             >
-                {Object.entries(NAME_DAYS_WEEK).map((keys, dayWeek) => {
+                {Object.entries(NAME_DAYS_WEEK).map((values) => {
                     return (
                         <li
                             className="flex justify-center items-center h-12"
-                            key={`header-${keys}`}
+                            key={`header-${values[0]}`}
                         >
-                            {dayWeek}
+                            {values[1]}
                         </li>
                     );
                 })}
@@ -53,33 +56,29 @@ export const Calendar = ({ period, onChange }: CalendarProps): JSX.Element => {
                 place-items-center text-center
                 divide-x divide-y divide-neutral-300 border
                 border-neutral-300 rounded-xl overflow-hidden text-base"
-                onClick={onDayClick}
+                onClick={onOpenWorkoutsByDay}
             >
-                {calendarCells.map(({ data, id }) => {
+                {calendarCells.map((cell, index) => {
                     return (
                         <li
-                            key={`day-${id}`}
-                            data-active={
-                                data && data?.hasWorkout ? 'true' : undefined
-                            }
+                            key={`day-${index}`}
                             className={`h-12 aspect-square w-full
                             flex items-center justify-center
                             nth-[7n]:border-r-0
                             nth-last-[-n+7]:border-b-0
-                            ${
-                                data && data.hasWorkout
-                                    ? `before:content-[''] before:absolute before:-z-10
-                                        before:w-7 before:h-7 sm:before:w-10 sm:before:h-10 before:rounded-3xl
-                                        before:bg-teal-700
-                                        text-white opacity-70 cursor-pointer`
-                                    : ''
-                            }
-
+                                ${
+                                    cell && cell.hasWorkout
+                                        ? `before:content-[''] before:absolute before:-z-10
+                                            before:w-7 before:h-7 sm:before:w-10 sm:before:h-10 before:rounded-3xl
+                                            before:bg-teal-700
+                                            text-white opacity-70 cursor-pointer`
+                                        : ''
+                                }
                             `}
                         >
-                            {data && (
-                                <time dateTime={data.fullDate}>
-                                    {data?.day}
+                            {cell && (
+                                <time dateTime={cell.fullDate}>
+                                    {cell?.day}
                                 </time>
                             )}
                         </li>

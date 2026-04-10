@@ -1,3 +1,4 @@
 export * from './formatDateForDisplay';
+export * from './checkValidPeriod';
 export * from './formatMonth';
-export * from './getCellsListForCalendar';
+export * from './getCalendarCellsWithActiveDays';

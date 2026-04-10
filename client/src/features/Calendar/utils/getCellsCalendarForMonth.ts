@@ -1,23 +1,16 @@
-interface GetCalendarCellsProps {
-    month: number;
-    year: number;
-}
+import type { CellData, PeriodProps } from '../type';
+import { checkValidPeriod } from './checkValidPeriod';
 
-interface CalendarCell {
-    fullDate: string;
-    day: number;
-}
+export function getCellsCalendarForMonth(
+    period: PeriodProps,
+): (CellData | '')[] {
+    const cells: (CellData | '')[] = [];
 
-export function getCellsListForCalendar({
-    month,
-    year,
-}: GetCalendarCellsProps): (CalendarCell | undefined | '')[] {
-    const cellsList: (CalendarCell | undefined | '')[] = [];
-
-    if (!month || !year || isNaN(month) || isNaN(year)) {
-        return cellsList;
+    if (!checkValidPeriod(period)) {
+        return cells;
     }
 
+    const { year, month } = period;
     const countDaysInMonth: number = new Date(year, month, 0).getDate();
     const firstDayOfMonth: number = new Date(year, month - 1, 1).getDay();
     const lastDayOfMonth: number = new Date(year, month, 0).getDay();
@@ -29,19 +22,19 @@ export function getCellsListForCalendar({
         6 - (lastDayOfMonth === 0 ? 6 : lastDayOfMonth - 1);
 
     for (let i = 1; i <= countEmptyCellsForward; i++) {
-        cellsList.push('');
+        cells.push('');
     }
 
     for (let i = 1; i <= countDaysInMonth; i++) {
-        cellsList.push({
+        cells.push({
             fullDate: `${year}-${String(month).padStart(2, '0')}-${String(i).padStart(2, '0')}`,
             day: i,
         });
     }
 
     for (let i = 1; i <= countEmptyCellsAfter; i++) {
-        cellsList.push('');
+        cells.push('');
     }
 
-    return cellsList;
+    return cells;
 }
