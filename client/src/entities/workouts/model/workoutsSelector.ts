@@ -1,3 +1,3 @@
-import type { RootState } from '../../../app/store';
+import type { RootState } from '../../typeStore';
 
 export const workoutsSelector = (state: RootState) => state.workouts;

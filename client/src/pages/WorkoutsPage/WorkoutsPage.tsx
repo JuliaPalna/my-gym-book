@@ -1,29 +1,31 @@
-import { useEffect, useState, type JSX } from 'react';
-// import { useDispatch } from 'react-redux';
-import { Button, Title } from '../../shared';
-import { Calendar, WorkoutsAnalytic } from '../../features';
-import type { MonthYearProps } from '../../features/Calendar/type';
-// import { getCurrentMonthYear } from '../../features/Calendar/utils';
+import { Button, ErrorMessage, Loader } from '../../shared';
+import { Calendar, WorkoutsAnalytics } from '../../features';
+import { useWorkoutsPage } from './useWorkoutsPage';
 
-export const WorkoutsPage = (): JSX.Element => {
-    // const dispatch = useDispatch();
-    const monthYear: MonthYearProps = '2026-04';
-    const [selectedMonth, setSelectedMonth] =
-        useState<MonthYearProps>(monthYear);
+export const WorkoutsPage: React.FC = () => {
+    const {
+        selectedMonth,
+        error,
+        isLoading,
+        setSelectedMonth,
+        onAddNewWorkout,
+    } = useWorkoutsPage();
 
-    useEffect(() => {
-        if (selectedMonth) {
-            // dispatch(fetchWorkoutsForMonth(selectedMonth));
-        }
-    }, [selectedMonth]);
+    if (isLoading) {
+        return (
+            <div className="flex justify-center">
+                <Loader />
+            </div>
+        );
+    }
 
-    const onAddNewWorkout = (): void => {};
+    if (error) {
+        return <ErrorMessage>{`Ошибка: ${error}`}</ErrorMessage>;
+    }
 
     return (
         <>
             <section className="h-[calc(100vh-10rem)] flex flex-col justify-around">
-                <Title>Тренировки</Title>
-
                 <div className="m-auto max-w-sm py-1 sm:p-6 lg:px-8">
                     <Calendar
                         period={selectedMonth}
@@ -39,7 +41,7 @@ export const WorkoutsPage = (): JSX.Element => {
             </section>
 
             <section className="py-10">
-                <WorkoutsAnalytic />
+                <WorkoutsAnalytics />
             </section>
         </>
     );

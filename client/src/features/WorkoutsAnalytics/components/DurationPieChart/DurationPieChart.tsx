@@ -1,19 +1,20 @@
-import type { JSX } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import type { WorkoutDurationTypesPieChartProps } from './type';
+import type { DurationPieChartProps } from './type';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export function WorkoutDurationTypesPieChart({
-    dataDuration,
-}: WorkoutDurationTypesPieChartProps): JSX.Element {
+export const DurationPieChart: React.FC<DurationPieChartProps> = ({
+    dataPie,
+    unitName,
+    title,
+}) => {
     const data = {
-        labels: dataDuration.types,
+        labels: dataPie.types,
         datasets: [
             {
-                label: 'Минуты',
-                data: dataDuration.minutes,
+                label: unitName,
+                data: dataPie.duration,
                 backgroundColor: [
                     'rgba(250,204,21, 0.3)',
                     'rgba(34,211,238, 0.3)',
@@ -48,7 +49,7 @@ export function WorkoutDurationTypesPieChart({
             },
             title: {
                 display: true,
-                text: 'Распределение нагрузки по типам',
+                text: title,
                 font: {
                     size: 16,
                 },
@@ -58,4 +59,4 @@ export function WorkoutDurationTypesPieChart({
     };
 
     return <Pie data={data} options={options} />;
-}
+};

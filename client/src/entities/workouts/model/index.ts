@@ -1,2 +1,2 @@
-export * from './workoutsAction';
+export * from './setWorkoutsAction';
 export * from './workoutsSelector';

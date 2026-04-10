@@ -37,12 +37,12 @@ export const WorkoutForm = (): JSX.Element => {
                 min-h-full max-w-xl m-auto  px-1 py-12 lg:px-8"
             >
                 <FieldWrapper
-                    htmlFor="createdAt"
+                    htmlFor="startedAt"
                     title="Дата"
-                    error={formState.errors.createdAt?.message}
+                    error={formState.errors.startedAt?.message}
                 >
                     <Input
-                        {...register('createdAt', {
+                        {...register('startedAt', {
                             onChange: onResetErrorServer,
                         })}
                         autoComplete="off"

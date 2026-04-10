@@ -1,3 +1,3 @@
 export * from './Calendar';
-export * from './WorkoutsAnalytic';
+export * from './WorkoutsAnalytics';
 export * from './WorkoutForm';

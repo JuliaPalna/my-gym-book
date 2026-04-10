@@ -1,10 +1,13 @@
 import { ACTION_TYPE } from '../../../constants';
-import { workoutsInitialState } from './workoutsInitialState';
-import type { WorkoutsAction, WorkoutsStateProps } from '../../../../entities';
+import { workoutsPerMonthInitialState } from './initialState';
+import type {
+    SetWorkoutsPerMonthAction,
+    WorkoutsPerMonth,
+} from '../../../../entities';
 
-export const workoutsReducer = (
-    state: WorkoutsStateProps = workoutsInitialState,
-    action: WorkoutsAction,
+export const workoutsPerMonthReducer = (
+    state: WorkoutsPerMonth = workoutsPerMonthInitialState,
+    action: SetWorkoutsPerMonthAction,
 ) => {
     switch (action.type) {
         case ACTION_TYPE.SET_WORKOUTS: {

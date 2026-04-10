@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { formatDateForDisplay, getCellsListForCalendar } from './utils';
 import type { CalendarCellsProps, CalendarProps } from './type';
-import { workoutsSelector, type WorkoutsStateProps } from '../../entities';
+import { workoutsSelector, type WorkoutsPerMonth } from '../../entities';
 
 export const useCalendar = ({ period, onChange }: CalendarProps) => {
     const navigate = useNavigate();
-    const workoutsData: WorkoutsStateProps = useSelector(workoutsSelector);
+    const workoutsPerMonth: WorkoutsPerMonth = useSelector(workoutsSelector);
 
-    const { activityDays } = workoutsData;
+    const { workouts } = workoutsPerMonth;
     const [year, month] = period.split('-').map((item) => Number(item));
 
     const isValid = !isNaN(year) && !isNaN(month) && month >= 1 && month <= 12;
@@ -40,8 +40,8 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
                     return { data: '', id: index };
                 }
 
-                const isActive = activityDays.find((item) => {
-                    const date = new Date(item.createdAt)
+                const isActive = workouts.find((item) => {
+                    const date = new Date(item.startedAt)
                         .toISOString()
                         .split('T')[0];
 
@@ -58,7 +58,7 @@ export const useCalendar = ({ period, onChange }: CalendarProps) => {
             });
 
         return cellsListCalendarWithActiveDay;
-    }, [year, month, isValid, activityDays]);
+    }, [year, month, isValid, workouts]);
 
     const onGoBack = useCallback((): void => {
         if (!isValid) {

@@ -19,6 +19,7 @@ export const RoutesContainer = (): JSX.Element => {
             <Route path="/register" element={<RegistrationPage />} />
 
             <Route path="/workouts/:id" element={<WorkoutPage />} />
+            <Route path="/workout" element={<WorkoutPage />} />
             <Route path="/workouts" element={<WorkoutsPage />} />
 
             <Route path="/users" element={<UsersPage />} />

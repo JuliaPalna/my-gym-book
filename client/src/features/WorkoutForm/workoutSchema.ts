@@ -20,9 +20,9 @@ export const workoutSchema = object({
     types: array()
         .required('Необходимо выбрать тип тренировки')
         .min(1, 'Выберите тег'),
-    createdAt: string()
+    startedAt: string()
         .required('Обязательное поле для заполнения')
-        .matches(regexWorkoutForm.createdAt, 'Некорректная дата'),
+        .matches(regexWorkoutForm.startedAt, 'Некорректная дата'),
 });
 
 export type WorkoutFormValues = InferType<typeof workoutSchema>;

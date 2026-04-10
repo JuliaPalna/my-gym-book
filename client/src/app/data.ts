@@ -1,79 +1,27 @@
-import type { TypeRoleUser } from './constants';
+import type { monthlyAnalytics, Workout } from '../entities';
 
-interface ActivityDays {
-    createdAt: number;
-    workouts: {
-        types: string[];
-        durationMinutes: number;
-    }[];
-    summary: {
-        workoutCount: number;
-        totalDurationMinutes: number;
-    };
-}
+export function calculateMonthlyAnalytics(
+    workouts: Workout[],
+): monthlyAnalytics {
+    const totalWorkouts: number = workouts.length;
 
-interface MonthStats {
-    totalWorkout: number;
-    averageDurationWorkout: number;
-    typeDurationMinutes: Record<string, number>;
-}
-
-export const activityDays: ActivityDays[] = [
-    {
-        createdAt: Date.now(),
-        workouts: [
-            {
-                types: ['running'],
-                durationMinutes: 30,
-            },
-        ],
-        summary: {
-            workoutCount: 1,
-            totalDurationMinutes: 30,
-        },
-    },
-    {
-        createdAt: Date.now(),
-        workouts: [
-            {
-                types: ['running', 'legs'],
-                durationMinutes: 30,
-            },
-            {
-                types: ['arms'],
-                durationMinutes: 15,
-            },
-        ],
-        summary: {
-            workoutCount: 2,
-            totalDurationMinutes: 45,
-        },
-    },
-];
-
-export function calculateMonthStats(days: ActivityDays[]): MonthStats {
-    const totalWorkout: number = days.reduce(
-        (accumulator: number, day) => accumulator + day.summary.workoutCount,
-        0,
-    );
-
-    const totalDurationMinutes: number = days.reduce(
-        (accumulator: number, day) =>
-            accumulator + day.summary.totalDurationMinutes,
+    const totalDuration: number = workouts.reduce(
+        (accumulator: number, workout) => accumulator + workout.durationMinutes,
         0,
     );
 
     const averageDurationWorkout: number = calculateAverageValue(
-        totalWorkout,
-        totalDurationMinutes,
+        totalWorkouts,
+        totalDuration,
     );
 
-    const typeDurationMinutes = calculateTypeDurationMinutes(days);
+    const durationByType: Record<string, number> =
+        calculateDurationByType(workouts);
 
     return {
-        totalWorkout,
+        totalWorkouts,
         averageDurationWorkout,
-        typeDurationMinutes,
+        durationByType,
     };
 }
 
@@ -81,31 +29,22 @@ function calculateAverageValue(whole: number, part: number): number {
     return whole === 0 ? 0 : Math.round((part / whole) * 100) / 100;
 }
 
-function calculateTypeDurationMinutes(
-    days: ActivityDays[],
+function calculateDurationByType(
+    workouts: Workout[],
+    //TODO: typeMinutes - изменить ключ  typeMinutes на types
 ): Record<string, number> {
-    const typeMinutes: Record<string, number> = {};
+    const workoutTypes: Record<string, number> = {};
 
-    days.forEach((day) => {
-        day.workouts.forEach(({ types, durationMinutes }) => {
-            types.forEach((type) => {
-                const duration =
-                    Math.round((durationMinutes / types.length) * 10) / 10;
+    workouts.forEach((workout) => {
+        const { types, durationMinutes } = workout;
 
-                typeMinutes[type] = (typeMinutes[type] || 0) + duration;
-            });
+        types.forEach((type) => {
+            const durationType =
+                Math.round((durationMinutes / types.length) * 10) / 10;
+
+            workoutTypes[type] = (workoutTypes[type] || 0) + durationType;
         });
     });
 
-    return typeMinutes;
-}
-
-export const monthStats: MonthStats = calculateMonthStats(activityDays);
-
-// --------------------------------------------------------
-export interface User {
-    id: string;
-    roleId: TypeRoleUser;
-    login: string;
-    registeredAt: number;
+    return workoutTypes;
 }

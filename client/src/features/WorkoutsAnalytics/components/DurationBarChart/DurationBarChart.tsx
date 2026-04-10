@@ -1,4 +1,3 @@
-import type { JSX } from 'react';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -9,7 +8,7 @@ import {
     Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import type { WorkoutDurationBarChartProps } from './type';
+import type { DurationBarChartProps } from './type';
 
 ChartJS.register(
     CategoryScale,
@@ -20,15 +19,17 @@ ChartJS.register(
     Legend,
 );
 
-export const WorkoutDurationBarChart = ({
-    dataDuration,
-}: WorkoutDurationBarChartProps): JSX.Element => {
+export const DurationBarChart: React.FC<DurationBarChartProps> = ({
+    dataBar,
+    unitName,
+    title,
+}) => {
     const data = {
-        labels: dataDuration.days,
+        labels: dataBar.days,
         datasets: [
             {
-                label: 'Минут',
-                data: dataDuration.minutes,
+                label: unitName,
+                data: dataBar.duration,
                 backgroundColor: 'rgba(255,137,4, 0.3)',
                 borderColor: 'rgba(255,137,4)',
                 borderWidth: 1,
@@ -49,7 +50,7 @@ export const WorkoutDurationBarChart = ({
             },
             title: {
                 display: true,
-                text: 'Продолжительность тренировок по дням',
+                text: title,
                 font: {
                     size: 16,
                 },
@@ -65,9 +66,5 @@ export const WorkoutDurationBarChart = ({
         },
     };
 
-    return (
-        <>
-            <Bar options={options} data={data} className="text-base" />
-        </>
-    );
+    return <Bar options={options} data={data} className="text-base" />;
 };

@@ -7,7 +7,7 @@ export function formatDateForDisplay(period: MonthYearProps): null | string {
         return null;
     }
 
-    const formatted: string = new Intl.DateTimeFormat('ru-RU', {
+    const formatted = new Intl.DateTimeFormat('ru-RU', {
         month: 'long',
         year: 'numeric',
     }).format(currentDate);

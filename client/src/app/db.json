@@ -1,83 +1,70 @@
 {
-  "users": [
-    {
-      "id": "1",
-      "login": "user1",
-      "role_id": "admin",
-      "registered_at": 1775653637247
-    },
-    {
-      "id": "2",
-      "login": "user2",
-      "role_id": "user",
-      "registered_at": 1775653637248
-    }
-  ],
-  "user_roles": [
-    {
-      "id": "admin",
-      "title": "Администратор"
-    },
-    {
-      "id": "reader",
-      "title": "Читатель"
-    },
-    {
-      "id": "guest",
-      "title": "Гость"
-    }
-  ],
-  "workout_types": [
-    {
-      "id": "running",
-      "title": "Бег"
-    },
-    {
-      "id": "legs",
-      "title": "Ноги"
-    },
-    {
-      "id": "arms",
-      "title": "Руки"
-    }
-  ],
-  "activity_days": [
-    {
-      "created_at": 1775653637247,
-      "workouts": [
+    "users": [
         {
-          "types": [
-            "running"
-          ],
-          "duration_minutes": 30
-        }
-      ],
-      "summary": {
-        "workout_count": 1,
-        "total_duration_minutes": 30
-      }
-    },
-    {
-      "created_at": 1775653674391,
-      "workouts": [
-        {
-          "types": [
-            "running",
-            "legs"
-          ],
-          "duration_minutes": 30
+            "id": "1",
+            "login": "user1",
+            "role_id": "admin",
+            "registered_at": 1775653637247
         },
         {
-          "types": [
-            "arms"
-          ],
-          "duration_minutes": 15
+            "id": "2",
+            "login": "user2",
+            "role_id": "user",
+            "registered_at": 1775653637248
         }
-      ],
-      "summary": {
-        "workout_count": 2,
-        "total_duration_minutes": 45
-      }
-    }
-  ]
+    ],
+    "user_roles": [
+        {
+            "id": "admin",
+            "title": "Администратор"
+        },
+        {
+            "id": "reader",
+            "title": "Читатель"
+        },
+        {
+            "id": "guest",
+            "title": "Гость"
+        }
+    ],
+    "workout_types": [
+        {
+            "id": "running",
+            "title": "Бег"
+        },
+        {
+            "id": "legs",
+            "title": "Ноги"
+        },
+        {
+            "id": "arms",
+            "title": "Руки"
+        }
+    ],
+    "workouts": [
+        {
+            "id": "1775653637247",
+            "started_at": 1775653637247,
+            "description": "description",
+            "duration_minutes": 30,
+            "types": ["running"],
+            "user_id": "1"
+        },
+        {
+            "id": "1775653674391",
+            "started_at": 1775653674391,
+            "description": "description",
+            "duration_minutes": 30,
+            "types": ["running", "legs"],
+            "user_id": "1"
+        },
+        {
+            "id": "1775848251961",
+            "started_at": 1775848251961,
+            "description": "description",
+            "duration_minutes": 15,
+            "types": ["arms"],
+            "user_id": "1"
+        }
+    ]
 }

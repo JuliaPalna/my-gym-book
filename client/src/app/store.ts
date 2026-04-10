@@ -4,12 +4,12 @@ import {
     authorizedUserReducer,
     usersReducer,
     workoutReducer,
-    workoutsReducer,
+    workoutsPerMonthReducer,
 } from './providers/reducers';
 
 const rootReducer = combineReducers({
     workout: workoutReducer,
-    workouts: workoutsReducer,
+    workouts: workoutsPerMonthReducer,
     users: usersReducer,
     authorizedUser: authorizedUserReducer,
 });

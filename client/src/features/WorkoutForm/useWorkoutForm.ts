@@ -20,7 +20,7 @@ export const useWorkoutForm = () => {
         watch,
     } = useForm<WorkoutFormValues>({
         defaultValues: {
-            createdAt: '',
+            startedAt: Date.now().toString(),
             duration: 1,
             description: '',
             types: [],
@@ -33,8 +33,8 @@ export const useWorkoutForm = () => {
     useLayoutEffect(() => {
         if (workoutData) {
             reset({
-                createdAt: timestampToInputValue(
-                    workoutData.createdAt || Date.now(),
+                startedAt: timestampToInputValue(
+                    workoutData.startedAt || Date.now(),
                 ),
                 duration: workoutData.duration || 1,
                 types: workoutData.types || [],
@@ -53,7 +53,7 @@ export const useWorkoutForm = () => {
     const onSubmit = (data: WorkoutFormValues): void => {
         const result = {
             ...data,
-            createdAt: inputValueToTimestamp(data.createdAt),
+            startedAt: inputValueToTimestamp(data.startedAt),
         };
         console.log(result);
     };
