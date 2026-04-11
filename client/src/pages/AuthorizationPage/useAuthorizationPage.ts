@@ -2,29 +2,29 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-    authorizationSchema,
-    type AuthorizationValuesProps,
-} from './authorizationSchema';
+import { authorizationSchema } from './authorizationSchema';
 import { useFetch } from '../../app/hooks';
-import { authorizationAction, type AppDispatch } from '../../entities';
+import {
+    authorizationAction,
+    type AppDispatch,
+    type AuthorizationData,
+} from '../../entities';
 
 export const useAuthorizationPage = () => {
     const [errorServer, setErrorServer] = useState<string | null>(null);
     const dispatch = useDispatch<AppDispatch>();
 
-    const { register, handleSubmit, formState } =
-        useForm<AuthorizationValuesProps>({
-            defaultValues: {
-                login: '',
-                password: '',
-            },
-            resolver: yupResolver(authorizationSchema),
-            mode: 'onChange',
-        });
+    const { register, handleSubmit, formState } = useForm<AuthorizationData>({
+        defaultValues: {
+            login: '',
+            password: '',
+        },
+        resolver: yupResolver(authorizationSchema),
+        mode: 'onChange',
+    });
 
     const [errorAuthorization, isLoading, authorization] =
-        useFetch<AuthorizationValuesProps>({
+        useFetch<AuthorizationData>({
             callback: async (data) => {
                 if (!data) {
                     return;
@@ -40,7 +40,7 @@ export const useAuthorizationPage = () => {
         setErrorServer(null);
     };
 
-    const onSubmitAuthorization = (data: AuthorizationValuesProps): void => {
+    const onSubmitAuthorization = (data: AuthorizationData): void => {
         authorization(data);
     };
 

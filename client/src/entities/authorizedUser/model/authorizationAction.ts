@@ -1,21 +1,15 @@
 import type { Dispatch } from 'redux';
 import type { AxiosResponse } from 'axios';
 import { ACTION_TYPE } from '../../../app/constants';
-import type { AuthorizedUser, AxiosResponseUserAuth } from '../types';
+import type {
+    AuthorizationAction,
+    AuthorizationData,
+    AuthorizedUser,
+    AxiosResponseUserAuth,
+} from '../types';
 import { fetchAuthorizationApi } from '../api';
 
-export interface AuthorizationAction {
-    type: typeof ACTION_TYPE.SET_AUTHORIZED_USER;
-    payload: AuthorizedUser;
-}
-
-export const authorizationAction = ({
-    login,
-    password,
-}: {
-    login: string;
-    password: string;
-}) => {
+export const authorizationAction = ({ login, password }: AuthorizationData) => {
     return async (dispatch: Dispatch<AuthorizationAction>): Promise<void> => {
         const user: AxiosResponse<AxiosResponseUserAuth[]> =
             await fetchAuthorizationApi(login);

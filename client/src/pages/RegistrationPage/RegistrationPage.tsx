@@ -1,17 +1,23 @@
-import { type JSX } from 'react';
 import { Button, ErrorMessage, FieldWrapper, Input, Title } from '../../shared';
 import { useRegistrationPage } from './useRegistrationPage';
 
-export const RegistrationPage = (): JSX.Element => {
-    const { formState, register, errorServer, onSubmit, onResetErrorServer } =
-        useRegistrationPage();
+export const RegistrationPage: React.FC = () => {
+    const {
+        formState,
+        register,
+        errorState,
+        isLoading,
+        handleSubmit,
+        onSubmitRegistration,
+        onResetErrorServer,
+    } = useRegistrationPage();
 
     return (
         <>
             <Title>Регистрация</Title>
 
             <form
-                onSubmit={onSubmit}
+                onSubmit={handleSubmit(onSubmitRegistration)}
                 className="flex flex-col justify-center gap-5
                 min-h-full max-w-xl m-auto  px-1 py-12 lg:px-8"
             >
@@ -56,11 +62,14 @@ export const RegistrationPage = (): JSX.Element => {
                     />
                 </FieldWrapper>
 
-                <Button type="submit" disabled={!formState.isValid}>
+                <Button
+                    type="submit"
+                    disabled={!formState.isValid || isLoading}
+                >
                     Зарегистрироваться
                 </Button>
 
-                {errorServer && <ErrorMessage>{errorServer}</ErrorMessage>}
+                {errorState && <ErrorMessage>{errorState}</ErrorMessage>}
             </form>
         </>
     );

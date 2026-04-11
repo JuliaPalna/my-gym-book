@@ -1,4 +1,4 @@
-import { object, setLocale, string, type InferType } from 'yup';
+import { object, setLocale, string } from 'yup';
 import { regexAuthorizationForm } from '../constants';
 
 setLocale({
@@ -21,5 +21,3 @@ export const authorizationSchema = object({
         .min(5)
         .max(30),
 });
-
-export type AuthorizationValuesProps = InferType<typeof authorizationSchema>;
