@@ -1,18 +1,16 @@
-import { useState, type JSX } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Button } from '../../shared';
 import { BurgerMenu, NavigationMenu } from './components';
 import { useHeader } from './useHeader';
 import { navigationList } from './constants';
 
-export const Header = (): JSX.Element => {
-    const [isOpenNavigationMenu, setIsOpenNavigationMenu] = useState(false);
-    const { authorizedUser, onLogout } = useHeader();
-
-    const isAuthorizedUser = authorizedUser;
-
-    const onToggleNavigationMenu = () =>
-        setIsOpenNavigationMenu(!isOpenNavigationMenu);
+export const Header: React.FC = () => {
+    const {
+        isAuthorizedUser,
+        isOpenNavigationMenu,
+        onLogout,
+        onToggleNavigationMenu,
+    } = useHeader();
 
     return (
         <header

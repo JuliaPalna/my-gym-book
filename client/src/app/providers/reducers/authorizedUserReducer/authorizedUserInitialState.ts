@@ -1,9 +1,8 @@
-import type { authorizedUserStateProps } from '../../../../entities';
+import type { AuthorizedUser } from '../../../../entities';
 import { TYPE_ROLE_USER } from '../../../constants';
 
-export const authorizedUserInitialState: authorizedUserStateProps = {
-    id: null,
+export const authorizedUserInitialState: AuthorizedUser = {
     roleId: TYPE_ROLE_USER.GUEST,
-    login: null,
-    session: null,
+    login: '',
+    // session: "",
 };

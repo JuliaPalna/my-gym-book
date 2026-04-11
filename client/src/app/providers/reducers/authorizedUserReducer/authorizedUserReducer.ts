@@ -1,14 +1,14 @@
 import { ACTION_TYPE } from '../../../constants';
 import type {
+    AuthorizedUser,
     AuthorizedUserAction,
-    authorizedUserStateProps,
 } from '../../../../entities';
 import { authorizedUserInitialState } from './authorizedUserInitialState';
 
 export const authorizedUserReducer = (
-    state: authorizedUserStateProps = authorizedUserInitialState,
+    state: AuthorizedUser = authorizedUserInitialState,
     action: AuthorizedUserAction,
-): authorizedUserStateProps => {
+): AuthorizedUser => {
     switch (action.type) {
         case ACTION_TYPE.SET_AUTHORIZED_USER: {
             return {

@@ -1,18 +1,24 @@
-import type { JSX } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, ErrorMessage, FieldWrapper, Input, Title } from '../../shared';
 import { useAuthorizationPage } from './useAuthorizationPage';
 
-export const AuthorizationPage = (): JSX.Element => {
-    const { formState, register, errorServer, onSubmit, onResetErrorServer } =
-        useAuthorizationPage();
+export const AuthorizationPage: React.FC = () => {
+    const {
+        formState,
+        register,
+        errorState,
+        isLoading,
+        handleSubmit,
+        onSubmitAuthorization,
+        onResetErrorServer,
+    } = useAuthorizationPage();
 
     return (
         <>
             <Title>Вход</Title>
 
             <form
-                onSubmit={onSubmit}
+                onSubmit={handleSubmit(onSubmitAuthorization)}
                 className="flex flex-col justify-center gap-5
                 min-h-full max-w-xl m-auto  px-1 py-12 lg:px-8"
             >
@@ -43,8 +49,11 @@ export const AuthorizationPage = (): JSX.Element => {
                     />
                 </FieldWrapper>
 
-                <Button type="submit" disabled={!formState.isValid}>
-                    Войти
+                <Button
+                    type="submit"
+                    disabled={!formState.isValid || isLoading}
+                >
+                    'Войти'
                 </Button>
 
                 <Link
@@ -55,7 +64,7 @@ export const AuthorizationPage = (): JSX.Element => {
                     Регистрация
                 </Link>
 
-                {errorServer && <ErrorMessage>{errorServer}</ErrorMessage>}
+                {errorState && <ErrorMessage>{errorState}</ErrorMessage>}
             </form>
         </>
     );

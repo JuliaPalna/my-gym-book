@@ -1,18 +1,27 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+// import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { authorizedUserSelector } from '../../entities';
+// import { authorizedUserSelector } from '../../entities';
 
 export const useHeader = () => {
+    const [isOpenNavigationMenu, setIsOpenNavigationMenu] = useState(false);
+
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const authorizedUser = useSelector(authorizedUserSelector);
+    // const authorizedUser = useSelector(authorizedUserSelector);
+    // TODO: заглушка
+    const isAuthorizedUser = false;
+
+    const onToggleNavigationMenu = () =>
+        setIsOpenNavigationMenu(!isOpenNavigationMenu);
 
     const onLogout = () => {
         navigate('/');
     };
 
     return {
-        authorizedUser,
+        isAuthorizedUser,
+        isOpenNavigationMenu,
         onLogout,
+        onToggleNavigationMenu,
     };
 };

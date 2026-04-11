@@ -1,8 +1,14 @@
 import { type TypeRoleUser } from '../../../app/constants';
 
-export interface authorizedUserStateProps {
-    id: null | number;
-    login: null | string;
+export interface AuthorizedUser {
+    login: string;
     roleId: TypeRoleUser;
-    session: null | string;
+    // session: string;
+}
+
+export interface AxiosResponseUserAuth {
+    id: string;
+    login: string;
+    role_id: TypeRoleUser;
+    registered_at: number;
 }

@@ -1,16 +1,39 @@
+import type { Dispatch } from 'redux';
+import type { AxiosResponse } from 'axios';
 import { ACTION_TYPE } from '../../../app/constants';
-import type { authorizedUserStateProps } from '../types';
+import type { AuthorizedUser, AxiosResponseUserAuth } from '../types';
+import { fetchAuthorizationApi } from '../api';
 
-interface SetAuthorizedUserAction {
+export interface AuthorizationAction {
     type: typeof ACTION_TYPE.SET_AUTHORIZED_USER;
-    payload: authorizedUserStateProps;
+    payload: AuthorizedUser;
 }
 
-export const authorizedUserAction = (
-    data: authorizedUserStateProps,
-): SetAuthorizedUserAction => ({
-    type: ACTION_TYPE.SET_AUTHORIZED_USER,
-    payload: data,
-});
+export const authorizationAction = ({
+    login,
+    password,
+}: {
+    login: string;
+    password: string;
+}) => {
+    return async (dispatch: Dispatch<AuthorizationAction>): Promise<void> => {
+        const user: AxiosResponse<AxiosResponseUserAuth[]> =
+            await fetchAuthorizationApi(login);
 
-export type AuthorizedUserAction = SetAuthorizedUserAction;
+        if (user.data.length <= 0) {
+            throw new Error('Пользователь не найден');
+        }
+
+        const authorizedUser: AuthorizedUser = {
+            login: user.data[0].login,
+            roleId: user.data[0].role_id,
+        };
+
+        // TODO: проверка пароля
+
+        dispatch({
+            type: ACTION_TYPE.SET_AUTHORIZED_USER,
+            payload: authorizedUser,
+        });
+    };
+};
