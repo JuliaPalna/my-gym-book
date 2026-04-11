@@ -1,4 +1,4 @@
-export * from './removeUsersAction';
+export * from './removeUserAction';
 export * from './setUsersAction';
-export * from './updateUsersAction';
+export * from './updateUserAction';
 export * from './usersSelector';

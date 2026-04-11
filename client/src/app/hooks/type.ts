@@ -1,9 +1,9 @@
-export interface UseFetchProps {
-    callback: () => void;
+export interface UseFetchProps<T> {
+    callback: (data?: T) => Promise<void>;
 }
 
-export type UseFetchResult = [
+export type UseFetchResult<T = void> = [
     error: string | null,
     isLoading: boolean,
-    onFetch: () => Promise<void>,
+    onFetch: (data?: T) => Promise<void>,
 ];

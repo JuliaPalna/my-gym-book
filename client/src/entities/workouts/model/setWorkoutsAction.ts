@@ -5,7 +5,7 @@ import { ACTION_TYPE } from '../../../app/constants';
 import type {
     AxiosResponseWorkout,
     monthlyAnalytics,
-    Workout,
+    Workouts,
     WorkoutsPerMonth,
 } from '../types';
 import { calculateMonthlyAnalytics } from '../../../app/data';
@@ -27,12 +27,11 @@ export const setWorkoutsAction = () => {
             return;
         }
 
-        const workouts: Workout[] = loadedWorkouts.data.map((workout) => {
+        const workouts: Workouts = loadedWorkouts.data.map((workout) => {
             return {
                 id: workout.id,
                 startedAt: workout.started_at,
                 durationMinutes: workout.duration_minutes,
-                description: workout.description,
                 types: workout.types,
             };
         });

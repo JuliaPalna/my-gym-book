@@ -1,3 +1,3 @@
-import type { UserProps } from '../../../../entities';
+import type { User } from '../../../../entities';
 
-export const usersInitialState: UserProps[] = [];
+export const usersInitialState: User[] = [];

@@ -1,20 +1,20 @@
 export const WORKOUT_TYPE = {
-    RUN: 'RUN',
-    SWIM: 'SWIM',
-    BOX: 'BOX',
-    LEGS: 'LEGS',
-    ARMS: 'ARMS',
+    swim: 'swim',
+    run: 'run',
+    box: 'box',
+    legs: 'legs',
+    arms: 'arms',
 } as const;
 
-export type WorkoutType = (typeof WORKOUT_TYPE)[keyof typeof WORKOUT_TYPE];
-
-type WorkoutTags = {
-    id: string;
-    name: string;
-}[];
-
-export const workoutTags: WorkoutTags = [
-    { id: WORKOUT_TYPE.RUN, name: 'Бег' },
-    { id: WORKOUT_TYPE.SWIM, name: 'Плавание' },
-    { id: WORKOUT_TYPE.BOX, name: 'Бокс' },
+export const WORKOUT_TAGS: {
+    value: WorkoutType;
+    label: string;
+}[] = [
+    { value: WORKOUT_TYPE.run, label: 'Бег' },
+    { value: WORKOUT_TYPE.swim, label: 'Плавание' },
+    { value: WORKOUT_TYPE.box, label: 'Бокс' },
+    { value: WORKOUT_TYPE.legs, label: 'Ноги' },
+    { value: WORKOUT_TYPE.arms, label: 'Руки' },
 ];
+
+export type WorkoutType = (typeof WORKOUT_TYPE)[keyof typeof WORKOUT_TYPE];

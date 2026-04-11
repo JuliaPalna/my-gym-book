@@ -2,11 +2,11 @@ import type { Dispatch } from 'redux';
 import type { AxiosResponse } from 'axios';
 import { ACTION_TYPE } from '../../../app/constants';
 import { fetchUsersApi } from '../api';
-import type { AxiosResponseUser, UserProps } from '../types';
+import type { AxiosResponseUser, User } from '../types';
 
 export interface SetUsersAction {
     type: typeof ACTION_TYPE.SET_USERS;
-    payload: UserProps[];
+    payload: User[];
 }
 
 export const setUsersAction = () => {
@@ -14,7 +14,7 @@ export const setUsersAction = () => {
         const loadedUsers: AxiosResponse<AxiosResponseUser[]> =
             await fetchUsersApi();
 
-        const users: UserProps[] = loadedUsers.data.map((user) => {
+        const users: User[] = loadedUsers.data.map((user) => {
             return {
                 id: user.id,
                 login: user.login,

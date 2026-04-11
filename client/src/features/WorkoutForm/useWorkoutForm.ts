@@ -1,70 +1,106 @@
-import { useLayoutEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { workoutSchema, type WorkoutFormValues } from './workoutSchema';
-import { workoutSelector, type WorkoutStateProps } from '../../entities';
-import { inputValueToTimestamp, timestampToInputValue } from '../../utils';
+import {
+    initialValueForm,
+    workoutSchema,
+    type WorkoutFormValues,
+} from './constants';
+import { inputValueToTimestamp } from '../../utils';
+import {
+    createWorkoutAction,
+    removeWorkoutAction,
+    updateWorkoutAction,
+    workoutSelector,
+    type AppDispatch,
+    type Workout,
+} from '../../entities';
+import { getWorkoutFormDefaultValues } from './utils';
+import { useFetch } from '../../app/hooks';
 
 export const useWorkoutForm = () => {
-    const workoutData: WorkoutStateProps = useSelector(workoutSelector);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+
+    const workoutData: Workout = useSelector(workoutSelector);
     const [errorServer, setErrorServer] = useState<string | null>(null);
 
-    const {
-        register,
-        handleSubmit,
-        formState,
-        control,
-        reset,
-        trigger,
-        watch,
-    } = useForm<WorkoutFormValues>({
-        defaultValues: {
-            startedAt: Date.now().toString(),
-            duration: 1,
-            description: '',
-            types: [],
+    const isCreateNewWorkout = location.pathname === '/workout';
+
+    const defaultValuesForm = isCreateNewWorkout
+        ? initialValueForm
+        : getWorkoutFormDefaultValues(workoutData, initialValueForm);
+
+    const { register, handleSubmit, formState, control } =
+        useForm<WorkoutFormValues>({
+            defaultValues: defaultValuesForm,
+            resolver: yupResolver(workoutSchema),
+            mode: 'onChange',
+            reValidateMode: 'onChange',
+        });
+
+    const [errorSaving, isSaving, saveWorkout] = useFetch<Workout>({
+        callback: async (data) => {
+            if (!data) {
+                return;
+            }
+
+            if (isCreateNewWorkout) {
+                await dispatch(createWorkoutAction(data));
+                return;
+            }
+
+            await dispatch(updateWorkoutAction(data));
         },
-        resolver: yupResolver(workoutSchema),
-        mode: 'onChange',
-        reValidateMode: 'onChange',
     });
 
-    useLayoutEffect(() => {
-        if (workoutData) {
-            reset({
-                startedAt: timestampToInputValue(
-                    workoutData.startedAt || Date.now(),
-                ),
-                duration: workoutData.duration || 1,
-                types: workoutData.types || [],
-                description: workoutData.description || '',
-            });
+    const [errorRemoving, isRemoving, removeWorkout] = useFetch<Workout>({
+        callback: async () => {
+            await dispatch(removeWorkoutAction(workoutData.id));
+        },
+    });
 
-            trigger();
-            watch();
-        }
-    }, [workoutData, reset, trigger, watch]);
+    const errorState = errorServer || errorRemoving || errorSaving;
+
+    const onSubmit = (data: WorkoutFormValues): void => {
+        const result = {
+            ...data,
+            id: workoutData.id,
+            types: data.types.map((type) => type.value),
+            startedAt: inputValueToTimestamp(data.startedAt),
+        };
+
+        saveWorkout(result);
+        navigate('/workouts');
+    };
 
     const onResetErrorServer = (): void => {
         setErrorServer(null);
     };
 
-    const onSubmit = (data: WorkoutFormValues): void => {
-        const result = {
-            ...data,
-            startedAt: inputValueToTimestamp(data.startedAt),
-        };
-        console.log(result);
+    const onGoMainPage = (): void => {
+        navigate('/');
+    };
+    const onRemoveWorkout = (): void => {
+        removeWorkout();
+        navigate('/workouts');
     };
 
     return {
-        control,
         formState,
         register,
-        errorServer,
+        errorState,
+        isCreateNewWorkout,
+        isSaving,
+        isRemoving,
         handleSubmit,
+        control,
         onSubmit,
+        onRemoveWorkout,
         onResetErrorServer,
+        onGoMainPage,
     };
 };

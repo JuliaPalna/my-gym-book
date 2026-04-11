@@ -1,8 +1,8 @@
-import type { WorkoutStateProps } from '../../../../entities';
+import type { Workout } from '../../../../entities';
 
-export const workoutInitialState: WorkoutStateProps = {
-    duration: 0,
-    startedAt: Date.now(),
+export const workoutInitialState: Workout = {
     description: '',
+    durationMinutes: 0,
+    startedAt: Date.now(),
     types: [],
 };

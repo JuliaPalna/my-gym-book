@@ -1,5 +1,5 @@
-import type { UserProps } from '../../../entities';
+import type { User } from '../../../entities';
 
 export interface ListItemProps {
-    user: UserProps;
+    user: User;
 }

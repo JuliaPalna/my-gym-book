@@ -1,31 +1,31 @@
-import type { JSX } from 'react';
 import { Controller } from 'react-hook-form';
 import {
     Button,
     ErrorMessage,
     FieldWrapper,
     Input,
+    Loader,
     SelectOptions,
     Title,
 } from '../../shared';
 import { useWorkoutForm } from './useWorkoutForm';
-import { transformedOptionsForSelect } from './utils';
-import { workoutTags } from '../../app/constants';
+import { WORKOUT_TAGS } from '../../app/constants';
 
-export const WorkoutForm = (): JSX.Element => {
+export const WorkoutForm: React.FC = () => {
     const {
         formState,
         register,
-        errorServer,
+        errorState,
+        isCreateNewWorkout,
+        isSaving,
+        isRemoving,
         handleSubmit,
-        onSubmit,
-        onResetErrorServer,
         control,
+        onSubmit,
+        onRemoveWorkout,
+        onResetErrorServer,
+        onGoMainPage,
     } = useWorkoutForm();
-
-    const selectOptions = transformedOptionsForSelect({
-        options: workoutTags,
-    });
 
     return (
         <>
@@ -51,12 +51,12 @@ export const WorkoutForm = (): JSX.Element => {
                 </FieldWrapper>
 
                 <FieldWrapper
-                    htmlFor="duration"
+                    htmlFor="durationMinutes"
                     title="Продолжительность"
-                    error={formState.errors.duration?.message}
+                    error={formState.errors.durationMinutes?.message}
                 >
                     <Input
-                        {...register('duration', {
+                        {...register('durationMinutes', {
                             onChange: onResetErrorServer,
                         })}
                         type="number"
@@ -72,15 +72,17 @@ export const WorkoutForm = (): JSX.Element => {
                     <Controller
                         name="types"
                         control={control}
-                        render={({ field }) => (
-                            <SelectOptions
-                                options={selectOptions}
-                                value={field.value ?? []}
-                                onChange={field.onChange}
-                                onBlur={field.onBlur}
-                                name={field.name}
-                            />
-                        )}
+                        render={({ field }) => {
+                            return (
+                                <SelectOptions
+                                    options={WORKOUT_TAGS}
+                                    value={field.value ?? []}
+                                    onChange={field.onChange}
+                                    onBlur={field.onBlur}
+                                    name={field.name}
+                                />
+                            );
+                        }}
                     />
                 </FieldWrapper>
 
@@ -103,11 +105,19 @@ export const WorkoutForm = (): JSX.Element => {
                     />
                 </FieldWrapper>
 
-                <Button type="submit" disabled={!formState.isValid}>
-                    Сохранить
+                <Button type="submit" disabled={!formState.isValid || isSaving}>
+                    {isSaving ? <Loader /> : 'Сохранить'}
                 </Button>
 
-                {errorServer && <ErrorMessage>{errorServer}</ErrorMessage>}
+                {isCreateNewWorkout ? (
+                    <Button onClick={onGoMainPage}>Отмена</Button>
+                ) : (
+                    <Button onClick={onRemoveWorkout} disabled={isRemoving}>
+                        {isRemoving ? <Loader /> : 'Удалить'}
+                    </Button>
+                )}
+
+                {errorState && <ErrorMessage>{errorState}</ErrorMessage>}
             </form>
         </>
     );

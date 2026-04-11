@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-    removeUsersAction,
-    updateUsersAction,
+    removeUserAction,
+    updateUserAction,
     type AppDispatch,
-    type UserProps,
+    type User,
 } from '../../../entities';
 import { useFetch } from '../../../app/hooks';
 import type { TypeRoleUser } from '../../../app/constants';
 
-export const useListItemUser = (user: UserProps) => {
+export const useListItemUser = (user: User) => {
     const [roleSelected, setRoleSelected] = useState<TypeRoleUser>(user.roleId);
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
@@ -17,15 +17,13 @@ export const useListItemUser = (user: UserProps) => {
 
     const [errorRemove, isRemoving, fetchRemoveUser] = useFetch({
         callback: async () => {
-            await dispatch(removeUsersAction(user.id));
+            await dispatch(removeUserAction(user.id));
         },
     });
 
     const [_, isUpdating, fetchUpdateUser] = useFetch({
         callback: async () => {
-            await dispatch(
-                updateUsersAction({ ...user, roleId: roleSelected }),
-            );
+            await dispatch(updateUserAction({ ...user, roleId: roleSelected }));
         },
     });
 

@@ -1,10 +1,11 @@
-export interface Workout {
+interface Workout {
     id: string;
-    startedAt: Date;
-    description: string;
+    startedAt: number;
     durationMinutes: number;
     types: string[];
 }
+
+export type Workouts = Workout[];
 
 export interface monthlyAnalytics {
     totalWorkouts: number;
@@ -13,7 +14,7 @@ export interface monthlyAnalytics {
 }
 
 export interface WorkoutsPerMonth {
-    workouts: Workout[];
+    workouts: Workouts;
     monthlyAnalytics: monthlyAnalytics;
 }
 

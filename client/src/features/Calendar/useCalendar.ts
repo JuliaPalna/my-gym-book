@@ -22,7 +22,8 @@ export const useCalendar = ({ period, onChangePeriod }: CalendarProps) => {
     );
 
     const onOpenWorkoutsByDay = (): void => {
-        navigate(`/workouts/:{id}`);
+        // TODO: заглушка id
+        navigate(`/workouts/1775848251961`);
     };
 
     const onGoBack = (): void => {

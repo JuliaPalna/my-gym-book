@@ -1,7 +1,18 @@
-export interface WorkoutStateProps {
-    id?: string;
+import type {
+    RemoveWorkoutAction,
+    SetWorkoutAction,
+    UpdateWorkoutAction,
+} from '../model';
+
+export interface Workout {
+    id: string;
     startedAt: number;
-    duration: number;
     description: string;
-    types: [];
+    durationMinutes: number;
+    types: string[];
 }
+
+export type WorkoutActions =
+    | RemoveWorkoutAction
+    | SetWorkoutAction
+    | UpdateWorkoutAction;

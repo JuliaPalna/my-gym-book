@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import {
     workoutsSelector,
-    type Workout,
+    type Workouts,
     type WorkoutsPerMonth,
 } from '../../entities';
 
@@ -18,7 +18,7 @@ export const useWorkoutsAnalytics = () => {
     return { monthlyAnalytics, durationByDay, durationByType };
 };
 
-function calculateDurationByDay(workouts: Workout[]): {
+function calculateDurationByDay(workouts: Workouts): {
     days: string[];
     duration: number[];
 } {

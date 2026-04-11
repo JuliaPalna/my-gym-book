@@ -1,16 +1,11 @@
-import type {
-    RemoveUsersAction,
-    SetUsersAction,
-    UpdateUsersAction,
-    UserProps,
-} from '../../../../entities';
+import type { UserActions, User } from '../../../../entities';
 import { ACTION_TYPE } from '../../../constants';
 import { usersInitialState } from './usersInitialState';
 
 export const usersReducer = (
-    state: UserProps[] = usersInitialState,
-    action: SetUsersAction | RemoveUsersAction | UpdateUsersAction,
-): UserProps[] => {
+    state: User[] = usersInitialState,
+    action: UserActions,
+): User[] => {
     switch (action.type) {
         case ACTION_TYPE.SET_USERS: {
             return action.payload;

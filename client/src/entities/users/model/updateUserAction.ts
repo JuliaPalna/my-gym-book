@@ -1,15 +1,15 @@
 import type { Dispatch } from 'redux';
 import { ACTION_TYPE } from '../../../app/constants';
 import { updateUserApi } from '../api';
-import type { UserProps } from '../types';
+import type { User } from '../types';
 
-export interface UpdateUsersAction {
+export interface UpdateUserAction {
     type: typeof ACTION_TYPE.UPDATE_USER;
-    payload: UserProps;
+    payload: User;
 }
 
-export const updateUsersAction = (user: UserProps) => {
-    return async (dispatch: Dispatch<UpdateUsersAction>): Promise<void> => {
+export const updateUserAction = (user: User) => {
+    return async (dispatch: Dispatch<UpdateUserAction>): Promise<void> => {
         await updateUserApi(user);
 
         dispatch({

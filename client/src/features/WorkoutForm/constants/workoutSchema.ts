@@ -1,5 +1,5 @@
 import { object, setLocale, string, type InferType, number, array } from 'yup';
-import { regexWorkoutForm } from './constants';
+import { regexWorkoutForm } from './regexWorkoutForm';
 
 setLocale({
     string: {
@@ -9,7 +9,7 @@ setLocale({
 });
 
 export const workoutSchema = object({
-    duration: number()
+    durationMinutes: number()
         .required('Обязательное поле для заполнения')
         .min(1, 'Минимум 1 минута'),
     description: string()
