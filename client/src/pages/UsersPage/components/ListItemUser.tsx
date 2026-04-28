@@ -1,14 +1,14 @@
-import { ROLES_USER } from '../../../app/constants';
-import { Button, ConfirmDeleteModal } from '../../../shared';
+import { Button, ConfirmDeleteModal, ErrorMessage } from '../../../shared';
 import { timestampToInputValue } from '../../../utils';
 import type { ListItemProps } from './type';
 import { useListItemUser } from './useListItemUser';
 
-export const ListItemUser: React.FC<ListItemProps> = ({ user }) => {
+export const ListItemUser: React.FC<ListItemProps> = ({ user, roles }) => {
     const { login, registeredAt } = user;
     const {
         roleSelected,
         errorRemove,
+        errorUpdate,
         isUpdating,
         isOpenModal,
         isRemoving,
@@ -39,7 +39,7 @@ export const ListItemUser: React.FC<ListItemProps> = ({ user }) => {
                     Выбрать
                 </option>
 
-                {Object.values(ROLES_USER).map((role) => {
+                {roles.map((role) => {
                     return (
                         <option key={role.id} value={role.id}>
                             {role.title}
@@ -69,6 +69,8 @@ export const ListItemUser: React.FC<ListItemProps> = ({ user }) => {
                     error={errorRemove}
                 />
             )}
+
+            {errorUpdate && <ErrorMessage>{errorUpdate}</ErrorMessage>}
         </li>
     );
 };

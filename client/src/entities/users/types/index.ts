@@ -1,4 +1,9 @@
 import type { TypeRoleUser } from '../../../app/constants';
+export interface RoleUser {
+    id: TypeRoleUser;
+    title: string;
+}
+
 import type {
     RemoveUserAction,
     SetUsersAction,
@@ -13,12 +18,5 @@ export interface User {
 }
 
 export type UsersProps = User[];
-
-export interface AxiosResponseUser {
-    id: string;
-    login: string;
-    role_id: TypeRoleUser;
-    registered_at: number;
-}
 
 export type UserActions = SetUsersAction | RemoveUserAction | UpdateUserAction;

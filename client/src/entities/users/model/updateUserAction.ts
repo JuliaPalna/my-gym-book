@@ -8,9 +8,9 @@ export interface UpdateUserAction {
     payload: User;
 }
 
-export const updateUserAction = (user: User) => {
+export const updateUserAction = (data: User) => {
     return async (dispatch: Dispatch<UpdateUserAction>): Promise<void> => {
-        await updateUserApi(user);
+        const user = await updateUserApi(data);
 
         dispatch({
             type: ACTION_TYPE.UPDATE_USER,

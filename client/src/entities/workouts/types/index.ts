@@ -20,7 +20,7 @@ export interface WorkoutsPerMonth {
 
 export interface AxiosResponseWorkout {
     id: string;
-    started_at: Date;
+    started_at: number;
     description: string;
     duration_minutes: number;
     types: string[];

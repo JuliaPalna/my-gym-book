@@ -3,7 +3,7 @@ import { ListItemUser } from './components';
 import { useUsersPage } from './useUsersPage';
 
 export const UsersPage: React.FC = () => {
-    const { users, isLoading, error } = useUsersPage();
+    const { users, userRoles, isLoading, error } = useUsersPage();
 
     if (isLoading) {
         return (
@@ -48,7 +48,13 @@ export const UsersPage: React.FC = () => {
                             return;
                         }
 
-                        return <ListItemUser key={user.id} user={user} />;
+                        return (
+                            <ListItemUser
+                                key={user.id}
+                                user={user}
+                                roles={userRoles}
+                            />
+                        );
                     })}
                 </ul>
             )}

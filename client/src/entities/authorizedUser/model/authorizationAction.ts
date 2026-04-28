@@ -5,14 +5,14 @@ import type {
     AuthorizationAction,
     AuthorizationData,
     AuthorizedUser,
-    AxiosResponseUserAuth,
 } from '../types';
+import type { User } from '../../users';
+
 import { fetchAuthorizationApi } from '../api';
 
-export const authorizationAction = ({ login, password }: AuthorizationData) => {
+export const authorizationAction = ({ login }: AuthorizationData) => {
     return async (dispatch: Dispatch<AuthorizationAction>): Promise<void> => {
-        const user: AxiosResponse<AxiosResponseUserAuth[]> =
-            await fetchAuthorizationApi(login);
+        const user: AxiosResponse<User[]> = await fetchAuthorizationApi(login);
 
         if (user.data.length <= 0) {
             throw new Error('Пользователь не найден');
@@ -20,7 +20,7 @@ export const authorizationAction = ({ login, password }: AuthorizationData) => {
 
         const authorizedUser: AuthorizedUser = {
             login: user.data[0].login,
-            roleId: user.data[0].role_id,
+            roleId: user.data[0].roleId,
         };
 
         // TODO: проверка пароля

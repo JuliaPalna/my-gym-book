@@ -21,7 +21,7 @@ export const useListItemUser = (user: User) => {
         },
     });
 
-    const [_, isUpdating, fetchUpdateUser] = useFetch({
+    const [errorUpdate, isUpdating, fetchUpdateUser] = useFetch({
         callback: async () => {
             await dispatch(updateUserAction({ ...user, roleId: roleSelected }));
         },
@@ -56,6 +56,7 @@ export const useListItemUser = (user: User) => {
     return {
         roleSelected,
         errorRemove,
+        errorUpdate,
         isUpdating,
         isOpenModal,
         isRemoving,
