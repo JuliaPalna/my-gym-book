@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,8 +17,9 @@ import { useFetch } from '../../app/hooks';
 export const useRegistrationPage = () => {
     const [errorServer, setErrorServer] = useState<string | null>(null);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
-    const { register, handleSubmit, formState } =
+    const { register, handleSubmit, formState, reset } =
         useForm<RegistrationValuesProps>({
             defaultValues: {
                 login: '',
@@ -34,7 +36,10 @@ export const useRegistrationPage = () => {
                     return;
                 }
 
-                await dispatch(registrationAction(data));
+                const userAuth = await dispatch(registrationAction(data));
+                sessionStorage.setItem('auth', JSON.stringify(userAuth.login));
+                navigate('/');
+                reset();
             },
         });
 

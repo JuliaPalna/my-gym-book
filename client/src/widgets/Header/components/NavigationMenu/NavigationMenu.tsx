@@ -1,12 +1,14 @@
 import type { JSX } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, OverlayShading } from '../../../../shared';
-import { navigationList } from '../../constants';
+import type { NavigationItem } from '../../constants';
 
 export const NavigationMenu = ({
+    list,
     isOpen,
     onClose,
 }: {
+    list: NavigationItem[];
     isOpen: boolean;
     onClose: () => void;
 }): JSX.Element => {
@@ -35,7 +37,7 @@ export const NavigationMenu = ({
 
                 <nav className="pt-8">
                     <ul className="flex flex-col" onClick={onClose}>
-                        {navigationList.map((item) => {
+                        {list.map((item) => {
                             return (
                                 <li key={item.id} className="bg-transparent">
                                     <NavLink

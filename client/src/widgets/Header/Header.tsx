@@ -2,15 +2,11 @@ import { Link, NavLink } from 'react-router-dom';
 import { Button } from '../../shared';
 import { BurgerMenu, NavigationMenu } from './components';
 import { useHeader } from './useHeader';
-import { navigationList } from './constants';
+import { useOpenNavigationMenu } from './useOpenNavigationMenu';
 
 export const Header: React.FC = () => {
-    const {
-        isAuthorizedUser,
-        isOpenNavigationMenu,
-        onLogout,
-        onToggleNavigationMenu,
-    } = useHeader();
+    const { navigationList, isAuthorizedUser, onLogout } = useHeader();
+    const { isOpenMenu, onToggleMenu } = useOpenNavigationMenu();
 
     return (
         <header
@@ -20,12 +16,13 @@ export const Header: React.FC = () => {
             border-b-3 border-b-neutral-600/20
             bg-white sm:shadow-2xl sm:border-none"
         >
-            <BurgerMenu onOpen={onToggleNavigationMenu} />
+            <BurgerMenu onOpen={onToggleMenu} />
 
             <div className="block sm:hidden">
                 <NavigationMenu
-                    isOpen={isOpenNavigationMenu}
-                    onClose={onToggleNavigationMenu}
+                    isOpen={isOpenMenu}
+                    onClose={onToggleMenu}
+                    list={navigationList}
                 />
             </div>
 

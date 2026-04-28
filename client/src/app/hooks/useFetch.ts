@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import type { UseFetchProps, UseFetchResult } from './type';
+import { AxiosError } from 'axios';
 
 export const useFetch = <T>({
     callback,
@@ -14,6 +15,12 @@ export const useFetch = <T>({
                 setIsLoading(true);
                 await callback(data);
             } catch (error) {
+                if (error instanceof AxiosError) {
+                    const message = error.response?.data;
+                    setError(message);
+                    return;
+                }
+
                 const message =
                     error instanceof Error ? error.message : String(error);
                 setError(message);

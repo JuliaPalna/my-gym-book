@@ -1,27 +1,46 @@
-import { useState } from 'react';
-// import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-// import { authorizedUserSelector } from '../../entities';
+import {
+    authorizedUserSelector,
+    logoutAction,
+    type AppDispatch,
+} from '../../entities';
+import { TYPE_ROLE_USER } from '../../app/constants';
+import {
+    navigationListBase,
+    navigationListAuthUser,
+    navigationListAdmin,
+} from './constants';
 
 export const useHeader = () => {
-    const [isOpenNavigationMenu, setIsOpenNavigationMenu] = useState(false);
-
+    const data = useSelector(authorizedUserSelector);
     const navigate = useNavigate();
-    // const authorizedUser = useSelector(authorizedUserSelector);
-    // TODO: заглушка
-    const isAuthorizedUser = false;
+    const dispatch = useDispatch<AppDispatch>();
 
-    const onToggleNavigationMenu = () =>
-        setIsOpenNavigationMenu(!isOpenNavigationMenu);
+    const isAdmin = data.roleId === TYPE_ROLE_USER.ADMIN;
+    const isAuthorizedUser = data.roleId === TYPE_ROLE_USER.USER || isAdmin;
 
-    const onLogout = () => {
-        navigate('/');
+    let navigationList = navigationListBase;
+
+    if (isAdmin) {
+        navigationList = navigationListAdmin;
+    } else if (isAuthorizedUser) {
+        navigationList = navigationListAuthUser;
+    }
+
+    const onLogout = async () => {
+        try {
+            await dispatch(logoutAction());
+            sessionStorage.removeItem('auth');
+            navigate('/');
+        } catch {
+            console.error('Ошибка. повторите запрос позже');
+        }
     };
 
     return {
+        navigationList,
         isAuthorizedUser,
-        isOpenNavigationMenu,
         onLogout,
-        onToggleNavigationMenu,
     };
 };

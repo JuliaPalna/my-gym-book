@@ -53,12 +53,12 @@ export const AuthorizationPage: React.FC = () => {
                     type="submit"
                     disabled={!formState.isValid || isLoading}
                 >
-                    'Войти'
+                    Войти
                 </Button>
 
                 <Link
                     to="/register"
-                    className=" font-semibold text-taupe-700
+                    className="font-semibold text-taupe-700
                     hover:text-teal-500 transition-colors max-w-25"
                 >
                     Регистрация

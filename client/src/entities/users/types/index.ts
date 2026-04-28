@@ -14,7 +14,7 @@ export interface User {
     id: string;
     roleId: TypeRoleUser;
     login: string;
-    registeredAt: number;
+    registeredAt?: number;
 }
 
 export type UsersProps = User[];

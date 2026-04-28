@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,15 +14,17 @@ import {
 export const useAuthorizationPage = () => {
     const [errorServer, setErrorServer] = useState<string | null>(null);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
-    const { register, handleSubmit, formState } = useForm<AuthorizationData>({
-        defaultValues: {
-            login: '',
-            password: '',
-        },
-        resolver: yupResolver(authorizationSchema),
-        mode: 'onChange',
-    });
+    const { register, handleSubmit, formState, reset } =
+        useForm<AuthorizationData>({
+            defaultValues: {
+                login: '',
+                password: '',
+            },
+            resolver: yupResolver(authorizationSchema),
+            mode: 'onChange',
+        });
 
     const [errorAuthorization, isLoading, authorization] =
         useFetch<AuthorizationData>({
@@ -30,7 +33,10 @@ export const useAuthorizationPage = () => {
                     return;
                 }
 
-                await dispatch(authorizationAction(data));
+                const userAuth = await dispatch(authorizationAction(data));
+                sessionStorage.setItem('auth', JSON.stringify(userAuth.login));
+                navigate('/');
+                reset();
             },
         });
 
