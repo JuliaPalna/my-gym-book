@@ -7,6 +7,16 @@ const sendError = require('../helpers/sendError');
 
 const router = express.Router({ mergeParams: true });
 
+router.get('/roles', async (req, res) => {
+    try {
+        const roles = await getRoles();
+
+        res.status(200).json(roles);
+    } catch (error) {
+        sendError(res, error);
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
         const loadedUsers = await getUsers();
@@ -24,7 +34,7 @@ router.patch('/:id', async (req, res) => {
             role_id: req.body.roleId,
         });
 
-        chalk.bgGreen(`Update user: ${req.params.id}`);
+       console.log( chalk.bgGreen(`User has been updated: ${req.params.id}`));
         res.status(200).json(mapUser(updatedUser));
     } catch (error) {
         sendError(res, error);
@@ -35,18 +45,8 @@ router.delete('/:id', async (req, res) => {
     try {
         await deleteUser(req.params.id);
 
-        chalk.bgGreen(`Remove user: ${req.params.id}`);
+        console.log(chalk.bgGreen(`User has been removed: ${req.params.id}`));
         res.status(200).json(null);
-    } catch (error) {
-        sendError(res, error);
-    }
-});
-
-router.get('/roles', async (req, res) => {
-    try {
-        const roles = await getRoles();
-
-        res.status(200).json(roles);
     } catch (error) {
         sendError(res, error);
     }
