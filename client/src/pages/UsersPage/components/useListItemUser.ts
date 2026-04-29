@@ -11,41 +11,19 @@ import type { TypeRoleUser } from '../../../app/constants';
 
 export const useListItemUser = (user: User) => {
     const [roleSelected, setRoleSelected] = useState<TypeRoleUser>(user.roleId);
-    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-
     const dispatch = useDispatch<AppDispatch>();
 
-    const [errorRemove, isRemoving, fetchRemoveUser] = useFetch({
+    const [errorRemove, isRemoving, onRemove] = useFetch({
         callback: async () => {
             await dispatch(removeUserAction(user.id));
         },
     });
 
-    const [errorUpdate, isUpdating, fetchUpdateUser] = useFetch({
+    const [errorUpdate, isUpdating, onSave] = useFetch({
         callback: async () => {
             await dispatch(updateUserAction({ ...user, roleId: roleSelected }));
         },
     });
-
-    const onOpenModal = (): void => {
-        setIsOpenModal(true);
-    };
-
-    const onCloseModal = (): void => {
-        setIsOpenModal(false);
-    };
-
-    const onSave = (): void => {
-        fetchUpdateUser();
-    };
-
-    const onRemove = (): void => {
-        fetchRemoveUser();
-
-        if (!errorRemove) {
-            onCloseModal();
-        }
-    };
 
     const onChangeRoleSelected = (
         event: React.ChangeEvent<HTMLSelectElement>,
@@ -58,10 +36,7 @@ export const useListItemUser = (user: User) => {
         errorRemove,
         errorUpdate,
         isUpdating,
-        isOpenModal,
         isRemoving,
-        onOpenModal,
-        onCloseModal,
         onSave,
         onRemove,
         onChangeRoleSelected,

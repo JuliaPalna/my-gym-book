@@ -1,3 +1,4 @@
+import { useOpen } from '../../../app/hooks';
 import { Button, ConfirmDeleteModal, ErrorMessage } from '../../../shared';
 import { timestampToInputValue } from '../../../utils';
 import type { ListItemProps } from './type';
@@ -10,14 +11,12 @@ export const ListItemUser: React.FC<ListItemProps> = ({ user, roles }) => {
         errorRemove,
         errorUpdate,
         isUpdating,
-        isOpenModal,
         isRemoving,
-        onOpenModal,
-        onCloseModal,
         onSave,
         onRemove,
         onChangeRoleSelected,
     } = useListItemUser(user);
+    const { isOpen, onOpen, onClose } = useOpen();
 
     return (
         <li
@@ -55,16 +54,22 @@ export const ListItemUser: React.FC<ListItemProps> = ({ user, roles }) => {
                 <Button disabled={isUpdating} onClick={onSave}>
                     С
                 </Button>
-                <Button disabled={isOpenModal} onClick={onOpenModal}>
+                <Button disabled={isOpen} onClick={onOpen}>
                     Y
                 </Button>
             </div>
 
-            {isOpenModal && (
+            {isOpen && (
                 <ConfirmDeleteModal
                     message="Подтвердите удаление пользователя?"
-                    onConfirm={onRemove}
-                    onCancel={onCloseModal}
+                    onConfirm={() => {
+                        onRemove();
+
+                        if (!errorRemove) {
+                            onClose();
+                        }
+                    }}
+                    onCancel={onClose}
                     isConfirm={isRemoving}
                     error={errorRemove}
                 />
