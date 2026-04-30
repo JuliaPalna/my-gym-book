@@ -22,17 +22,15 @@ export const Calendar: React.FC<CalendarProps> = ({
     return (
         <>
             <div className="pb-2 flex flex-row justify-between items-center gap-2 text-base">
-                <div>
-                    <Button onClick={onGoBack} isLink={true}>
-                        <span className="text-2xl">&lt;</span>
-                    </Button>
-                </div>
+                <Button onClick={onGoBack} variant="link">
+                    <span className="text-2xl">&lt;</span>
+                </Button>
+
                 <span>{displayMonthYear}</span>
-                <div>
-                    <Button onClick={onGoForward} isLink={true}>
-                        <span className="text-2xl">&gt;</span>
-                    </Button>
-                </div>
+
+                <Button onClick={onGoForward} variant="link">
+                    <span className="text-2xl">&gt;</span>
+                </Button>
             </div>
 
             <ul

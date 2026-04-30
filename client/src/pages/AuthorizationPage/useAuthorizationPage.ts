@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -12,7 +11,6 @@ import {
 } from '../../entities';
 
 export const useAuthorizationPage = () => {
-    const [errorServer, setErrorServer] = useState<string | null>(null);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
@@ -40,12 +38,6 @@ export const useAuthorizationPage = () => {
             },
         });
 
-    const errorState = errorServer || errorAuthorization;
-
-    const onResetErrorServer = (): void => {
-        setErrorServer(null);
-    };
-
     const onSubmitAuthorization = (data: AuthorizationData): void => {
         authorization(data);
     };
@@ -53,10 +45,9 @@ export const useAuthorizationPage = () => {
     return {
         formState,
         register,
-        errorState,
+        errorAuthorization,
         isLoading,
         handleSubmit,
         onSubmitAuthorization,
-        onResetErrorServer,
     };
 };

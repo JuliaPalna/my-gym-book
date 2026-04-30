@@ -23,7 +23,7 @@ export const useWorkoutsPage = () => {
         fetchWorkouts();
     }, [selectedPeriod]);
 
-    const onAddNewWorkout = (): void => {
+    const onGoToCreationForm = (): void => {
         navigate('/workout');
     };
 
@@ -32,6 +32,6 @@ export const useWorkoutsPage = () => {
         error,
         isLoading,
         setSelectedPeriod,
-        onAddNewWorkout,
+        onGoToCreationForm,
     };
 };

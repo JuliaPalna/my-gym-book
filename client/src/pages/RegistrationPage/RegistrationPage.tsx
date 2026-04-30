@@ -5,11 +5,10 @@ export const RegistrationPage: React.FC = () => {
     const {
         formState,
         register,
-        errorState,
+        errorRegistration,
         isLoading,
         handleSubmit,
         onSubmitRegistration,
-        onResetErrorServer,
     } = useRegistrationPage();
 
     return (
@@ -26,12 +25,7 @@ export const RegistrationPage: React.FC = () => {
                     title="Логин"
                     error={formState.errors.login?.message}
                 >
-                    <Input
-                        {...register('login', {
-                            onChange: onResetErrorServer,
-                        })}
-                        autoComplete="username"
-                    />
+                    <Input {...register('login', {})} autoComplete="username" />
                 </FieldWrapper>
 
                 <FieldWrapper
@@ -40,9 +34,7 @@ export const RegistrationPage: React.FC = () => {
                     error={formState.errors.password?.message}
                 >
                     <Input
-                        {...register('password', {
-                            onChange: onResetErrorServer,
-                        })}
+                        {...register('password', {})}
                         type="password"
                         autoComplete="current-password"
                     />
@@ -54,9 +46,7 @@ export const RegistrationPage: React.FC = () => {
                     error={formState.errors.passwordConfirm?.message}
                 >
                     <Input
-                        {...register('passwordConfirm', {
-                            onChange: onResetErrorServer,
-                        })}
+                        {...register('passwordConfirm', {})}
                         type="password"
                         autoComplete="passwordConfirm"
                     />
@@ -69,7 +59,9 @@ export const RegistrationPage: React.FC = () => {
                     Зарегистрироваться
                 </Button>
 
-                {errorState && <ErrorMessage>{errorState}</ErrorMessage>}
+                {errorRegistration && (
+                    <ErrorMessage>{errorRegistration}</ErrorMessage>
+                )}
             </form>
         </>
     );

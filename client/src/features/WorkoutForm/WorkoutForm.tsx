@@ -9,22 +9,30 @@ import {
     Title,
 } from '../../shared';
 import { useWorkoutForm } from './useWorkoutForm';
-import { WORKOUT_TAGS } from '../../app/constants';
+import type { WorkoutFormValues } from './constants';
+import { useTypesWorkout } from './hooks';
 
-export const WorkoutForm: React.FC = () => {
+interface WorkoutFormProps {
+    isSubmitting: boolean;
+    onSubmit: (data: WorkoutFormValues) => void;
+}
+
+export const WorkoutForm: React.FC<WorkoutFormProps> = ({
+    isSubmitting,
+    onSubmit,
+}) => {
+    const {
+        workoutTypes,
+        error: errorWorkoutTypes,
+        isLoading: isLoadingWorkoutTypes,
+    } = useTypesWorkout();
+
     const {
         formState,
         register,
-        errorState,
-        isCreateNewWorkout,
-        isSaving,
-        isRemoving,
         handleSubmit,
         control,
-        onSubmit,
-        onRemoveWorkout,
-        onResetErrorServer,
-        onGoMainPage,
+        onResetFormAndGoMainPage,
     } = useWorkoutForm();
 
     return (
@@ -39,12 +47,10 @@ export const WorkoutForm: React.FC = () => {
                 <FieldWrapper
                     htmlFor="startedAt"
                     title="Дата"
-                    error={formState.errors.startedAt?.message}
+                    error={formState.errors.date?.message}
                 >
                     <Input
-                        {...register('startedAt', {
-                            onChange: onResetErrorServer,
-                        })}
+                        {...register('date', {})}
                         autoComplete="off"
                         type="date"
                     />
@@ -52,39 +58,43 @@ export const WorkoutForm: React.FC = () => {
 
                 <FieldWrapper
                     htmlFor="durationMinutes"
-                    title="Продолжительность"
+                    title="Продолжительность (мин)"
                     error={formState.errors.durationMinutes?.message}
                 >
                     <Input
-                        {...register('durationMinutes', {
-                            onChange: onResetErrorServer,
-                        })}
+                        {...register('durationMinutes', {})}
                         type="number"
                         autoComplete="off"
                     />
                 </FieldWrapper>
 
-                <FieldWrapper
-                    htmlFor="types"
-                    title="Тэги"
-                    error={formState.errors.types?.message}
-                >
-                    <Controller
-                        name="types"
-                        control={control}
-                        render={({ field }) => {
-                            return (
-                                <SelectOptions
-                                    options={WORKOUT_TAGS}
-                                    value={field.value ?? []}
-                                    onChange={field.onChange}
-                                    onBlur={field.onBlur}
-                                    name={field.name}
-                                />
-                            );
-                        }}
-                    />
-                </FieldWrapper>
+                {isLoadingWorkoutTypes ? (
+                    <Loader />
+                ) : (
+                    <FieldWrapper
+                        htmlFor="types"
+                        title="Тэги"
+                        error={formState.errors.types?.message}
+                    >
+                        <Controller
+                            name="types"
+                            control={control}
+                            render={({ field }) => {
+                                return (
+                                    <SelectOptions
+                                        options={workoutTypes}
+                                        value={field.value ?? []}
+                                        onChange={field.onChange}
+                                    />
+                                );
+                            }}
+                        />
+                    </FieldWrapper>
+                )}
+
+                {errorWorkoutTypes && (
+                    <ErrorMessage>{errorWorkoutTypes}</ErrorMessage>
+                )}
 
                 <FieldWrapper
                     htmlFor="description"
@@ -92,9 +102,7 @@ export const WorkoutForm: React.FC = () => {
                     error={formState.errors.description?.message}
                 >
                     <textarea
-                        {...register('description', {
-                            onChange: onResetErrorServer,
-                        })}
+                        {...register('description', {})}
                         autoComplete="off"
                         placeholder="Введите..."
                         className="block w-full h-25 px-1 py-1.5
@@ -105,19 +113,14 @@ export const WorkoutForm: React.FC = () => {
                     />
                 </FieldWrapper>
 
-                <Button type="submit" disabled={!formState.isValid || isSaving}>
-                    {isSaving ? <Loader /> : 'Сохранить'}
+                <Button
+                    type="submit"
+                    disabled={!formState.isValid || isSubmitting}
+                >
+                    {isSubmitting ? <Loader /> : 'Сохранить'}
                 </Button>
 
-                {isCreateNewWorkout ? (
-                    <Button onClick={onGoMainPage}>Отмена</Button>
-                ) : (
-                    <Button onClick={onRemoveWorkout} disabled={isRemoving}>
-                        {isRemoving ? <Loader /> : 'Удалить'}
-                    </Button>
-                )}
-
-                {errorState && <ErrorMessage>{errorState}</ErrorMessage>}
+                <Button onClick={onResetFormAndGoMainPage}>Отмена</Button>
             </form>
         </>
     );

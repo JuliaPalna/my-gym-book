@@ -8,12 +8,8 @@ export const ListItemUser: React.FC<ListItemProps> = ({ user, roles }) => {
     const { login, registeredAt } = user;
     const {
         roleSelected,
-        errorRemove,
-        errorUpdate,
-        isUpdating,
-        isRemoving,
-        onSave,
-        onRemove,
+        stateRemove: [errorRemove, isRemoving, onRemove],
+        stateUpdate: [errorUpdate, isUpdating, onSave],
         onChangeRoleSelected,
     } = useListItemUser(user);
     const { isOpen, onOpen, onClose } = useOpen();

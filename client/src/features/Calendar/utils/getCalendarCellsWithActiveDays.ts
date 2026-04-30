@@ -1,4 +1,4 @@
-import type { Workouts } from '../../../entities';
+import type { Workout } from '../../../entities';
 import type { CalendarCell, PeriodProps } from '../type';
 import { checkValidPeriod } from './checkValidPeriod';
 import { getCellsCalendarForMonth } from './getCellsCalendarForMonth';
@@ -8,7 +8,7 @@ export const getCalendarCellsWithActiveDays = ({
     workouts,
 }: {
     period: PeriodProps;
-    workouts: Workouts;
+    workouts: Workout[];
 }): (CalendarCell | '')[] => {
     if (!checkValidPeriod(period)) {
         return [];
@@ -20,7 +20,7 @@ export const getCalendarCellsWithActiveDays = ({
         return new Date(workout.startedAt).toISOString().split('T')[0];
     });
 
-    const activeDays = new Set(workoutDate);
+    const activeDays: Set<string> = new Set(workoutDate);
 
     const cellsWithActiveDay: (CalendarCell | '')[] = cells.map(
         (cell): CalendarCell | '' => {

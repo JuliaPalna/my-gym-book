@@ -69,7 +69,7 @@ export const Header: React.FC = () => {
             <div>
                 {isAuthorizedUser ? (
                     <div>
-                        <Button onClick={onLogout} isLink={true}>
+                        <Button onClick={onLogout} variant="link">
                             Выйти
                         </Button>
                     </div>

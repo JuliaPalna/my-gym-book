@@ -1,28 +1,22 @@
-import { object, setLocale, string, type InferType, number, array } from 'yup';
+import { object, string, type InferType, number, array } from 'yup';
 import { regexWorkoutForm } from './regexWorkoutForm';
-
-setLocale({
-    string: {
-        min: 'Должно быть не менее ${min} символов',
-        max: 'Должно быть не более ${max} символов',
-    },
-});
 
 export const workoutSchema = object({
     durationMinutes: number()
         .required('Обязательное поле для заполнения')
-        .min(1, 'Минимум 1 минута'),
+        .min(1, 'Должно быть не менее 1 минуты')
+        .max(240, 'Должно быть не более 240 минут'),
     description: string()
         .trim()
         .required('Обязательное поле для заполнения')
         .matches(regexWorkoutForm.description, 'Введите корректные символы')
-        .max(30),
+        .max(150, 'Должно быть не более 150 символов'),
     types: array()
         .required('Необходимо выбрать тип тренировки')
-        .min(1, 'Выберите тег'),
-    startedAt: string()
+        .min(1, 'Должно быть не менее 1'),
+    date: string()
         .required('Обязательное поле для заполнения')
-        .matches(regexWorkoutForm.startedAt, 'Некорректная дата'),
+        .matches(regexWorkoutForm.date, 'Некорректная дата'),
 });
 
 export type WorkoutFormValues = InferType<typeof workoutSchema>;

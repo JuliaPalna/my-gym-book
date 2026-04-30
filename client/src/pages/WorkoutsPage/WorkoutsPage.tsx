@@ -12,7 +12,7 @@ export const WorkoutsPage: React.FC = () => {
         error,
         isLoading,
         setSelectedPeriod,
-        onAddNewWorkout,
+        onGoToCreationForm,
     } = useWorkoutsPage();
 
     if (isLoading) {
@@ -38,7 +38,7 @@ export const WorkoutsPage: React.FC = () => {
                 </div>
 
                 <div className="m-auto mt-10 lg:mt-20 ">
-                    <Button onClick={onAddNewWorkout}>
+                    <Button onClick={onGoToCreationForm}>
                         Создать тренировку вручную
                     </Button>
                 </div>

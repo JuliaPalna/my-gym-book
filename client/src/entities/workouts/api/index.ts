@@ -1,9 +1,7 @@
-import axios, { type AxiosResponse } from 'axios';
-import { BASE_URL } from '../../../app/constants';
-import type { AxiosResponseWorkout } from '../types';
+import axios from 'axios';
+import type { Workout } from '../../workout/types';
 
-export const fetchWorkoutsPerMothApi = async (): Promise<
-    AxiosResponse<AxiosResponseWorkout[]>
-> => {
-    return await axios.get(`${BASE_URL}/workouts`);
+export const fetchWorkoutsPerMoth = async (): Promise<Workout[]> => {
+    const response = await axios.get(`/api/workouts`);
+    return response.data;
 };

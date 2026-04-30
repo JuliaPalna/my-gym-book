@@ -13,13 +13,13 @@ export const useListItemUser = (user: User) => {
     const [roleSelected, setRoleSelected] = useState<TypeRoleUser>(user.roleId);
     const dispatch = useDispatch<AppDispatch>();
 
-    const [errorRemove, isRemoving, onRemove] = useFetch({
+    const stateRemove = useFetch({
         callback: async () => {
             await dispatch(removeUserAction(user.id));
         },
     });
 
-    const [errorUpdate, isUpdating, onSave] = useFetch({
+    const stateUpdate = useFetch({
         callback: async () => {
             await dispatch(updateUserAction({ ...user, roleId: roleSelected }));
         },
@@ -33,12 +33,8 @@ export const useListItemUser = (user: User) => {
 
     return {
         roleSelected,
-        errorRemove,
-        errorUpdate,
-        isUpdating,
-        isRemoving,
-        onSave,
-        onRemove,
+        stateRemove,
+        stateUpdate,
         onChangeRoleSelected,
     };
 };

@@ -1,9 +1,5 @@
-import axios, { type AxiosResponse } from 'axios';
-import { BASE_URL } from '../../../app/constants';
-import type { AxiosResponseWorkout } from '../../workouts';
+import axios from 'axios';
 
-export const removeWorkoutApi = async (
-    id: string,
-): Promise<AxiosResponse<AxiosResponseWorkout[]>> => {
-    return await axios.delete(`${BASE_URL}/workouts/${id}`);
+export const removeWorkout = async (id: string): Promise<void> => {
+    await axios.delete(`/api/workouts/${id}`);
 };

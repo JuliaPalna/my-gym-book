@@ -23,7 +23,7 @@ export const NavigationMenu = ({
             ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
             >
                 <div className="relative size-6 ml-6 mt-6">
-                    <Button isLink={true} onClick={onClose}>
+                    <Button variant="link" onClick={onClose}>
                         <span
                             className='before:content-[""] before:absolute before:inset-x-0
                         before:border-b-2 before:border-neutral-900

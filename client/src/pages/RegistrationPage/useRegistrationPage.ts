@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -15,7 +14,6 @@ import {
 import { useFetch } from '../../app/hooks';
 
 export const useRegistrationPage = () => {
-    const [errorServer, setErrorServer] = useState<string | null>(null);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
@@ -43,12 +41,6 @@ export const useRegistrationPage = () => {
             },
         });
 
-    const errorState: string | null = errorServer || errorRegistration;
-
-    const onResetErrorServer = (): void => {
-        setErrorServer(null);
-    };
-
     const onSubmitRegistration = (data: AuthorizationData): void => {
         registration(data);
     };
@@ -56,10 +48,9 @@ export const useRegistrationPage = () => {
     return {
         formState,
         register,
-        errorState,
+        errorRegistration,
         isLoading,
         handleSubmit,
         onSubmitRegistration,
-        onResetErrorServer,
     };
 };

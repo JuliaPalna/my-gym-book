@@ -5,3 +5,4 @@ export * from './RegistrationPage';
 export * from './UsersPage';
 export * from './WorkoutPage';
 export * from './WorkoutsPage';
+export * from './NewWorkoutPage';

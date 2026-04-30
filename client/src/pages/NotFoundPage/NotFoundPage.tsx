@@ -1,6 +1,4 @@
-import { type JSX } from 'react';
-
-export const NotFoundPage = (): JSX.Element => {
+export const NotFoundPage: React.FC = () => {
     return (
         <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
             <div className="text-center">

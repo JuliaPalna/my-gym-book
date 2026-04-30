@@ -1,16 +1,11 @@
 import type { Dispatch } from 'redux';
 import { ACTION_TYPE } from '../../../app/constants';
-import { fetchUsersApi } from '../api';
-import type { User } from '../types';
-
-export interface SetUsersAction {
-    type: typeof ACTION_TYPE.SET_USERS;
-    payload: User[];
-}
+import { fetchUsers } from '../api';
+import type { SetUsersAction } from '../types';
 
 export const setUsersAction = () => {
     return async (dispatch: Dispatch<SetUsersAction>): Promise<void> => {
-        const users = await fetchUsersApi();
+        const users = await fetchUsers();
 
         dispatch({
             type: ACTION_TYPE.SET_USERS,

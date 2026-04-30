@@ -7,6 +7,7 @@ import {
 } from './utils';
 import { workoutsSelector } from '../../entities';
 import type { CalendarCell, CalendarProps } from './type';
+import { getCurrentDate } from './utils/getCurrentDate';
 
 export const useCalendar = ({ period, onChangePeriod }: CalendarProps) => {
     const { workouts } = useSelector(workoutsSelector);
@@ -14,8 +15,11 @@ export const useCalendar = ({ period, onChangePeriod }: CalendarProps) => {
 
     const isValidPeriod: boolean = checkValidPeriod(period);
 
-    const displayMonthYear: string =
-        formatDateForDisplay(period) || 'Некорректная дата';
+    const currentDate = getCurrentDate(period);
+
+    const displayMonthYear: string = isNaN(currentDate.getTime())
+        ? 'Некорректная дата'
+        : formatDateForDisplay(currentDate);
 
     const calendarCells: (CalendarCell | '')[] = getCalendarCellsWithActiveDays(
         { period, workouts },

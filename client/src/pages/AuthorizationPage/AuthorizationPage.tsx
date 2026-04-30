@@ -6,11 +6,10 @@ export const AuthorizationPage: React.FC = () => {
     const {
         formState,
         register,
-        errorState,
+        errorAuthorization,
         isLoading,
         handleSubmit,
         onSubmitAuthorization,
-        onResetErrorServer,
     } = useAuthorizationPage();
 
     return (
@@ -27,12 +26,7 @@ export const AuthorizationPage: React.FC = () => {
                     title="Логин"
                     error={formState.errors.login?.message}
                 >
-                    <Input
-                        {...register('login', {
-                            onChange: onResetErrorServer,
-                        })}
-                        autoComplete="username"
-                    />
+                    <Input {...register('login', {})} autoComplete="username" />
                 </FieldWrapper>
 
                 <FieldWrapper
@@ -41,9 +35,7 @@ export const AuthorizationPage: React.FC = () => {
                     error={formState.errors.password?.message}
                 >
                     <Input
-                        {...register('password', {
-                            onChange: onResetErrorServer,
-                        })}
+                        {...register('password', {})}
                         type="password"
                         autoComplete="current-password"
                     />
@@ -64,7 +56,9 @@ export const AuthorizationPage: React.FC = () => {
                     Регистрация
                 </Link>
 
-                {errorState && <ErrorMessage>{errorState}</ErrorMessage>}
+                {errorAuthorization && (
+                    <ErrorMessage>{errorAuthorization}</ErrorMessage>
+                )}
             </form>
         </>
     );

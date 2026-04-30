@@ -19,6 +19,7 @@ export const MainPage: React.FC = () => {
             icon: <img src="#" alt="drger" />,
         },
     ];
+
     return (
         <>
             <div className="mx-auto max-w-2xl ">

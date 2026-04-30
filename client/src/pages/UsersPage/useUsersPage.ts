@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    fetchRolesApi,
+    fetchRoles,
     setUsersAction,
     usersSelector,
     type AppDispatch,
@@ -16,7 +16,7 @@ export const useUsersPage = () => {
 
     const [error, isLoading, fetchUsers] = useFetch({
         callback: async () => {
-            const loadedRoles = await fetchRolesApi();
+            const loadedRoles = await fetchRoles();
             await dispatch(setUsersAction());
             setUserRoles(loadedRoles);
         },

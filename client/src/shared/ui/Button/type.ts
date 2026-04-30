@@ -3,5 +3,6 @@ export interface ButtonProps {
     children: React.ReactElement | string;
     onClick?: () => void;
     type?: 'button' | 'submit';
-    isLink?: boolean;
+    variant?: 'link' | 'selector' | 'base';
+    size?: 'sm' | 'md';
 }

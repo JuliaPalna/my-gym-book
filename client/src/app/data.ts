@@ -1,7 +1,7 @@
-import type { monthlyAnalytics, Workouts } from '../entities';
+import type { monthlyAnalytics, Workout } from '../entities';
 
 export function calculateMonthlyAnalytics(
-    workouts: Workouts,
+    workouts: Workout[],
 ): monthlyAnalytics {
     const totalWorkouts: number = workouts.length;
 
@@ -30,7 +30,7 @@ function calculateAverageValue(whole: number, part: number): number {
 }
 
 function calculateDurationByType(
-    workouts: Workouts,
+    workouts: Workout[],
     //TODO: typeMinutes - изменить ключ  typeMinutes на types
 ): Record<string, number> {
     const workoutTypes: Record<string, number> = {};

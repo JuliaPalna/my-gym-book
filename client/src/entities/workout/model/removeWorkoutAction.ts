@@ -1,15 +1,11 @@
 import type { Dispatch } from 'redux';
+import { removeWorkout } from '../api';
 import { ACTION_TYPE } from '../../../app/constants';
-import { removeWorkoutApi } from '../api';
-
-export interface RemoveWorkoutAction {
-    type: typeof ACTION_TYPE.REMOVE_WORKOUT;
-    payload: string;
-}
+import type { RemoveWorkoutAction } from '../types';
 
 export const removeWorkoutAction = (id: string) => {
     return async (dispatch: Dispatch<RemoveWorkoutAction>): Promise<void> => {
-        await removeWorkoutApi(id);
+        await removeWorkout(id);
 
         dispatch({
             type: ACTION_TYPE.REMOVE_WORKOUT,

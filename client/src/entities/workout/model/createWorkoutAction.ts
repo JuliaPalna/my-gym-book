@@ -1,20 +1,15 @@
 import type { Dispatch } from 'redux';
+import { addWorkout } from '../api';
 import { ACTION_TYPE } from '../../../app/constants';
-import type { Workout } from '../types';
-import { createWorkoutApi } from '../api';
+import type { SetWorkoutAction, Workout, WorkoutActionProps } from '../types';
 
-export interface CreateWorkoutAction {
-    type: typeof ACTION_TYPE.CREATE_WORKOUT;
-    payload: Workout;
-}
-
-export const createWorkoutAction = (workout: Workout) => {
-    return async (dispatch: Dispatch<CreateWorkoutAction>): Promise<void> => {
-        await createWorkoutApi(workout);
+export const createWorkoutAction = (data: WorkoutActionProps) => {
+    return async (dispatch: Dispatch<SetWorkoutAction>): Promise<void> => {
+        const newWorkout: Workout = await addWorkout(data);
 
         dispatch({
-            type: ACTION_TYPE.CREATE_WORKOUT,
-            payload: workout,
+            type: ACTION_TYPE.SET_WORKOUT,
+            payload: newWorkout,
         });
     };
 };
