@@ -1,66 +1,54 @@
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
-    checkValidPeriod,
     formatDateForDisplay,
-    getCalendarCellsWithActiveDays,
+    markActiveDays,
+    getActiveDays,
+    getCalendar,
 } from './utils';
-import { workoutsSelector } from '../../entities';
-import type { CalendarCell, CalendarProps } from './type';
-import { getCurrentDate } from './utils/getCurrentDate';
+import { workoutsSelector, type WorkoutBase } from '../../entities';
+import type { DaysData, PeriodProps } from './type';
+import { useState } from 'react';
+import { formatDateYYYYMMDD } from '../../utils';
+import { useOpen } from '../../app/hooks';
 
-export const useCalendar = ({ period, onChangePeriod }: CalendarProps) => {
+export const useCalendar = (period: PeriodProps) => {
     const { workouts } = useSelector(workoutsSelector);
-    const navigate = useNavigate();
+    const [workoutsByDay, setWorkoutsByDay] = useState<WorkoutBase[]>([]);
+    const stateModalListWorkouts = useOpen();
 
-    const isValidPeriod: boolean = checkValidPeriod(period);
+    const displayMonthYear: string = formatDateForDisplay(period);
+    const calendarCells: (DaysData | null)[] = getCalendar(period);
+    const activeDays = getActiveDays(workouts);
+    const calendarsWithActiveDays: (DaysData | null)[] = markActiveDays({
+        activeDays,
+        cells: calendarCells,
+    });
 
-    const currentDate = getCurrentDate(period);
+    const onOpenListWorkoutsByDay = ({ target }: { target: EventTarget }) => {
+        if (target instanceof Element) {
+            const element = target.closest('time');
+            const dateTime = element && element.dataset.date;
 
-    const displayMonthYear: string = isNaN(currentDate.getTime())
-        ? 'Некорректная дата'
-        : formatDateForDisplay(currentDate);
+            if (!dateTime) {
+                return;
+            }
 
-    const calendarCells: (CalendarCell | '')[] = getCalendarCellsWithActiveDays(
-        { period, workouts },
-    );
+            const filteredWorkouts = workouts.filter(
+                (workout) => formatDateYYYYMMDD(workout.startedAt) === dateTime,
+            );
 
-    const onOpenWorkoutsByDay = (): void => {
-        // TODO: заглушка id
-        navigate(`/workouts/1775848251961`);
-    };
-
-    const onGoBack = (): void => {
-        if (!isValidPeriod) {
-            return;
+            setWorkoutsByDay(filteredWorkouts);
+            stateModalListWorkouts.onOpen();
         }
 
-        if (period.month === 1) {
-            onChangePeriod({ year: period.year - 1, month: 12 });
-            return;
-        }
-
-        onChangePeriod({ ...period, month: period.month - 1 });
-    };
-
-    const onGoForward = (): void => {
-        if (!isValidPeriod) {
-            return;
-        }
-
-        if (period.month === 12) {
-            onChangePeriod({ year: period.year + 1, month: 1 });
-            return;
-        }
-
-        onChangePeriod({ ...period, month: period.month + 1 });
+        return;
     };
 
     return {
+        workoutsByDay,
         displayMonthYear,
-        calendarCells,
-        onGoBack,
-        onGoForward,
-        onOpenWorkoutsByDay,
+        calendarsWithActiveDays,
+        stateModalListWorkouts,
+        onOpenListWorkoutsByDay,
     };
 };

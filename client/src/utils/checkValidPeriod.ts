@@ -1,6 +1,6 @@
-import type { PeriodProps } from '../type';
+import type { PeriodProps } from '../features/Calendar/type';
 
-export const checkValidPeriod = ({ year, month }: PeriodProps): boolean => {
+export function checkValidPeriod({ year, month }: PeriodProps): boolean {
     return (
         !isNaN(year) &&
         !isNaN(month) &&
@@ -9,4 +9,4 @@ export const checkValidPeriod = ({ year, month }: PeriodProps): boolean => {
         month >= 1 &&
         month <= 12
     );
-};
+}

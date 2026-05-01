@@ -1,5 +1,5 @@
 import type { WorkoutActionProps } from '../../../entities';
-import { inputValueToTimestamp } from '../../../utils';
+import { getTimestamp } from '../../../utils';
 import type { WorkoutFormValues } from '../constants';
 
 export const mapWorkoutToServer = (
@@ -8,5 +8,5 @@ export const mapWorkoutToServer = (
     durationMinutes: data.durationMinutes,
     description: data.description,
     types: data.types,
-    startedAt: inputValueToTimestamp(data.date),
+    startedAt: getTimestamp(data.date),
 });

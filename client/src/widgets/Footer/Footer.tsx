@@ -1,6 +1,4 @@
-import type { JSX } from 'react';
-
-export const Footer = (): JSX.Element => {
+export const Footer: React.FC = () => {
     return (
         <footer className="py-3 px-1.5 sm:p-6 lg:px-8 w-full bg-white">
             <div className="pb-3">

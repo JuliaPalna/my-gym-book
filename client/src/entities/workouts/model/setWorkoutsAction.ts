@@ -1,33 +1,21 @@
 import type { Dispatch } from 'redux';
 import { fetchWorkoutsPerMoth } from '../api';
 import { ACTION_TYPE } from '../../../app/constants';
-import type { monthlyAnalytics, SetWorkoutsPerMonthAction } from '../types';
-import { calculateMonthlyAnalytics } from '../../../app/data';
-import type { Workout } from '../../workout/types';
+import type { SetWorkoutsPerMonthAction } from '../types';
+import type { PeriodProps } from '../../../features';
+import { getMonthRange } from '../../../utils/date';
 
-export const setWorkoutsAction = () => {
+export const setWorkoutsAction = (period: PeriodProps) => {
     return async (
         dispatch: Dispatch<SetWorkoutsPerMonthAction>,
     ): Promise<void> => {
-        const loadedWorkouts: Workout[] | undefined =
-            await fetchWorkoutsPerMoth();
+        const { startTs, endTs } = getMonthRange(period);
 
-        if (!loadedWorkouts) {
-            return;
-        }
-
-        const workouts: Workout[] = loadedWorkouts;
-
-        // TODO: перенести на backend. на client получаем уже итоговые данные
-        const monthlyAnalytics: monthlyAnalytics =
-            calculateMonthlyAnalytics(workouts);
+        const loadedDataPerMonth = await fetchWorkoutsPerMoth(startTs, endTs);
 
         dispatch({
             type: ACTION_TYPE.SET_WORKOUTS,
-            payload: {
-                workouts,
-                monthlyAnalytics,
-            },
+            payload: loadedDataPerMonth,
         });
     };
 };

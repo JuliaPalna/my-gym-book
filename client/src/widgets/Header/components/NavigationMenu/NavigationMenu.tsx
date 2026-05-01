@@ -1,17 +1,18 @@
-import type { JSX } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, OverlayShading } from '../../../../shared';
 import type { NavigationItem } from '../../constants';
 
-export const NavigationMenu = ({
-    list,
-    isOpen,
-    onClose,
-}: {
+interface NavigationMenuProps {
     list: NavigationItem[];
     isOpen: boolean;
     onClose: () => void;
-}): JSX.Element => {
+}
+
+export const NavigationMenu: React.FC<NavigationMenuProps> = ({
+    list,
+    isOpen,
+    onClose,
+}) => {
     return (
         <>
             {isOpen && <OverlayShading onCloseModule={onClose} />}

@@ -8,24 +8,14 @@ export const WorkoutsPage: React.FC = () => {
     const { workouts }: WorkoutsPerMonth = useSelector(workoutsSelector);
 
     const {
+        isAuthorizedUser,
         selectedPeriod,
         error,
         isLoading,
-        setSelectedPeriod,
+        onGoForwardMonth,
+        onGoBackMonth,
         onGoToCreationForm,
     } = useWorkoutsPage();
-
-    if (isLoading) {
-        return (
-            <div className="flex justify-center">
-                <Loader />
-            </div>
-        );
-    }
-
-    if (error) {
-        return <ErrorMessage>{`Ошибка: ${error}`}</ErrorMessage>;
-    }
 
     return (
         <>
@@ -33,21 +23,30 @@ export const WorkoutsPage: React.FC = () => {
                 <div className="m-auto max-w-sm py-1 sm:p-6 lg:px-8">
                     <Calendar
                         period={selectedPeriod}
-                        onChangePeriod={setSelectedPeriod}
+                        onGoForwardMonth={onGoForwardMonth}
+                        onGoBackMonth={onGoBackMonth}
                     />
                 </div>
 
-                <div className="m-auto mt-10 lg:mt-20 ">
-                    <Button onClick={onGoToCreationForm}>
-                        Создать тренировку вручную
-                    </Button>
-                </div>
+                {isAuthorizedUser && (
+                    <div className="m-auto mt-10 lg:mt-20 ">
+                        <Button onClick={onGoToCreationForm}>
+                            Создать тренировку вручную
+                        </Button>
+                    </div>
+                )}
             </section>
 
             <section className="py-10">
                 <p>Аналитика за месяц</p>
 
-                {workouts.length > 0 ? (
+                {isLoading ? (
+                    <div className="flex justify-center">
+                        <Loader />
+                    </div>
+                ) : error ? (
+                    <ErrorMessage>{`Ошибка: ${error}`}</ErrorMessage>
+                ) : workouts.length > 0 ? (
                     <WorkoutsAnalytics />
                 ) : (
                     <p className="text-center">

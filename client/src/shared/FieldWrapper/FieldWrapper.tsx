@@ -1,13 +1,12 @@
-import type { JSX } from 'react';
 import { ErrorMessage } from '../ui';
 import type { FieldWrapperProps } from './type';
 
-export const FieldWrapper = ({
+export const FieldWrapper: React.FC<FieldWrapperProps> = ({
     error = '',
     htmlFor,
     title,
     children,
-}: FieldWrapperProps): JSX.Element => {
+}) => {
     return (
         <div className="flex flex-col justify-center min-h-full gap-1.5">
             <label

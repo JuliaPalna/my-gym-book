@@ -1,8 +1,10 @@
-export const OverlayShading = ({
-    onCloseModule,
-}: {
+interface OverlayShadingProps {
     onCloseModule: () => void;
-}): React.JSX.Element => {
+}
+
+export const OverlayShading: React.FC<OverlayShadingProps> = ({
+    onCloseModule,
+}) => {
     return (
         <div
             className="fixed inset-0 bg-neutral-800/40 z-40"

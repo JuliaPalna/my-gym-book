@@ -1,7 +1,18 @@
 const Workout = require('../models/Workout');
 
-function getWorkouts() {
-    return Workout.find();
+async function getWorkouts(startTs, endTs) {
+    const start = Number(startTs);
+    const end = Number(endTs);
+
+    if (isNaN(start) || isNaN(end) || start >= end) {
+        throw new Error('Invalid timestamps');
+    }
+
+    const workouts = await Workout.find({
+        started_at: { $gte: start, $lt: end },
+    }).sort({ started_at: 1 });
+
+    return workouts;
 }
 
 function getWorkout(id) {

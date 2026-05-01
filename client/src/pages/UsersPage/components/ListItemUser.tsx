@@ -1,6 +1,6 @@
 import { useOpen } from '../../../app/hooks';
 import { Button, ConfirmDeleteModal, ErrorMessage } from '../../../shared';
-import { timestampToInputValue } from '../../../utils';
+import { formatDateYYYYMMDD } from '../../../utils';
 import type { ListItemProps } from './type';
 import { useListItemUser } from './useListItemUser';
 
@@ -22,7 +22,7 @@ export const ListItemUser: React.FC<ListItemProps> = ({ user, roles }) => {
             <span className="col-end-2">{login}</span>
 
             <span className="col-end-2 row-start-2 sm:col-auto sm:row-auto">
-                {timestampToInputValue(registeredAt)}
+                {formatDateYYYYMMDD(registeredAt)}
             </span>
 
             <select

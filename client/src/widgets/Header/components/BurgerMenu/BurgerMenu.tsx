@@ -1,7 +1,10 @@
-import type { JSX } from 'react';
 import { Button } from '../../../../shared';
 
-export const BurgerMenu = ({ onOpen }: { onOpen: () => void }): JSX.Element => {
+interface BurgerMenuProps {
+    onOpen: () => void;
+}
+
+export const BurgerMenu: React.FC<BurgerMenuProps> = ({ onOpen }) => {
     return (
         <div className="block sm:hidden relative size-6 mx-3">
             <Button variant="link" onClick={onOpen}>

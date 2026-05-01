@@ -24,5 +24,9 @@
         "noFallthroughCasesInSwitch": true,
         "noUncheckedSideEffectImports": true
     },
-    "include": ["src", "src/pages/WorkoutPage/useFetchWorkout.ts"]
+    "include": [
+        "src",
+        "src/pages/WorkoutPage/useFetchWorkout.ts",
+        "../server/helpers/calculateMonthlyAnalytics.js"
+    ]
 }

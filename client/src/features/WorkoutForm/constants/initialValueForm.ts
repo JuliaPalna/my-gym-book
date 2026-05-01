@@ -1,5 +1,5 @@
 export const initialValueForm = {
-    date: Date.now().toString(),
+    date: '',
     description: '',
     durationMinutes: 0,
     types: [],

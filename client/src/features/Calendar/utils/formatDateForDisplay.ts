@@ -1,8 +1,9 @@
-export function formatDateForDisplay(date: Date): string {
-    const formatted: string = new Intl.DateTimeFormat('ru-RU', {
-        month: 'long',
-        year: 'numeric',
-    }).format(date);
+import { dayjs } from '../../../utils';
+import type { PeriodProps } from '../type';
 
-    return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+export function formatDateForDisplay(period: PeriodProps): string {
+    return dayjs()
+        .year(period.year)
+        .month(period.month - 1)
+        .format('MMMM YYYY');
 }

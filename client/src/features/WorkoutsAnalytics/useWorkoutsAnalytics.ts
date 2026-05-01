@@ -1,14 +1,14 @@
+import { dayjs } from '../../utils';
 import { useSelector } from 'react-redux';
 import {
     workoutsSelector,
-    type Workouts,
+    type WorkoutBase,
     type WorkoutsPerMonth,
 } from '../../entities';
 
 export const useWorkoutsAnalytics = () => {
-    const workoutsPerMonth: WorkoutsPerMonth = useSelector(workoutsSelector);
-
-    const { workouts, monthlyAnalytics } = workoutsPerMonth;
+    const { workouts, monthlyAnalytics }: WorkoutsPerMonth =
+        useSelector(workoutsSelector);
 
     const durationByDay = calculateDurationByDay(workouts);
     const durationByType = !monthlyAnalytics.durationByType
@@ -18,17 +18,14 @@ export const useWorkoutsAnalytics = () => {
     return { monthlyAnalytics, durationByDay, durationByType };
 };
 
-function calculateDurationByDay(workouts: Workouts): {
+function calculateDurationByDay(workouts: WorkoutBase[]): {
     days: string[];
     duration: number[];
 } {
-    //!TODO: activityDays - ключ числа от 1 до 31
     const daysWithDuration: Record<string, number> = {};
 
     workouts.forEach((workout) => {
-        const activityDay: string = new Date(workout.startedAt)
-            .getDate()
-            .toString();
+        const activityDay: string = dayjs(workout.startedAt).format('D');
 
         if (daysWithDuration[activityDay]) {
             daysWithDuration[activityDay] += workout.durationMinutes;

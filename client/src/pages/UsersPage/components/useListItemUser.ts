@@ -7,7 +7,7 @@ import {
     type User,
 } from '../../../entities';
 import { useFetch } from '../../../app/hooks';
-import type { TypeRoleUser } from '../../../app/constants';
+import { TYPE_ROLE_USER, type TypeRoleUser } from '../../../app/constants';
 
 export const useListItemUser = (user: User) => {
     const [roleSelected, setRoleSelected] = useState<TypeRoleUser>(user.roleId);
@@ -25,10 +25,22 @@ export const useListItemUser = (user: User) => {
         },
     });
 
-    const onChangeRoleSelected = (
-        event: React.ChangeEvent<HTMLSelectElement>,
-    ): void => {
-        setRoleSelected(event.target.value as TypeRoleUser);
+    const onChangeRoleSelected = ({
+        target,
+    }: {
+        target: EventTarget;
+    }): void => {
+        if (target instanceof HTMLSelectElement) {
+            const newRole = target.value;
+            const isValid =
+                TYPE_ROLE_USER.ADMIN === newRole ||
+                TYPE_ROLE_USER.USER === newRole;
+
+            if (isValid) {
+                setRoleSelected(newRole);
+            }
+        }
+        return;
     };
 
     return {

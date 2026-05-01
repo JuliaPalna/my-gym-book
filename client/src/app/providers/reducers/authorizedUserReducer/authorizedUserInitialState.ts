@@ -5,4 +5,5 @@ export const authorizedUserInitialState: User = {
     id: '',
     roleId: TYPE_ROLE_USER.GUEST,
     login: '',
+    registeredAt: 0,
 };

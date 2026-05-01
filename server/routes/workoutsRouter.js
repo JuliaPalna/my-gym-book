@@ -1,8 +1,13 @@
 const express = require('express');
 const { default: chalk } = require('chalk');
+const authenticated = require('../middlewares/authenticated');
 const sendError = require('../helpers/sendError');
 const mapType = require('../helpers/mapType');
 const mapWorkout = require('../helpers/mapWorkout');
+const mapWorkouts = require('../helpers/mapWorkouts');
+const {
+    calculateMonthlyAnalytics,
+} = require('../helpers/calculateMonthlyAnalytics');
 const {
     addWorkout,
     deleteWorkout,
@@ -14,7 +19,7 @@ const { getWorkoutTypes } = require('../controllers/workoutType');
 
 const router = express.Router({ mergeParams: true });
 
-router.get('/types', async (req, res) => {
+router.get('/types', authenticated, async (req, res) => {
     try {
         const loadedTypes = await getWorkoutTypes();
 
@@ -25,7 +30,7 @@ router.get('/types', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticated, async (req, res) => {
     try {
         const newWorkout = await getWorkout(req.params.id);
 
@@ -36,18 +41,23 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', authenticated, async (req, res) => {
     try {
-        const loadedWorkouts = await getWorkouts();
+        const loadedWorkouts = await getWorkouts(
+            req.query.startTs,
+            req.query.endTs,
+        );
 
-        const workouts = loadedWorkouts.map((workout) => mapWorkout(workout));
-        res.status(200).json(workouts);
+        const monthlyAnalytics = calculateMonthlyAnalytics(loadedWorkouts);
+        const workouts = loadedWorkouts.map((workout) => mapWorkouts(workout));
+
+        res.status(200).json({ workouts, monthlyAnalytics });
     } catch (error) {
         sendError(res, error);
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authenticated, async (req, res) => {
     try {
         const newWorkout = await addWorkout({
             description: req.body.description,
@@ -63,7 +73,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authenticated, async (req, res) => {
     try {
         const updatedWorkout = await updateWorkout(req.params.id, {
             description: req.body.description,
@@ -81,7 +91,7 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticated, async (req, res) => {
     try {
         await deleteWorkout(req.params.id);
 

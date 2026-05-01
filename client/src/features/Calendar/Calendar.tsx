@@ -1,34 +1,32 @@
-import { Button } from '../../shared';
+import { Button, ModalCenter } from '../../shared';
 import { useCalendar } from './useCalendar';
 import { NAME_DAYS_WEEK } from './constants';
 import type { CalendarProps } from './type';
-import type React from 'react';
+import { ListWorkoutsByDay } from './components/ListWorkoutsByDay';
 
 export const Calendar: React.FC<CalendarProps> = ({
     period,
-    onChangePeriod,
+    onGoForwardMonth,
+    onGoBackMonth,
 }) => {
     const {
+        workoutsByDay,
         displayMonthYear,
-        calendarCells,
-        onGoBack,
-        onGoForward,
-        onOpenWorkoutsByDay,
-    } = useCalendar({
-        period,
-        onChangePeriod,
-    });
+        calendarsWithActiveDays,
+        stateModalListWorkouts,
+        onOpenListWorkoutsByDay,
+    } = useCalendar(period);
 
     return (
         <>
             <div className="pb-2 flex flex-row justify-between items-center gap-2 text-base">
-                <Button onClick={onGoBack} variant="link">
+                <Button onClick={onGoBackMonth} variant="link">
                     <span className="text-2xl">&lt;</span>
                 </Button>
 
                 <span>{displayMonthYear}</span>
 
-                <Button onClick={onGoForward} variant="link">
+                <Button onClick={onGoForwardMonth} variant="link">
                     <span className="text-2xl">&gt;</span>
                 </Button>
             </div>
@@ -54,9 +52,9 @@ export const Calendar: React.FC<CalendarProps> = ({
                 place-items-center text-center
                 divide-x divide-y divide-neutral-300 border
                 border-neutral-300 rounded-xl overflow-hidden text-base"
-                onClick={onOpenWorkoutsByDay}
+                onClick={onOpenListWorkoutsByDay}
             >
-                {calendarCells.map((cell, index) => {
+                {calendarsWithActiveDays.map((cell, index) => {
                     return (
                         <li
                             key={`day-${index}`}
@@ -75,7 +73,10 @@ export const Calendar: React.FC<CalendarProps> = ({
                             `}
                         >
                             {cell && (
-                                <time dateTime={cell.fullDate}>
+                                <time
+                                    dateTime={cell.fullDate}
+                                    data-date={cell.fullDate}
+                                >
                                     {cell?.day}
                                 </time>
                             )}
@@ -83,6 +84,12 @@ export const Calendar: React.FC<CalendarProps> = ({
                     );
                 })}
             </ul>
+
+            {stateModalListWorkouts.isOpen && (
+                <ModalCenter onClose={stateModalListWorkouts.onClose}>
+                    <ListWorkoutsByDay workouts={workoutsByDay} />
+                </ModalCenter>
+            )}
         </>
     );
 };

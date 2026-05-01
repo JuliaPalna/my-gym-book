@@ -46,19 +46,19 @@ export const WorkoutForm: React.FC<WorkoutFormProps> = ({
             >
                 <FieldWrapper
                     htmlFor="startedAt"
-                    title="Дата"
+                    title="Дата и время:"
                     error={formState.errors.date?.message}
                 >
                     <Input
                         {...register('date', {})}
                         autoComplete="off"
-                        type="date"
+                        type="datetime-local"
                     />
                 </FieldWrapper>
 
                 <FieldWrapper
                     htmlFor="durationMinutes"
-                    title="Продолжительность (мин)"
+                    title="Продолжительность (мин):"
                     error={formState.errors.durationMinutes?.message}
                 >
                     <Input
@@ -73,7 +73,7 @@ export const WorkoutForm: React.FC<WorkoutFormProps> = ({
                 ) : (
                     <FieldWrapper
                         htmlFor="types"
-                        title="Тэги"
+                        title="Тэги:"
                         error={formState.errors.types?.message}
                     >
                         <Controller
@@ -98,7 +98,7 @@ export const WorkoutForm: React.FC<WorkoutFormProps> = ({
 
                 <FieldWrapper
                     htmlFor="description"
-                    title="Описание"
+                    title="Описание:"
                     error={formState.errors.description?.message}
                 >
                     <textarea
