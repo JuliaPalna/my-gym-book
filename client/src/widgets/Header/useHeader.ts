@@ -1,16 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-    authorizedUserSelector,
-    logoutAction,
-    type AppDispatch,
-} from '../../entities';
+import { authorizedUserSelector, logoutAction } from '../../entities';
 import { TYPE_ROLE_USER } from '../../app/constants';
 import {
     navigationListBase,
     navigationListAuthUser,
     navigationListAdmin,
 } from './constants';
+import type { AppDispatch } from '../../app/store';
 
 export const useHeader = () => {
     const data = useSelector(authorizedUserSelector);
@@ -31,7 +28,7 @@ export const useHeader = () => {
     const onLogout = async () => {
         try {
             await dispatch(logoutAction());
-            sessionStorage.removeItem('auth');
+            sessionStorage.removeItem('authData');
             navigate('/');
         } catch {
             console.error('Ошибка. повторите запрос позже');

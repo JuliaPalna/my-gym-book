@@ -5,11 +5,12 @@ export interface NavigationItem {
 }
 
 export const navigationListBase: NavigationItem[] = [
-    { name: 'Тренировки', href: '/workouts', id: 1 },
+    { name: 'Главная', href: '/', id: 0 },
 ];
 
 export const navigationListAuthUser: NavigationItem[] = [
     ...navigationListBase,
+    { name: 'Тренировки', href: '/workouts', id: 1 },
     { name: 'Создать тренировку', href: '/workout', id: 3 },
 ];
 

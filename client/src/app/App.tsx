@@ -1,18 +1,24 @@
-import { RoutesContainer } from './providers';
+import { RoutesContainer } from './router';
 import { Header, Footer } from '../widgets';
+import { useApp } from './useApp';
 
-export const App: React.FC = () => {
+export const App = (): React.JSX.Element => {
+    useApp();
+
     return (
         <div
-            className="flex flex-col justify-center items-center
+            className="flex-column
             min-h-screen sm:min-h-screen box-border
-            text-neutral-900 bg-white"
+            text-base text-brand-text
+            bg-brand-bg"
         >
             <Header />
 
             <main
-                className="relative @container grow max-w-7xl w-full
-            pt-25 sm:pt-32 px-3 sm:px-10 lg:px-10 text-base "
+                className="relative @container grow
+                w-full sm:max-w-4xl sm:mx-auto
+                p-layout sm:p-x-layout-sm lg:p-x-layout-lg
+                pt-28 sm:pt-32"
             >
                 <RoutesContainer />
             </main>

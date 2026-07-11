@@ -1,13 +1,13 @@
-import axios from 'axios';
-import type { Workout, WorkoutActionProps } from '../types';
+import { apiAxios } from '../../../shared';
+import type { Workout, WorkoutActionValues } from '../types';
 
 export const updateWorkout = async ({
     id,
     data,
 }: {
     id: string;
-    data: WorkoutActionProps;
+    data: WorkoutActionValues;
 }): Promise<Workout> => {
-    const response = await axios.patch(`/api/workouts/${id}`, data);
+    const response = await apiAxios.patch<Workout>(`/api/workouts/${id}`, data);
     return response.data;
 };

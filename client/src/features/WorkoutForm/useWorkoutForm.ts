@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-    initialValueForm,
     workoutSchema,
+    workoutSelector,
+    type Workout,
     type WorkoutFormValues,
-} from './constants';
-import { workoutSelector, type Workout } from '../../entities';
+} from '../../entities';
 import { getDefaultValuesToWorkoutForm } from './utils';
+import { initialValueForm } from './initialValueForm';
 
 export const useWorkoutForm = () => {
     const location = useLocation();
@@ -30,7 +31,7 @@ export const useWorkoutForm = () => {
 
     const onResetFormAndGoMainPage = (): void => {
         reset();
-        navigate('/');
+        navigate('/workouts');
     };
 
     return {

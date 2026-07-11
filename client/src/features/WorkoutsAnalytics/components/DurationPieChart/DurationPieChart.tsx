@@ -4,11 +4,11 @@ import type { DurationPieChartProps } from './type';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const DurationPieChart: React.FC<DurationPieChartProps> = ({
+export const DurationPieChart = ({
     dataPie,
     unitName,
     title,
-}) => {
+}: DurationPieChartProps): React.JSX.Element => {
     const data = {
         labels: dataPie.types,
         datasets: [
@@ -48,7 +48,7 @@ export const DurationPieChart: React.FC<DurationPieChartProps> = ({
                 },
             },
             title: {
-                display: true,
+                display: false,
                 text: title,
                 font: {
                     size: 16,

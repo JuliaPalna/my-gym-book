@@ -1,7 +1,7 @@
-interface ErrorMessageProps {
+export const ErrorMessage = ({
+    children,
+}: {
     children: string;
-}
-
-export const ErrorMessage: React.FC<ErrorMessageProps> = ({ children }) => {
-    return <p className="text-red-800 font-light text-sm">{children}</p>;
+}): React.JSX.Element => {
+    return <p className="text-status-error font-light text-sm">{children}</p>;
 };

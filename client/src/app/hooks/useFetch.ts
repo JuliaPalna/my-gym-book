@@ -1,6 +1,15 @@
 import { useCallback, useState } from 'react';
-import type { UseFetchProps, UseFetchResult } from './type';
 import { AxiosError } from 'axios';
+
+interface UseFetchProps<T> {
+    callback: (data?: T) => Promise<void>;
+}
+
+type UseFetchResult<T = void> = [
+    error: string | null,
+    isLoading: boolean,
+    onFetch: (data?: T) => Promise<void>,
+];
 
 export const useFetch = <T>({
     callback,
@@ -16,14 +25,30 @@ export const useFetch = <T>({
                 await callback(data);
             } catch (error) {
                 if (error instanceof AxiosError) {
-                    const message = error.response?.data;
-                    setError(message);
-                    return;
-                }
+                    const status = error.response?.status;
 
-                const message =
-                    error instanceof Error ? error.message : String(error);
-                setError(message);
+                    switch (status) {
+                        case 500:
+                            setError('Повторите запрос позже');
+                            return;
+                        case 401:
+                            setError('Требуется авторизация.');
+                            return;
+                        case 403:
+                            setError('Доступ к данным запрещен.');
+                            return;
+                        case 404:
+                            setError('Данные не найдены.');
+                            return;
+                        default:
+                            setError('Произошла ошибка при загрузке данных');
+                            return;
+                    }
+                } else {
+                    const message =
+                        error instanceof Error ? error.message : String(error);
+                    setError(message);
+                }
             } finally {
                 setIsLoading(false);
             }

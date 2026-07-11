@@ -1,8 +1,7 @@
 import type { DaysData, PeriodProps } from '../type';
-import { checkValidPeriod } from '../../../utils/checkValidPeriod';
 import { generateCalendarPadding } from './generateCalendarPadding';
 import { generateMonthDays } from './generateMonthDays';
-import { dayjs } from '../../../utils';
+import { dayjs, checkValidPeriod } from '../../../shared';
 
 export function getCalendar(period: PeriodProps): (DaysData | null)[] {
     if (!checkValidPeriod(period)) {

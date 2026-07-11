@@ -1,19 +1,27 @@
 import { Button } from '../../../../shared';
 
-interface BurgerMenuProps {
+export const BurgerMenu = ({
+    onOpen,
+}: {
     onOpen: () => void;
-}
-
-export const BurgerMenu: React.FC<BurgerMenuProps> = ({ onOpen }) => {
+}): React.JSX.Element => {
     return (
-        <div className="block sm:hidden relative size-6 mx-3">
+        <div className="block sm:hidden relative">
             <Button variant="link" onClick={onOpen}>
-                <div
-                    className='min-h-6 min-w-6 border-y-2 border-neutral-900
-                        before:content-[""] before:absolute before:inset-x-0
-                        before:top-[calc(50%-1px)] before:border-b-2
-                        before:border-neutral-900'
-                ></div>
+                <div className="relative size-6">
+                    <span
+                        className="absolute left-0 w-full h-0.5
+                    bg-brand-border-dark top-0"
+                    ></span>
+                    <span
+                        className="absolute left-0 w-full h-0.5
+                    bg-brand-border-dark top-1/2 -translate-y-1/2"
+                    ></span>
+                    <span
+                        className="absolute left-0 w-full h-0.5
+                    bg-brand-border-dark top-full -translate-y-full"
+                    ></span>
+                </div>
             </Button>
         </div>
     );

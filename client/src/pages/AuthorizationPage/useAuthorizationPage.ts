@@ -2,20 +2,20 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { authorizationSchema } from './authorizationSchema';
 import { useFetch } from '../../app/hooks';
 import {
     authorizationAction,
-    type AppDispatch,
-    type AuthorizationData,
+    authorizationSchema,
+    type AuthorizationProps,
 } from '../../entities';
+import type { AppDispatch } from '../../app/store';
 
 export const useAuthorizationPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState, reset } =
-        useForm<AuthorizationData>({
+        useForm<AuthorizationProps>({
             defaultValues: {
                 login: '',
                 password: '',
@@ -24,21 +24,21 @@ export const useAuthorizationPage = () => {
             mode: 'onChange',
         });
 
-    const [errorAuthorization, isLoading, authorization] =
-        useFetch<AuthorizationData>({
+    const [errorAuthorization, isAuthorization, authorization] =
+        useFetch<AuthorizationProps>({
             callback: async (data) => {
                 if (!data) {
                     return;
                 }
 
-                const userAuth = await dispatch(authorizationAction(data));
-                sessionStorage.setItem('auth', JSON.stringify(userAuth.login));
+                await dispatch(authorizationAction(data));
+                sessionStorage.setItem('authData', JSON.stringify(data));
                 navigate('/');
                 reset();
             },
         });
 
-    const onSubmitAuthorization = (data: AuthorizationData): void => {
+    const onSubmitAuthorization = (data: AuthorizationProps): void => {
         authorization(data);
     };
 
@@ -46,7 +46,7 @@ export const useAuthorizationPage = () => {
         formState,
         register,
         errorAuthorization,
-        isLoading,
+        isAuthorization,
         handleSubmit,
         onSubmitAuthorization,
     };

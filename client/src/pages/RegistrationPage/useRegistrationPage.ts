@@ -3,22 +3,20 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-    registrationSchema,
-    type RegistrationValuesProps,
-} from './registrationSchema';
-import {
     registrationAction,
-    type AppDispatch,
-    type AuthorizationData,
+    registrationSchema,
+    type AuthorizationProps,
+    type RegistrationProps,
 } from '../../entities';
 import { useFetch } from '../../app/hooks';
+import type { AppDispatch } from '../../app/store';
 
 export const useRegistrationPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState, reset } =
-        useForm<RegistrationValuesProps>({
+        useForm<RegistrationProps>({
             defaultValues: {
                 login: '',
                 password: '',
@@ -27,21 +25,21 @@ export const useRegistrationPage = () => {
             mode: 'onChange',
         });
 
-    const [errorRegistration, isLoading, registration] =
-        useFetch<AuthorizationData>({
+    const [errorRegistration, isRegistration, registration] =
+        useFetch<AuthorizationProps>({
             callback: async (data) => {
                 if (!data) {
                     return;
                 }
 
-                const userAuth = await dispatch(registrationAction(data));
-                sessionStorage.setItem('auth', JSON.stringify(userAuth.login));
+                await dispatch(registrationAction(data));
+                sessionStorage.setItem('authData', JSON.stringify(data));
                 navigate('/');
                 reset();
             },
         });
 
-    const onSubmitRegistration = (data: AuthorizationData): void => {
+    const onSubmitRegistration = (data: AuthorizationProps): void => {
         registration(data);
     };
 
@@ -49,7 +47,7 @@ export const useRegistrationPage = () => {
         formState,
         register,
         errorRegistration,
-        isLoading,
+        isRegistration,
         handleSubmit,
         onSubmitRegistration,
     };

@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge';
 import type { ButtonProps } from './type';
 import { buttonVariants } from './buttonVariants';
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button = ({
     disabled = false,
     children,
     onClick,
@@ -10,7 +10,7 @@ export const Button: React.FC<ButtonProps> = ({
     variant,
     size,
     ...props
-}) => {
+}: ButtonProps): React.JSX.Element => {
     return (
         <button
             onClick={onClick}

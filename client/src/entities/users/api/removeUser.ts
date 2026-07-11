@@ -1,5 +1,5 @@
-import axios from 'axios';
+import { apiAxios } from '../../../shared';
 
 export const removeUser = async (id: string): Promise<void> => {
-    await axios.delete(`/api/users/${id}`);
+    await apiAxios.delete(`/api/users/${id}`);
 };

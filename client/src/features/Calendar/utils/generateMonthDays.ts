@@ -1,5 +1,5 @@
 import type { DaysData, PeriodProps } from '../type';
-import { dayjs } from '../../../utils';
+import { dayjs } from '../../../shared';
 
 export function generateMonthDays({ year, month }: PeriodProps): DaysData[] {
     const countDays: number = dayjs()

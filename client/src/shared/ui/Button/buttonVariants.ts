@@ -1,17 +1,16 @@
 import { cva } from 'class-variance-authority';
 
 export const buttonVariants = cva(
-    `flex justify-center items-center w-full px-3 py-1.5
-    font-semibold cursor-pointer transition-all`,
+    `flex-center font-semibold cursor-pointer transition-all`,
     {
         variants: {
             variant: {
-                base: `text-white bg-teal-800 hover:bg-teal-800/70
-                disabled:bg-neutral-400`,
-                link: `bg-white `,
-                selector: `text-neutral-700 bg-neutral-200
-                    hover:bg-neutral-300 hover:scale-105
-                    aria-pressed:bg-teal-600 aria-pressed:text-white`,
+                base: `w-full text-brand-text-light bg-brand-primary
+                hover:bg-brand-primary-hover disabled:bg-brand-disabled`,
+                link: `bg-transparent hover:scale-110`,
+                selector: `text-brand-border bg-transparent border border-2 border-brand-border
+                    hover:border-brand-primary-hover hover:text-brand-primary-hover
+                    aria-pressed:bg-brand-primary-active aria-pressed:text-brand-text-light`,
             },
             size: {
                 sm: 'px-2 py-1 text-sm',

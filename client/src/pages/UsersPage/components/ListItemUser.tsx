@@ -1,10 +1,18 @@
 import { useOpen } from '../../../app/hooks';
-import { Button, ConfirmDeleteModal, ErrorMessage } from '../../../shared';
-import { formatDateYYYYMMDD } from '../../../utils';
+import {
+    Button,
+    ConfirmDeleteModal,
+    ErrorMessage,
+    formatDateYYYYMMDD,
+    Loader,
+} from '../../../shared';
 import type { ListItemProps } from './type';
 import { useListItemUser } from './useListItemUser';
 
-export const ListItemUser: React.FC<ListItemProps> = ({ user, roles }) => {
+export const ListItemUser = ({
+    user,
+    roles,
+}: ListItemProps): React.JSX.Element => {
     const { login, registeredAt } = user;
     const {
         roleSelected,
@@ -16,8 +24,8 @@ export const ListItemUser: React.FC<ListItemProps> = ({ user, roles }) => {
 
     return (
         <li
-            className="grid grid-cols-2 gap-1 sm:grid-cols-4
-            border-t-2 border-neutral-400 py-2"
+            className="grid grid-cols-2 gap-list sm:grid-cols-4
+            border-t-2 border-brand-border py-2"
         >
             <span className="col-end-2">{login}</span>
 
@@ -45,13 +53,14 @@ export const ListItemUser: React.FC<ListItemProps> = ({ user, roles }) => {
 
             <div
                 className="col-start-2 row-start-1 row-end-4 sm:col-auto sm:row-auto
-                flex flex-col sm:flex-row gap-1"
+                flex-column sm:flex-row gap-list"
             >
                 <Button disabled={isUpdating} onClick={onSave}>
-                    С
+                    {isUpdating ? <Loader /> : 'C'}
                 </Button>
+
                 <Button disabled={isOpen} onClick={onOpen}>
-                    Y
+                    {isOpen ? <Loader /> : 'D'}
                 </Button>
             </div>
 

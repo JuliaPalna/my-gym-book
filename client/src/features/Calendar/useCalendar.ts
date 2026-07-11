@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
     formatDateForDisplay,
@@ -5,15 +6,14 @@ import {
     getActiveDays,
     getCalendar,
 } from './utils';
-import { workoutsSelector, type WorkoutBase } from '../../entities';
-import type { DaysData, PeriodProps } from './type';
-import { useState } from 'react';
-import { formatDateYYYYMMDD } from '../../utils';
+import { workoutsSelector, type WorkoutItem } from '../../entities';
+import { formatDateYYYYMMDD } from '../../shared';
 import { useOpen } from '../../app/hooks';
+import type { DaysData, PeriodProps } from './type';
 
 export const useCalendar = (period: PeriodProps) => {
     const { workouts } = useSelector(workoutsSelector);
-    const [workoutsByDay, setWorkoutsByDay] = useState<WorkoutBase[]>([]);
+    const [workoutsByDay, setWorkoutsByDay] = useState<WorkoutItem[]>([]);
     const stateModalListWorkouts = useOpen();
 
     const displayMonthYear: string = formatDateForDisplay(period);
@@ -26,10 +26,15 @@ export const useCalendar = (period: PeriodProps) => {
 
     const onOpenListWorkoutsByDay = ({ target }: { target: EventTarget }) => {
         if (target instanceof Element) {
-            const element = target.closest('time');
-            const dateTime = element && element.dataset.date;
+            const element: HTMLLIElement | null = target.closest('li');
 
-            if (!dateTime) {
+            if (element === null) {
+                return;
+            }
+
+            const dateTime = element.dataset.date;
+
+            if (dateTime === 'false') {
                 return;
             }
 

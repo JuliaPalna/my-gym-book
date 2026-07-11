@@ -1,6 +1,6 @@
-export const Footer: React.FC = () => {
+export const Footer = (): React.JSX.Element => {
     return (
-        <footer className="py-3 px-1.5 sm:p-6 lg:px-8 w-full bg-white">
+        <footer className="p-layout sm:p-x-layout-sm lg:p-x-layout-lg w-full">
             <div className="pb-3">
                 <address>
                     Email:{' '}

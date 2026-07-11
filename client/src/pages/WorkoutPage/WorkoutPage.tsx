@@ -2,7 +2,7 @@ import { Button, ErrorMessage, Loader } from '../../shared';
 import { WorkoutForm } from '../../features';
 import { useWorkoutPage } from './useWorkoutPage';
 
-export const WorkoutPage: React.FC = () => {
+const WorkoutPage = (): React.JSX.Element => {
     const {
         errorFetch,
         isLoading,
@@ -14,7 +14,7 @@ export const WorkoutPage: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="flex justify-center">
+            <div className="flex-center">
                 <Loader />
             </div>
         );
@@ -27,14 +27,16 @@ export const WorkoutPage: React.FC = () => {
     const errorState = errorUpdate || errorRemove;
 
     return (
-        <>
+        <div className="flex-column gap-form max-w-xl m-auto">
             <WorkoutForm isSubmitting={isUpdating} onSubmit={onUpdate} />
 
             <Button type="submit" disabled={isRemoving} onClick={onRemove}>
-                Удалить
+                {isRemoving ? <Loader /> : 'Удалить'}
             </Button>
 
             {errorState && <ErrorMessage>{errorState}</ErrorMessage>}
-        </>
+        </div>
     );
 };
+
+export default WorkoutPage;

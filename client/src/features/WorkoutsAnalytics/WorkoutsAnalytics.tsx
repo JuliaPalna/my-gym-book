@@ -1,33 +1,33 @@
 import { DurationBarChart, DurationPieChart } from './components';
 import { useWorkoutsAnalytics } from './useWorkoutsAnalytics';
 
-export const WorkoutsAnalytics: React.FC = () => {
+export const WorkoutsAnalytics = (): React.JSX.Element => {
     const { monthlyAnalytics, durationByDay, durationByType } =
         useWorkoutsAnalytics();
 
     return (
         <>
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 ">
-                <div className=" flex-1 flex flex-col gap-1 sm:gap-4">
+            <div className="mt-10 flex-column sm:flex-row gap-form ">
+                <div className=" flex-1 flex-column gap-list sm:gap-form">
                     <span className="font-bold text-3xl">
                         {monthlyAnalytics.totalWorkouts}
                     </span>
-                    <span className="text-neutral-500">Итого тренировок</span>
+                    <span>Итого тренировок</span>
                 </div>
 
-                <div className=" flex-1 flex flex-col  gap-1 sm:gap-4">
+                <div className=" flex-1 flex-column gap-list sm:gap-form">
                     <span className="font-bold text-3xl">
                         {monthlyAnalytics.averageDurationWorkout} мин
                     </span>
-                    <span className="text-neutral-500">
-                        Средняя продолжительность
-                    </span>
+                    <span>Средняя продолжительность</span>
                 </div>
             </div>
 
-            <div className="mt-20 space-y-24 lg:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-6 mx-auto ">
+            <div className="mt-20 space-y-24 lg:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-form mx-auto ">
                 {durationByType && (
-                    <div className="flex justify-center align-top">
+                    <div>
+                        <p>Распределение нагрузки по типам</p>
+
                         <DurationPieChart
                             dataPie={durationByType}
                             unitName="Минуты"
@@ -36,7 +36,9 @@ export const WorkoutsAnalytics: React.FC = () => {
                     </div>
                 )}
 
-                <div className="flex justify-center align-top">
+                <div>
+                    <p>Продолжительность тренировок по дням</p>
+
                     <DurationBarChart
                         dataBar={durationByDay}
                         unitName="Минуты"

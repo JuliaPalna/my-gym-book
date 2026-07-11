@@ -1,4 +1,4 @@
-import { dayjs } from '../../../utils';
+import { dayjs } from '../../../shared';
 import type { PeriodProps } from '../type';
 
 export function formatDateForDisplay(period: PeriodProps): string {

@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFetch } from '../../app/hooks';
-import {
-    authorizedUserSelector,
-    setWorkoutsAction,
-    type AppDispatch,
-} from '../../entities';
+import { authorizedUserSelector, setWorkoutsAction } from '../../entities';
 import type { PeriodProps } from '../../features';
-import { checkValidPeriod, getInitialPeriod } from '../../utils';
+import { checkValidPeriod, getInitialPeriod } from '../../shared';
 import { TYPE_ROLE_USER } from '../../app/constants';
+import type { AppDispatch } from '../../app/store';
 
 export const useWorkoutsPage = () => {
     const authUser = useSelector(authorizedUserSelector);
@@ -23,15 +20,17 @@ export const useWorkoutsPage = () => {
         authUser.roleId === TYPE_ROLE_USER.USER ||
         authUser.roleId === TYPE_ROLE_USER.ADMIN;
 
+    const fetchWorkoutsCallback = useCallback(async () => {
+        await dispatch(setWorkoutsAction(selectedPeriod));
+    }, [dispatch, selectedPeriod]);
+
     const [error, isLoading, fetchWorkouts] = useFetch({
-        callback: async () => {
-            await dispatch(setWorkoutsAction(selectedPeriod));
-        },
+        callback: fetchWorkoutsCallback,
     });
 
     useEffect(() => {
         fetchWorkouts();
-    }, [selectedPeriod]);
+    }, [fetchWorkouts]);
 
     const onGoToCreationForm = (): void => {
         navigate('/workout');

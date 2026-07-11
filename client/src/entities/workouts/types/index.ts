@@ -1,15 +1,7 @@
 import type { ACTION_TYPE } from '../../../app/constants';
+import type { Workout } from '../../workout/types';
 
-export interface WorkoutBase {
-    id: string;
-    startedAt: number;
-    durationMinutes: number;
-    types: string[];
-}
-
-export interface Workout extends WorkoutBase {
-    description: string;
-}
+export type WorkoutItem = Omit<Workout, 'description'>;
 
 export interface MonthlyAnalytics {
     totalWorkouts: number;
@@ -18,7 +10,7 @@ export interface MonthlyAnalytics {
 }
 
 export interface WorkoutsPerMonth {
-    workouts: WorkoutBase[];
+    workouts: WorkoutItem[];
     monthlyAnalytics: MonthlyAnalytics;
 }
 

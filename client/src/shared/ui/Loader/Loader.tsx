@@ -1,12 +1,13 @@
-export const Loader: React.FC = () => {
+export const Loader = (): React.JSX.Element => {
     return (
-        <div
-            className="rounded-full size-10
-            flex justify-center items-center
-            bg-linear-to-t from-teal-900 via-teal-700 to-teal-400
-            animate-spin"
-        >
-            <div className="bg-white rounded-full size-8"></div>
+        <div>
+            <div
+                className="rounded-full size-6 flex-center
+                bg-gradient-to-t from-brand-primary via-brand-primary-hover to-brand-primary-active
+                animate-spin"
+            >
+                <div className="bg-brand-bg rounded-full size-4"></div>
+            </div>
         </div>
     );
 };

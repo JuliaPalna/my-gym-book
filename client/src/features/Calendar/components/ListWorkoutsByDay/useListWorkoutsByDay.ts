@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { formatDateHHmm, formatDateYYYYMMDD } from '../../../../utils';
+import { formatDateHHmm, formatDateYYYYMMDD } from '../../../../shared';
 
 export const useListWorkoutsByDay = () => {
     const navigate = useNavigate();

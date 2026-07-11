@@ -1,6 +1,12 @@
 import { useState } from 'react';
 
-export const useOpen = () => {
+interface UseOpenResult {
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+}
+
+export const useOpen = (): UseOpenResult => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const onOpen = (): void => {

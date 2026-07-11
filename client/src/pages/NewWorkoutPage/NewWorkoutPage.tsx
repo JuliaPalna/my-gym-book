@@ -2,14 +2,23 @@ import { WorkoutForm } from '../../features';
 import { ErrorMessage } from '../../shared';
 import { useNewWorkoutPage } from './useNewWorkoutPage';
 
-export const NewWorkoutPage: React.FC = () => {
-    const { isCreating, error, onCreate } = useNewWorkoutPage();
+const NewWorkoutPage = (): React.JSX.Element => {
+    const { isAuthorizedUser, isCreating, error, onCreate } =
+        useNewWorkoutPage();
+
+    if (!isAuthorizedUser) {
+        return (
+            <ErrorMessage>{`Ошибка: Доступ к данным запрещен. Требуется авторизация.`}</ErrorMessage>
+        );
+    }
 
     return (
-        <>
+        <div className="max-w-xl m-auto">
             <WorkoutForm isSubmitting={isCreating} onSubmit={onCreate} />
 
-            <div>{error && <ErrorMessage>{error}</ErrorMessage>}</div>
-        </>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+        </div>
     );
 };
+
+export default NewWorkoutPage;

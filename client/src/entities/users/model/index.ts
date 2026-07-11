@@ -1,4 +1,3 @@
-export * from './removeUserAction';
-export * from './setUsersAction';
-export * from './updateUserAction';
+export * from './action';
+export * from './reducer';
 export * from './usersSelector';

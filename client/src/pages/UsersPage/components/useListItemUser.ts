@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import {
     removeUserAction,
     updateUserAction,
-    type AppDispatch,
     type User,
 } from '../../../entities';
 import { useFetch } from '../../../app/hooks';
 import { TYPE_ROLE_USER, type TypeRoleUser } from '../../../app/constants';
+import type { AppDispatch } from '../../../app/store';
 
 export const useListItemUser = (user: User) => {
     const [roleSelected, setRoleSelected] = useState<TypeRoleUser>(user.roleId);

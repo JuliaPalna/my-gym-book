@@ -4,7 +4,7 @@ import { Calendar, WorkoutsAnalytics } from '../../features';
 import { useWorkoutsPage } from './useWorkoutsPage';
 import { workoutsSelector, type WorkoutsPerMonth } from '../../entities';
 
-export const WorkoutsPage: React.FC = () => {
+const WorkoutsPage = (): React.JSX.Element => {
     const { workouts }: WorkoutsPerMonth = useSelector(workoutsSelector);
 
     const {
@@ -17,10 +17,16 @@ export const WorkoutsPage: React.FC = () => {
         onGoToCreationForm,
     } = useWorkoutsPage();
 
+    if (!isAuthorizedUser) {
+        return (
+            <ErrorMessage>{`Ошибка: Доступ к данным запрещен. Требуется авторизация.`}</ErrorMessage>
+        );
+    }
+
     return (
         <>
-            <section className="h-[calc(100vh-10rem)] flex flex-col justify-around">
-                <div className="m-auto max-w-sm py-1 sm:p-6 lg:px-8">
+            <section className="flex flex-col justify-around mb-8">
+                <div className="m-auto max-w-sm">
                     <Calendar
                         period={selectedPeriod}
                         onGoForwardMonth={onGoForwardMonth}
@@ -29,7 +35,7 @@ export const WorkoutsPage: React.FC = () => {
                 </div>
 
                 {isAuthorizedUser && (
-                    <div className="m-auto mt-10 lg:mt-20 ">
+                    <div className="m-auto mt-10 lg:mt-15">
                         <Button onClick={onGoToCreationForm}>
                             Создать тренировку вручную
                         </Button>
@@ -37,23 +43,27 @@ export const WorkoutsPage: React.FC = () => {
                 )}
             </section>
 
-            <section className="py-10">
-                <p>Аналитика за месяц</p>
+            <section>
+                <p className="text-center font-semibold py-1 text-xl">
+                    Аналитика за месяц
+                </p>
 
                 {isLoading ? (
-                    <div className="flex justify-center">
+                    <div className="flex-center">
                         <Loader />
                     </div>
-                ) : error ? (
-                    <ErrorMessage>{`Ошибка: ${error}`}</ErrorMessage>
-                ) : workouts.length > 0 ? (
-                    <WorkoutsAnalytics />
-                ) : (
+                ) : workouts.length === 0 ? (
                     <p className="text-center">
                         Нет тренировок за выбранный период
                     </p>
+                ) : workouts.length > 0 && !error ? (
+                    <WorkoutsAnalytics />
+                ) : (
+                    <ErrorMessage>{`Ошибка: Повторите запрос позже`}</ErrorMessage>
                 )}
             </section>
         </>
     );
 };
+
+export default WorkoutsPage;

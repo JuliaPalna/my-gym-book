@@ -1,17 +1,11 @@
 import type { ACTION_TYPE } from '../../../app/constants';
-export interface WorkoutActionProps {
+import type { WorkoutFormValues } from '../lib';
+
+export type WorkoutActionValues = Omit<WorkoutFormValues, 'startedAt'> & {
     startedAt: number;
-    description: string;
-    durationMinutes: number;
-    types: string[];
-}
-export interface Workout {
-    id: string;
-    startedAt: number;
-    description: string;
-    durationMinutes: number;
-    types: string[];
-}
+};
+
+export type Workout = WorkoutActionValues & { id: string };
 
 export interface TypeWorkout {
     id: string;

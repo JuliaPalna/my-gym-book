@@ -1,18 +1,18 @@
-import { ACTION_TYPE } from '../../../app/constants';
-import type { User } from '../../users';
+import { ACTION_TYPE, type TypeRoleUser } from '../../../app/constants';
+
+export interface AuthUser {
+    id: string;
+    roleId: TypeRoleUser;
+    login: string;
+}
 
 export interface AuthorizationAction {
     type: typeof ACTION_TYPE.SET_AUTHORIZED_USER;
-    payload: User;
+    payload: AuthUser;
 }
 
 export interface LogoutAction {
     type: typeof ACTION_TYPE.REMOVE_AUTHORIZED_USER;
-}
-
-export interface AuthorizationData {
-    login: string;
-    password: string;
 }
 
 export type AuthUserActions = AuthorizationAction | LogoutAction;

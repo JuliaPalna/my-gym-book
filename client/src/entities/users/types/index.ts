@@ -1,13 +1,12 @@
 import type { ACTION_TYPE, TypeRoleUser } from '../../../app/constants';
+import type { AuthUser } from '../../authorizedUser';
+
 export interface RoleUser {
     id: TypeRoleUser;
     title: string;
 }
 
-export interface User {
-    id: string;
-    roleId: TypeRoleUser;
-    login: string;
+export interface User extends AuthUser {
     registeredAt: number;
 }
 

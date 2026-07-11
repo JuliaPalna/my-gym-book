@@ -1,1 +1,1 @@
-export * from './AuthorizationPage.tsx';
+export { default } from './AuthorizationPage';

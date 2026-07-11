@@ -19,11 +19,11 @@ ChartJS.register(
     Legend,
 );
 
-export const DurationBarChart: React.FC<DurationBarChartProps> = ({
+export const DurationBarChart = ({
     dataBar,
     unitName,
     title,
-}) => {
+}: DurationBarChartProps): React.JSX.Element => {
     const data = {
         labels: dataBar.days,
         datasets: [
@@ -45,16 +45,15 @@ export const DurationBarChart: React.FC<DurationBarChartProps> = ({
                 labels: {
                     font: { size: 13 },
                     color: 'rgb(74,85,101)',
-                    padding: 16,
                 },
             },
             title: {
-                display: true,
+                display: false,
                 text: title,
                 font: {
                     size: 16,
                 },
-                color: 'rgb(74,85,101)',
+                color: 'rgb(26,26,26)',
             },
         },
         scales: {

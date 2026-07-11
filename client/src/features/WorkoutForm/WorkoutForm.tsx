@@ -3,24 +3,23 @@ import {
     Button,
     ErrorMessage,
     FieldWrapper,
+    Form,
     Input,
     Loader,
     SelectOptions,
+    Textarea,
     Title,
 } from '../../shared';
 import { useWorkoutForm } from './useWorkoutForm';
-import type { WorkoutFormValues } from './constants';
-import { useTypesWorkout } from './hooks';
+import { useTypesWorkout, type WorkoutFormValues } from '../../entities';
 
-interface WorkoutFormProps {
-    isSubmitting: boolean;
-    onSubmit: (data: WorkoutFormValues) => void;
-}
-
-export const WorkoutForm: React.FC<WorkoutFormProps> = ({
+export const WorkoutForm = ({
     isSubmitting,
     onSubmit,
-}) => {
+}: {
+    isSubmitting: boolean;
+    onSubmit: (data: WorkoutFormValues) => void;
+}): React.JSX.Element => {
     const {
         workoutTypes,
         error: errorWorkoutTypes,
@@ -39,89 +38,85 @@ export const WorkoutForm: React.FC<WorkoutFormProps> = ({
         <>
             <Title>Тренировка</Title>
 
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-col justify-center gap-5
-                min-h-full max-w-xl m-auto  px-1 py-12 lg:px-8"
-            >
-                <FieldWrapper
-                    htmlFor="startedAt"
-                    title="Дата и время:"
-                    error={formState.errors.date?.message}
-                >
-                    <Input
-                        {...register('date', {})}
-                        autoComplete="off"
-                        type="datetime-local"
-                    />
-                </FieldWrapper>
-
-                <FieldWrapper
-                    htmlFor="durationMinutes"
-                    title="Продолжительность (мин):"
-                    error={formState.errors.durationMinutes?.message}
-                >
-                    <Input
-                        {...register('durationMinutes', {})}
-                        type="number"
-                        autoComplete="off"
-                    />
-                </FieldWrapper>
-
-                {isLoadingWorkoutTypes ? (
-                    <Loader />
-                ) : (
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <>
                     <FieldWrapper
-                        htmlFor="types"
-                        title="Тэги:"
-                        error={formState.errors.types?.message}
+                        htmlFor="startedAt"
+                        title="Дата и время:"
+                        error={formState.errors.startedAt?.message}
                     >
-                        <Controller
-                            name="types"
-                            control={control}
-                            render={({ field }) => {
-                                return (
-                                    <SelectOptions
-                                        options={workoutTypes}
-                                        value={field.value ?? []}
-                                        onChange={field.onChange}
-                                    />
-                                );
-                            }}
+                        <Input
+                            {...register('startedAt', {})}
+                            autoComplete="off"
+                            type="datetime-local"
                         />
                     </FieldWrapper>
-                )}
 
-                {errorWorkoutTypes && (
-                    <ErrorMessage>{errorWorkoutTypes}</ErrorMessage>
-                )}
+                    <FieldWrapper
+                        htmlFor="durationMinutes"
+                        title="Продолжительность (мин):"
+                        error={formState.errors.durationMinutes?.message}
+                    >
+                        <Input
+                            {...register('durationMinutes', {})}
+                            type="number"
+                            autoComplete="off"
+                        />
+                    </FieldWrapper>
 
-                <FieldWrapper
-                    htmlFor="description"
-                    title="Описание:"
-                    error={formState.errors.description?.message}
-                >
-                    <textarea
-                        {...register('description', {})}
-                        autoComplete="off"
-                        placeholder="Введите..."
-                        className="block w-full h-25 px-1 py-1.5
-                        bg-white text-base sm:text-sm/6
-                        text-neutral-900 placeholder:text-neutral-400
-                        outline-1 -outline-offset-1 outline-neutral-300
-                        focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 transition-colors"
-                    />
-                </FieldWrapper>
+                    {isLoadingWorkoutTypes ? (
+                        <Loader />
+                    ) : (
+                        <FieldWrapper
+                            htmlFor="types"
+                            title="Тэги:"
+                            error={formState.errors.types?.message}
+                        >
+                            <Controller
+                                name="types"
+                                control={control}
+                                render={({ field }) => {
+                                    return (
+                                        <SelectOptions
+                                            options={workoutTypes}
+                                            value={field.value ?? []}
+                                            onChange={field.onChange}
+                                        />
+                                    );
+                                }}
+                            />
+                        </FieldWrapper>
+                    )}
 
-                <Button
-                    type="submit"
-                    disabled={!formState.isValid || isSubmitting}
-                >
-                    {isSubmitting ? <Loader /> : 'Сохранить'}
-                </Button>
+                    {errorWorkoutTypes && (
+                        <ErrorMessage>{errorWorkoutTypes}</ErrorMessage>
+                    )}
 
-                <Button onClick={onResetFormAndGoMainPage}>Отмена</Button>
-            </form>
+                    <FieldWrapper
+                        htmlFor="description"
+                        title="Описание:"
+                        error={formState.errors.description?.message}
+                    >
+                        <Textarea
+                            {...register('description', {})}
+                            autoComplete="off"
+                        />
+                    </FieldWrapper>
+
+                    <div className="flex-column sm:flex-row gap-list">
+                        <Button
+                            type="submit"
+                            disabled={!formState.isValid || isSubmitting}
+                        >
+                            {isSubmitting ? <Loader /> : 'Сохранить'}
+                        </Button>
+
+                        <Button onClick={onResetFormAndGoMainPage}>
+                            Отмена
+                        </Button>
+                    </div>
+                </>
+            </Form>
         </>
     );
 };

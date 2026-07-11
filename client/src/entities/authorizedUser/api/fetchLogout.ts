@@ -1,5 +1,5 @@
-import axios from 'axios';
+import { apiAxios } from '../../../shared';
 
 export const fetchLogout = async (): Promise<void> => {
-    await axios.post(`/api/logout`);
+    await apiAxios.post(`/api/logout`);
 };

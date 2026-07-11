@@ -1,5 +1,3 @@
-export * from './createWorkoutAction';
-export * from './removeWorkoutAction';
-export * from './setWorkoutAction';
-export * from './updateWorkoutAction';
+export * from './action';
+export * from './reducer';
 export * from './workoutSelector';
