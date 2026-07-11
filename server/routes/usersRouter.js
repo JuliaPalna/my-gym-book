@@ -6,7 +6,7 @@ const { deleteUser, getUsers, updateUser } = require('../controllers/user');
 const { getRoles } = require('../controllers/role');
 const mapUser = require('../helpers/mapUser');
 const sendError = require('../helpers/sendError');
-const ROLES = require('../constants/role');
+const ROLES = require('../constants/roles');
 
 const router = express.Router({ mergeParams: true });
 
@@ -49,6 +49,7 @@ router.patch(
             console.log(
                 chalk.bgGreen(`User has been updated: ${req.params.id}`),
             );
+
             res.status(200).json(mapUser(updatedUser));
         } catch (error) {
             sendError(res, error);
@@ -67,6 +68,7 @@ router.delete(
             console.log(
                 chalk.bgGreen(`User has been removed: ${req.params.id}`),
             );
+
             res.status(200).json(null);
         } catch (error) {
             sendError(res, error);

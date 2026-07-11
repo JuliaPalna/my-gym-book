@@ -15,7 +15,8 @@ router.post('/register', async (req, res) => {
             .status(200)
             .json(mapUser(user));
     } catch (error) {
-        res.status(error.status || 401).send(error.message || 'Unknown error');
+        res.status(error.status || 401)
+            .send(error.message || 'Unknown error');
     }
 });
 
@@ -27,15 +28,19 @@ router.post('/login', async (req, res) => {
             .status(200)
             .json(mapUser(user));
     } catch (error) {
-        res.status(error.status || 401).json(error.message || 'Unknown error');
+        res.status(error.status || 401)
+            .json(error.message || 'Unknown error');
     }
 });
 
 router.post('/logout', async (req, res) => {
     try {
-        res.cookie('token', '', { httpOnly: true }).status(200).json(null);
+        res.cookie('token', '', { httpOnly: true })
+            .status(200)
+            .json(null);
     } catch (error) {
-        res.status(error.status || 500).json(error.message || 'Unknown error');
+        res.status(error.status || 500)
+            .json(error.message || 'Unknown error');
     }
 });
 

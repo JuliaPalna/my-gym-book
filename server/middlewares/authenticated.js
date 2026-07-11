@@ -4,7 +4,13 @@ const { verify } = require('../helpers/token.js');
 const User = require('../models/User');
 
 async function authenticated(req, res, next) {
-    const tokenData = verify(req.cookies.token);
+    const token = req.cookies.token;
+
+    if(!token) {
+        return res.status(401).json({ message: 'Требуется авторизация' });
+    }
+
+    const tokenData = verify(token);
 
     const user = await User.findOne({ _id: tokenData.id });
 

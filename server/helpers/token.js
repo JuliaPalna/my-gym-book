@@ -7,4 +7,8 @@ module.exports = {
             expiresIn: '30d',
         });
     },
+
+     verify(token) {
+        return jwt.verify(token, JWT_SECRET);
+    },
 };

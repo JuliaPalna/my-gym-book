@@ -1,6 +1,6 @@
 const Workout = require('../models/Workout');
 
-async function getWorkouts(startTs, endTs) {
+async function getWorkouts(startTs, endTs, userId) {
     const start = Number(startTs);
     const end = Number(endTs);
 
@@ -8,9 +8,12 @@ async function getWorkouts(startTs, endTs) {
         throw new Error('Invalid timestamps');
     }
 
-    const workouts = await Workout.find({
-        started_at: { $gte: start, $lt: end },
-    }).sort({ started_at: 1 });
+    const workouts = await Workout
+        .find({
+            author_id: userId,
+            started_at: { $gte: start, $lt: end },
+        })
+        .sort({ started_at: 1 });
 
     return workouts;
 }
