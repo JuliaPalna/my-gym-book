@@ -28,6 +28,7 @@ export const useNewWorkoutPage = () => {
             }
 
             await dispatch(createWorkoutAction(data));
+            sessionStorage.removeItem('timerState');
             navigate('/workouts');
         },
     });

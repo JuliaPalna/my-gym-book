@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
     workoutsSelector,
@@ -10,10 +11,17 @@ export const useWorkoutsAnalytics = () => {
     const { workouts, monthlyAnalytics }: WorkoutsPerMonth =
         useSelector(workoutsSelector);
 
-    const durationByDay = mapperDurationByDayForBarChart(workouts);
-    const durationByType = !monthlyAnalytics.durationByType
-        ? null
-        : mapperDurationByTypeForPieChart(monthlyAnalytics.durationByType);
+    const durationByDay = useMemo(() => {
+        return mapperDurationByDayForBarChart(workouts);
+    }, [workouts]);
+
+    const durationByType = useMemo(() => {
+        if (!monthlyAnalytics.durationByType) {
+            return null;
+        }
+
+        return mapperDurationByTypeForPieChart(monthlyAnalytics.durationByType);
+    }, [monthlyAnalytics.durationByType]);
 
     return { monthlyAnalytics, durationByDay, durationByType };
 };

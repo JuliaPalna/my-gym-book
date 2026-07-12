@@ -29,6 +29,7 @@ export const useHeader = () => {
         try {
             await dispatch(logoutAction());
             sessionStorage.removeItem('authData');
+            sessionStorage.removeItem('timerState');
             navigate('/');
         } catch {
             console.error('Ошибка. повторите запрос позже');

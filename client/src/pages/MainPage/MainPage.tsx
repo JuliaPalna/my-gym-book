@@ -1,3 +1,4 @@
+import { Timer } from '../../features/Timer/Timer';
 import { features } from './constants';
 
 const MainPage = (): React.JSX.Element => {
@@ -24,7 +25,7 @@ const MainPage = (): React.JSX.Element => {
 
             <div
                 className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl
-            grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-y-16"
+                grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-y-16"
             >
                 {features.map((feature) => (
                     <div key={feature.id} className="relative sm:pl-16">
@@ -44,6 +45,10 @@ const MainPage = (): React.JSX.Element => {
                         </div>
                     </div>
                 ))}
+            </div>
+
+            <div className="max-w-xl m-auto mt-16">
+                <Timer />
             </div>
         </>
     );

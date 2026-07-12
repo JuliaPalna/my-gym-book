@@ -4,6 +4,7 @@ import { BurgerMenu, ModalNavigationMenu, NavigationMenu } from './components';
 import { useHeader } from './useHeader';
 import { useOpen } from '../../app/hooks';
 import { NavigationLink } from '../../shared/ui/NavigationLink';
+import Logo from '../../../public/favicon.svg?react';
 
 export const Header = (): React.JSX.Element => {
     const { navigationList, isAuthorizedUser, onLogout } = useHeader();
@@ -30,11 +31,7 @@ export const Header = (): React.JSX.Element => {
                 <Link to="/">
                     <span className="sr-only">Your Company</span>
 
-                    <img
-                        alt="logo"
-                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=teal&shade=600"
-                        className="h-8 w-auto"
-                    />
+                    <Logo className="h-8 w-auto fill-brand-primary" />
                 </Link>
             </div>
 
