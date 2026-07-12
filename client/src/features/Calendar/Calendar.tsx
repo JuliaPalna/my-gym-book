@@ -58,8 +58,10 @@ export const Calendar = ({
                     return (
                         <li
                             key={`day-${index}`}
-                            data-date={cell && cell.hasWorkout && cell.fullDate}
-                            className={`h-12 aspect-square w-full flex-center
+                            data-date={
+                                cell?.hasWorkout ? cell.fullDate : undefined
+                            }
+                            className={`relative h-12 aspect-square w-full flex-center
                             [&:nth-child(7n)]:border-l-0
                             [&:nth-last-child(-n+7)]:border-t-0
                                 ${
@@ -67,7 +69,8 @@ export const Calendar = ({
                                         ? `before:content-[''] before:absolute before:-z-fixed
                                             before:size-9 sm:before:w-10 sm:before:h-10 before:rounded-3xl
                                             before:bg-brand-primary-active
-                                            text-brand-text-light opacity-70 cursor-pointer`
+                                            text-brand-text-light opacity-70 cursor-pointer
+                                            before:animate-pop-in`
                                         : ''
                                 }
                             `}
@@ -75,7 +78,7 @@ export const Calendar = ({
                             {cell && (
                                 <time
                                     dateTime={cell.fullDate}
-                                    className="inline-blok w-full h-hull"
+                                    className="inline-block w-full flex-center"
                                 >
                                     {cell.day}
                                 </time>

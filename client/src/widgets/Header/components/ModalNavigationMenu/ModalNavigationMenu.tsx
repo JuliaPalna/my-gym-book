@@ -18,7 +18,7 @@ export const ModalNavigationMenu = ({
 
             <div
                 className={`fixed top-0 bottom-0 left-0 max-w-xs
-                bg-brand-bg z-modal sm:hidden transition-transform
+                bg-brand-bg z-modal sm:hidden animate-transform
             ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
             >
                 <div className="ml-3 mt-3 mb-8">

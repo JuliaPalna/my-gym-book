@@ -16,9 +16,9 @@ export const Header = (): React.JSX.Element => {
             p-layout sm:p-x-layout-sm lg:p-x-layout-lg
             bg-inherit sm:shadow-2xl"
         >
-            <BurgerMenu onOpen={onOpen} />
-
             <div className="inline-block sm:hidden">
+                <BurgerMenu onOpen={onOpen} />
+
                 <ModalNavigationMenu
                     isOpen={isOpen}
                     onClose={onClose}
@@ -29,6 +29,7 @@ export const Header = (): React.JSX.Element => {
             <div>
                 <Link to="/">
                     <span className="sr-only">Your Company</span>
+
                     <img
                         alt="logo"
                         src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=teal&shade=600"
@@ -49,7 +50,7 @@ export const Header = (): React.JSX.Element => {
                         </Button>
                     </div>
                 ) : (
-                    <NavigationLink href="/login">
+                    <NavigationLink href="/login" variant="header">
                         <>
                             Войти <span aria-hidden="true">&rarr;</span>
                         </>

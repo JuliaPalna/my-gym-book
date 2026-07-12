@@ -13,7 +13,6 @@ export default {
                     'primary-hover': '#00695C',
                     'primary-active': '#004D40',
 
-                    //border outline
                     border: '#a3a3a3',
                     'border-dark': '#1a1a1a',
                     'border-hover': '#0d9488',
@@ -24,7 +23,7 @@ export default {
                     shadow: '#'
                 },
                 status: {
-                    error: '#991b1b', //red
+                    error: '#991b1b',
                     success: '#22c55e'
                 },
 
@@ -37,11 +36,21 @@ export default {
             gap: {
                 'list': '1rem',
                 'form': '1.5rem',
+                'small': '.5rem'
             },
             padding: {
                 'layout': '1rem',
                 'layout-sm': '3rem',
                 'layout-lg': '6rem',
+            },
+            keyframes: {
+                'pop-in': {
+                    '0%': { transform: 'scale(0)', opacity: '0' },
+                    '100%': { transform: 'scale(1)', opacity: '1' },
+                },
+            },
+            animation: {
+                'pop-in': 'pop-in 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
             },
         },
     },
@@ -70,7 +79,11 @@ export default {
                     display: 'flex',
                     flexDirection: 'column',
                 },
-
+                '.animate-transform': {
+                    transitionProperty: 'transform',
+                    transitionDuration: '300ms',
+                    transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                },
             })
         }
     ],

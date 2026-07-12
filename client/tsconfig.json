@@ -27,6 +27,7 @@
     "include": [
         "src",
         "src/pages/WorkoutPage/useFetchWorkout.ts",
-        "../server/helpers/calculateMonthlyAnalytics.js"
+        "../server/helpers/calculateMonthlyAnalytics.js",
+        "vite-env.d.ts"
     ]
 }

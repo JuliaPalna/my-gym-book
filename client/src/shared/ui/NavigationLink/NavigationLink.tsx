@@ -22,7 +22,7 @@ export const NavigationLink = ({
             modalActiveClasses = isActive
                 ? 'before:bg-brand-primary text-brand-primary'
                 : `before:scale-x-0 hover:before:scale-x-110
-                hover:before:bg-brand-primary before:transition-transform`;
+                hover:before:bg-brand-primary before:animate-transform`;
         }
 
         return modalActiveClasses;

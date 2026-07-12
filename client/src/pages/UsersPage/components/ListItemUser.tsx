@@ -8,6 +8,8 @@ import {
 } from '../../../shared';
 import type { ListItemProps } from './type';
 import { useListItemUser } from './useListItemUser';
+import Save from '../../../app/assets/saveDisk.svg?react';
+import Delete from '../../../app/assets/trash.svg?react';
 
 export const ListItemUser = ({
     user,
@@ -24,7 +26,7 @@ export const ListItemUser = ({
 
     return (
         <li
-            className="grid grid-cols-2 gap-list sm:grid-cols-4
+            className="grid grid-cols-[1fr_auto] sm:grid-cols-4 gap-small sm:gap-list
             border-t-2 border-brand-border py-2"
         >
             <span className="col-end-2">{login}</span>
@@ -36,7 +38,7 @@ export const ListItemUser = ({
             <select
                 defaultValue={roleSelected}
                 onChange={onChangeRoleSelected}
-                className="col-end-2 row-start-3 sm:col-auto sm:row-auto"
+                className="col-end-2 row-start-3 sm:col-auto sm:row-auto cursor-pointer"
             >
                 <option key="default" disabled>
                     Выбрать
@@ -56,11 +58,19 @@ export const ListItemUser = ({
                 flex-column sm:flex-row gap-list"
             >
                 <Button disabled={isUpdating} onClick={onSave}>
-                    {isUpdating ? <Loader /> : 'C'}
+                    {isUpdating ? (
+                        <Loader />
+                    ) : (
+                        <Save className="size-6 fill-current" />
+                    )}
                 </Button>
 
                 <Button disabled={isOpen} onClick={onOpen}>
-                    {isOpen ? <Loader /> : 'D'}
+                    {isOpen ? (
+                        <Loader />
+                    ) : (
+                        <Delete className="size-6 fill-current" />
+                    )}
                 </Button>
             </div>
 

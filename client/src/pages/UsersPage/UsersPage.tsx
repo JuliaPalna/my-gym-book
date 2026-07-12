@@ -16,7 +16,7 @@ const UsersPage = (): React.JSX.Element => {
             <ul className="flex-column gap-list mt-10 ">
                 <li
                     key={'header'}
-                    className="grid grid-cols-2 gap-list sm:grid-cols-4"
+                    className="grid grid-cols-[1fr_auto] sm:grid-cols-4 gap-small sm:gap-list"
                 >
                     <span className="font-bold col-start-1 col-end-3 sm:col-auto sm:row-auto">
                         Логин

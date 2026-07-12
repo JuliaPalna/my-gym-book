@@ -1,4 +1,9 @@
-import { DurationBarChart, DurationPieChart } from './components';
+import {
+    DurationBarChart,
+    DurationPieChart,
+    WrapperChart,
+    WrapperData,
+} from './components';
 import { useWorkoutsAnalytics } from './useWorkoutsAnalytics';
 
 export const WorkoutsAnalytics = (): React.JSX.Element => {
@@ -8,43 +13,35 @@ export const WorkoutsAnalytics = (): React.JSX.Element => {
     return (
         <>
             <div className="mt-10 flex-column sm:flex-row gap-form ">
-                <div className=" flex-1 flex-column gap-list sm:gap-form">
-                    <span className="font-bold text-3xl">
-                        {monthlyAnalytics.totalWorkouts}
-                    </span>
-                    <span>Итого тренировок</span>
-                </div>
+                <WrapperData
+                    description="Итого тренировок"
+                    data={monthlyAnalytics.totalWorkouts}
+                />
 
-                <div className=" flex-1 flex-column gap-list sm:gap-form">
-                    <span className="font-bold text-3xl">
-                        {monthlyAnalytics.averageDurationWorkout} мин
-                    </span>
-                    <span>Средняя продолжительность</span>
-                </div>
+                <WrapperData
+                    description="Средняя продолжительность"
+                    data={`${monthlyAnalytics.averageDurationWorkout} мин`}
+                />
             </div>
 
             <div className="mt-20 space-y-24 lg:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-form mx-auto ">
                 {durationByType && (
-                    <div>
-                        <p>Распределение нагрузки по типам</p>
-
+                    <WrapperChart subtitle="Распределение нагрузки по типам">
                         <DurationPieChart
                             dataPie={durationByType}
                             unitName="Минуты"
                             title="Распределение нагрузки по типам"
                         />
-                    </div>
+                    </WrapperChart>
                 )}
 
-                <div>
-                    <p>Продолжительность тренировок по дням</p>
-
+                <WrapperChart subtitle="Продолжительность тренировок по дням">
                     <DurationBarChart
                         dataBar={durationByDay}
                         unitName="Минуты"
                         title="Продолжительность тренировок по дням"
                     />
-                </div>
+                </WrapperChart>
             </div>
         </>
     );
