@@ -12,12 +12,13 @@ const MainPage = (): React.JSX.Element => {
                     className="mt-2 text-4xl font-semibold tracking-tight
                     text-pretty sm:text-5xl lg:text-balance"
                 >
-                    Всё необходимое для начала тренировки
+                    Твой личный дневник тренировок
                 </p>
 
                 <p className="hidden sm:block mt-6 text-lg/8">
-                    Quis tellus eget adipiscing convallis sit sit eget aliquet
-                    quis. Suspendisse eget egestas a elementum
+                    Фиксируй результаты, следи за регулярностью и анализируй
+                    свой прогресс. Всё, что нужно для достижения фитнес-целей, в
+                    одном удобном приложении.
                 </p>
             </div>
 
@@ -29,12 +30,16 @@ const MainPage = (): React.JSX.Element => {
                     <div key={feature.id} className="relative sm:pl-16">
                         <div
                             className="hidden sm:absolute sm:top-0 sm:left-0 sm:size-10
-                            sm:flex-center sm:bg-brand-primary"
-                        ></div>
+                            sm:flex-center"
+                        >
+                            {feature.icon}
+                        </div>
+
                         <div className="text-base/7">
                             <p className="font-semibold text-2xl">
                                 {feature.name}
                             </p>
+
                             <p className="pt-2">{feature.description}</p>
                         </div>
                     </div>
