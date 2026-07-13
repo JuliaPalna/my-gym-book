@@ -17,10 +17,10 @@ router.get(
     async (req, res) => {
         try {
             const roles = await getRoles();
-
             res.status(200).json(roles);
         } catch (error) {
-            sendError(res, error);
+            res.status(error.status || 400)
+                .json({ message: error.message || 'Ошибка запроса' });
         }
     },
 );
@@ -29,10 +29,10 @@ router.get('/', authenticated, hasRole([ROLES.ADMIN]), async (req, res) => {
     try {
         const loadedUsers = await getUsers();
         const users = loadedUsers.map((user) => mapUser(user));
-
         res.status(200).json(users);
     } catch (error) {
-        sendError(res, error);
+        res.status(error.status || 400)
+            .json({ message: error.message || 'Ошибка запроса' });
     }
 });
 
@@ -52,7 +52,8 @@ router.patch(
 
             res.status(200).json(mapUser(updatedUser));
         } catch (error) {
-            sendError(res, error);
+            res.status(error.status || 400)
+                .json({ message: error.message || 'Ошибка запроса' });
         }
     },
 );
@@ -71,7 +72,8 @@ router.delete(
 
             res.status(200).json(null);
         } catch (error) {
-            sendError(res, error);
+            res.status(error.status || 400)
+                .json({ message: error.message || 'Ошибка запроса' });
         }
     },
 );

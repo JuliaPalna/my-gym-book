@@ -4,7 +4,7 @@ import { BurgerMenu, ModalNavigationMenu, NavigationMenu } from './components';
 import { useHeader } from './useHeader';
 import { useOpen } from '../../app/hooks';
 import { NavigationLink } from '../../shared/ui/NavigationLink';
-import Logo from '../../../public/favicon.svg?react';
+import Logo from '../../app/assets/icons/logo.svg?react';
 
 export const Header = (): React.JSX.Element => {
     const { navigationList, isAuthorizedUser, onLogout } = useHeader();

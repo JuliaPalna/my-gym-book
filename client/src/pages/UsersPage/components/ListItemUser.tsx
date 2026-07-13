@@ -8,8 +8,8 @@ import {
 } from '../../../shared';
 import type { ListItemProps } from './type';
 import { useListItemUser } from './useListItemUser';
-import Save from '../../../app/assets/saveDisk.svg?react';
-import Delete from '../../../app/assets/trash.svg?react';
+import Save from '../../../app/assets/icons/saveDisk.svg?react';
+import Delete from '../../../app/assets/icons/trash.svg?react';
 
 export const ListItemUser = ({
     user,

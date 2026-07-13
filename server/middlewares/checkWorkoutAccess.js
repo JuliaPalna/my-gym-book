@@ -19,7 +19,8 @@ async function checkWorkoutAccess(req, res, next) {
 
         next();
     } catch (error) {
-        sendError(res, error);
+        res.status(error.status || 400)
+            .json({ message: error.message || 'Ошибка запроса' });
     }
 };
 

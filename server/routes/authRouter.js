@@ -15,8 +15,8 @@ router.post('/register', async (req, res) => {
             .status(200)
             .json(mapUser(user));
     } catch (error) {
-        res.status(error.status || 401)
-            .send(error.message || 'Unknown error');
+        res.status(error.status || 400)
+            .json({ message: error.message || 'Ошибка регистрации' });
     }
 });
 
@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
             .json(mapUser(user));
     } catch (error) {
         res.status(error.status || 401)
-            .json(error.message || 'Unknown error');
+            .json({ message: error.message || 'Ошибка входа' });
     }
 });
 
@@ -40,7 +40,7 @@ router.post('/logout', async (req, res) => {
             .json(null);
     } catch (error) {
         res.status(error.status || 500)
-            .json(error.message || 'Unknown error');
+            .json(error.message || 'Ошибка выхода');
     }
 });
 

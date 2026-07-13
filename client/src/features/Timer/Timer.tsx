@@ -1,9 +1,9 @@
 import { Button, ErrorMessage } from '../../shared';
 import { useTimer } from './useTimer';
-import Play from '../../app/assets/play.svg?react';
-import Pause from '../../app/assets/pause.svg?react';
-import Save from '../../app/assets/saveDisk.svg?react';
-import Reset from '../../app/assets/reset.svg?react';
+import Play from '../../app/assets/icons/play.svg?react';
+import Pause from '../../app/assets/icons/pause.svg?react';
+import Save from '../../app/assets/icons/saveDisk.svg?react';
+import Reset from '../../app/assets/icons/reset.svg?react';
 
 export const Timer = () => {
     const { displayTime, status, error, onStart, onPause, onReset, onSave } =

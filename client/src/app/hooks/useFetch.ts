@@ -26,19 +26,30 @@ export const useFetch = <T>({
             } catch (error) {
                 if (error instanceof AxiosError) {
                     const status = error.response?.status;
+                    const serverMessage = error.response?.data;
 
                     switch (status) {
                         case 500:
                             setError('Повторите запрос позже');
                             return;
                         case 401:
-                            setError('Требуется авторизация.');
+                            setError('Неверный логин или пароль');
                             return;
                         case 403:
                             setError('Доступ к данным запрещен.');
                             return;
                         case 404:
                             setError('Данные не найдены.');
+                            return;
+                        case 409:
+                            setError('Пользователь с таким логином уже существует');
+                            return;
+                        case 400:
+                            setError(
+                                typeof serverMessage === 'string'
+                                    ? serverMessage
+                                    : 'Ошибка в запросе'
+                            );
                             return;
                         default:
                             setError('Произошла ошибка при загрузке данных');

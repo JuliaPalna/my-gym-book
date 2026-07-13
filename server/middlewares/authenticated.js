@@ -7,7 +7,7 @@ async function authenticated(req, res, next) {
     const token = req.cookies.token;
 
     if(!token) {
-        return res.status(401).json({ message: 'Требуется авторизация' });
+        return res.status(403).json({ message: 'Требуется авторизация' });
     }
 
     const tokenData = verify(token);

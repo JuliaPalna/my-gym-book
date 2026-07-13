@@ -27,7 +27,8 @@ router.get('/types', authenticated, async (req, res) => {
 
         res.status(200).json(types);
     } catch (error) {
-        sendError(res, error);
+        res.status(error.status || 400)
+            .json({ message: error.message || 'Ошибка запроса' });
     }
 });
 
@@ -37,7 +38,8 @@ router.get('/:id', authenticated, checkWorkoutAccess, async (req, res) => {
 
         res.status(200).json(mapWorkout(req.workout));
     } catch (error) {
-        sendError(res, error);
+        res.status(error.status || 400)
+            .json({ message: error.message || 'Ошибка запроса' });
     }
 });
 
@@ -56,7 +58,8 @@ router.get('/', authenticated, async (req, res) => {
 
         res.status(200).json({ workouts, monthlyAnalytics });
     } catch (error) {
-        sendError(res, error);
+        res.status(error.status || 400)
+            .json({ message: error.message || 'Ошибка запроса' });
     }
 });
 
@@ -74,7 +77,8 @@ router.post('/', authenticated, async (req, res) => {
 
         res.status(200).json(mapWorkout(newWorkout));
     } catch (error) {
-        sendError(res, error);
+        res.status(error.status || 400)
+            .json({ message: error.message || 'Ошибка запроса' });
     }
 });
 
@@ -97,7 +101,8 @@ router.patch('/:id', authenticated, checkWorkoutAccess, async (req, res) => {
         res.status(200)
             .json(mapWorkout(updatedWorkout));
     } catch (error) {
-        sendError(res, error);
+        res.status(error.status || 400)
+            .json({ message: error.message || 'Ошибка запроса' });
     }
 });
 
@@ -113,7 +118,8 @@ router.delete('/:id', authenticated, checkWorkoutAccess, async (req, res) => {
 
         res.status(200).json(null);
     } catch (error) {
-        sendError(res, error);
+        res.status(error.status || 400)
+            .json({ message: error.message || 'Ошибка запроса' });
     }
 });
 

@@ -9,6 +9,18 @@ const UsersPage = (): React.JSX.Element => {
         return <ErrorMessage>{`Ошибка: ${error}`}</ErrorMessage>;
     }
 
+    if (isLoading) {
+        return (
+            <div className="flex-center">
+                <Loader />
+            </div>
+        );
+    }
+
+    if (users.length === 0) {
+        <ErrorMessage>Пользователи не найдены</ErrorMessage>;
+    }
+
     return (
         <>
             <Title>Пользователи</Title>
@@ -32,27 +44,19 @@ const UsersPage = (): React.JSX.Element => {
                     <span className="hidden"></span>
                 </li>
 
-                {isLoading ? (
-                    <div className="flex-center">
-                        <Loader />
-                    </div>
-                ) : users.length === 0 ? (
-                    <ErrorMessage>Пользователи не найдены</ErrorMessage>
-                ) : (
-                    users.map((user) => {
-                        if (!user) {
-                            return;
-                        }
+                {users.map((user) => {
+                    if (!user) {
+                        return;
+                    }
 
-                        return (
-                            <ListItemUser
-                                key={user.id}
-                                user={user}
-                                roles={userRoles}
-                            />
-                        );
-                    })
-                )}
+                    return (
+                        <ListItemUser
+                            key={user.id}
+                            user={user}
+                            roles={userRoles}
+                        />
+                    );
+                })}
             </ul>
         </>
     );

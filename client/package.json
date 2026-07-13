@@ -8,6 +8,7 @@
         "build": "tsc -b && vite build",
         "lint": "eslint .",
         "typecheck": "tsc --noEmit",
+        "predeploy": "npm run lint && npm run typecheck && npm run build",
         "preview": "vite preview",
         "server": "npx json-server --watch src/app/db.json --port 3004 "
     },

@@ -1,1 +1,1 @@
-export * from './DurationBarChart';
+export { default } from './DurationBarChart';

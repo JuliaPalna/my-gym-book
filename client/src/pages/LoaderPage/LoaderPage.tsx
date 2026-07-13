@@ -1,7 +1,7 @@
 import { Loader } from '../../shared';
 
 const LoaderPage = (): React.JSX.Element => (
-    <div className="flex-center h-screen">
+    <div className="flex justify-center h-screen">
         <Loader />
     </div>
 );

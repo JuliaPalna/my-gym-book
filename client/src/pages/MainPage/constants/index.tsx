@@ -1,4 +1,4 @@
-import GrowthAnalytic from '../../../app/assets/growthAnalytic.svg?react';
+import GrowthAnalytic from '../../../app/assets/icons/growthAnalytic.svg?react';
 
 export const features: {
     id: string;
