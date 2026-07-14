@@ -1,0 +1,27 @@
+const mongoose = require('mongoose');
+const { timeStamp } = require('console');
+const ROLES = require('../constants/roles');
+
+const UserSchema = mongoose.Schema(
+    {
+        login: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        role_id: {
+            type: String,
+            required: true,
+            default: ROLES.USER,
+        },
+    },
+    { timestamps: true },
+);
+
+const User = mongoose.model('User', UserSchema);
+
+module.exports = User;

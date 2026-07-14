@@ -1,0 +1,17 @@
+node_modules
+**/node_modules
+.git
+.gitignore
+**/.git
+**/.gitignore
+dist
+**/dist
+.env
+.env.local
+.env.production
+**/.env
+**/.env.local
+**/.env.production
+*.md
+Dockerfile
+.dockerignore
