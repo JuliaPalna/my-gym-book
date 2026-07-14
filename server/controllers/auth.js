@@ -36,7 +36,7 @@ async function login(login, password) {
 
     if (!user) {
         console.log(chalk.bgRed('User not found'));
-        const error = new Error('Неверный логин или пароль');
+        const error = new Error('Пользователь не найден');
         error.status = 401;
         throw error;
     }
@@ -45,7 +45,7 @@ async function login(login, password) {
 
     if (!isPasswordCorrect) {
         console.log(chalk.bgRed('Wrong password'));
-        const error = new Error('Неверный логин или пароль');
+        const error = new Error('Неверный пароль');
         error.status = 401;
         throw error;
     }
