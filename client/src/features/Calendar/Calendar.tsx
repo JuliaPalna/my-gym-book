@@ -31,10 +31,7 @@ export const Calendar = ({
                 </Button>
             </div>
 
-            <ul
-                className="grid grid-cols-7 py-1 text-center place-items-center
-                uppercase"
-            >
+            <ul className="grid grid-cols-7 py-1 text-center place-items-center uppercase">
                 {Object.entries(NAME_DAYS_WEEK).map((values) => {
                     return (
                         <li
@@ -49,9 +46,9 @@ export const Calendar = ({
 
             <ul
                 className="grid grid-cols-7
-                place-items-center text-center
-                divide-x divide-y divide-brand-border border
-                border-brand-border rounded-xl overflow-hidden"
+                gap-px place-items-center text-center
+                border border-brand-border rounded-xl
+                overflow-hidden"
                 onClick={onOpenListWorkoutsByDay}
             >
                 {calendarsWithActiveDays.map((cell, index) => {
@@ -61,13 +58,11 @@ export const Calendar = ({
                             data-date={
                                 cell?.hasWorkout ? cell.fullDate : undefined
                             }
-                            className={`relative h-12 aspect-square w-full flex-center
-                            [&:nth-child(7n)]:border-l-0
-                            [&:nth-last-child(-n+7)]:border-t-0
+                            className={`relative h-12 aspect-square w-full flex-center border
                                 ${
                                     cell && cell.hasWorkout
                                         ? `before:content-[''] before:absolute before:-z-fixed
-                                            before:size-9 sm:before:w-10 sm:before:h-10 before:rounded-3xl
+                                            before:size-9 sm:before:size-10 before:rounded-3xl
                                             before:bg-brand-primary-active
                                             text-brand-text-light opacity-70 cursor-pointer
                                             before:animate-pop-in`
