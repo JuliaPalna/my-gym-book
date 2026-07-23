@@ -6,9 +6,8 @@ export const Footer = (): React.JSX.Element => {
                     Email:{' '}
                     <a href="mailto:info@example.com">info@example.com</a>
                 </address>
+                <span>2026</span>
             </div>
-
-            <div>2026</div>
         </footer>
     );
 };
