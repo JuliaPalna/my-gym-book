@@ -17,7 +17,7 @@ export const App = (): React.JSX.Element => {
             <main
                 className="relative @container grow
                 w-full sm:max-w-4xl sm:mx-auto
-                p-layout sm:p-x-layout-sm lg:p-x-layout-lg
+                p-layout pb-0 sm:p-x-layout-sm lg:p-x-layout-lg
                 pt-28 sm:pt-32"
             >
                 <RoutesContainer />
