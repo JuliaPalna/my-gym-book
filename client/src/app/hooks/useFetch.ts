@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AxiosError } from 'axios';
 
 interface UseFetchProps<T> {
@@ -17,13 +17,32 @@ export const useFetch = <T>({
     const [error, setError] = useState<null | string>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const isMounted = useRef(true);
+
+    useEffect(() => {
+        isMounted.current = true;
+
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
+
     const onFetch = useCallback(
         async (data?: T) => {
+            if (!isMounted.current) {
+                return;
+            }
+
             try {
                 setError(null);
                 setIsLoading(true);
+
                 await callback(data);
             } catch (error) {
+                if (!isMounted.current) {
+                    return;
+                }
+
                 if (error instanceof AxiosError) {
                     const status = error.response?.status;
                     const serverMessage = error.response?.data;
@@ -42,13 +61,15 @@ export const useFetch = <T>({
                             setError('Данные не найдены.');
                             return;
                         case 409:
-                            setError('Пользователь с таким логином уже существует');
+                            setError(
+                                'Пользователь с таким логином уже существует',
+                            );
                             return;
                         case 400:
                             setError(
                                 typeof serverMessage === 'string'
                                     ? serverMessage
-                                    : 'Ошибка в запросе'
+                                    : 'Ошибка в запросе',
                             );
                             return;
                         default:
@@ -58,10 +79,13 @@ export const useFetch = <T>({
                 } else {
                     const message =
                         error instanceof Error ? error.message : String(error);
+
                     setError(message);
                 }
             } finally {
-                setIsLoading(false);
+                if (isMounted.current) {
+                    setIsLoading(false);
+                }
             }
         },
         [callback],
