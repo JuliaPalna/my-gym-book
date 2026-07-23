@@ -28,11 +28,10 @@ export const useHeader = () => {
     const onLogout = async () => {
         try {
             await dispatch(logoutAction());
+        } finally {
             sessionStorage.removeItem('authData');
             sessionStorage.removeItem('timerState');
             navigate('/');
-        } catch {
-            console.error('Ошибка. повторите запрос позже');
         }
     };
 

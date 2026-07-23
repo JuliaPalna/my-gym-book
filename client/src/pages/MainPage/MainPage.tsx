@@ -1,4 +1,4 @@
-import { Timer } from '../../features/Timer/Timer';
+import { Timer } from '../../features';
 import { features } from './constants';
 
 const MainPage = (): React.JSX.Element => {

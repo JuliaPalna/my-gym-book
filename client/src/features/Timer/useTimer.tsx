@@ -43,7 +43,7 @@ export const useTimer = () => {
     };
 
     const onSave = () => {
-        const time = Math.round(durationMs / 60000);
+        const time = Math.floor(durationMs / 60000);
 
         if (time < 1) {
             setError('Длительность тренировки должна быть больше 1 минуты');
